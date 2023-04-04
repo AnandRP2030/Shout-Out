@@ -1,6 +1,6 @@
 import React from "react";
 
-function HomeSvg() {
+function BookmarkSvg() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -11,10 +11,10 @@ function HomeSvg() {
       style={{fill: "white"}}
     >
       <g>
-        <path d="M12 1.696L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM12 16.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5z" />
+        <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
       </g>
     </svg>
   );
 }
 
-export default HomeSvg;
+export default BookmarkSvg;
