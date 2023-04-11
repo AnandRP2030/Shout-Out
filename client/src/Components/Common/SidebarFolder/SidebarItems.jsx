@@ -8,9 +8,9 @@ import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import MsgSvg from "../../Icon/messegesSvg";
 import CommunitySvg from "../../Icon/communitySvg";
 import BookmarkSvg from "../../Icon/bookmarkSvg";
-import { HStack, Heading } from "@chakra-ui/react";
+import { HStack, Heading, Text } from "@chakra-ui/react";
 import SpinTwit from '../../Icon/spinTwit';
-
+import { useNavigate } from 'react-router-dom';
 const SidbarItems = ({label}) => {
 
     let Icon;
@@ -35,11 +35,47 @@ const SidbarItems = ({label}) => {
     }else {
         Icon = MoreSvg;
     }
+
+
+    const optionStyles = {
+        cursor: 'pointer',
+        borderRadius: '8px',
+        transition: 'background-color 0.3s',
+        '&:hover': {
+          bg: '#2c3640',
+        },
+      };
+
+      const navigate = useNavigate();
+    const redirectPage = () => {
+        if (label === "Home"){
+            navigate('/home')
+        }else if (label === "Explore"){
+            navigate('/explore')
+        }else if (label === "Communites"){
+            navigate('/communities')
+        }else if (label === "Notifications"){
+            navigate('/notifications')
+        }else if (label === "Messages"){
+            navigate('/messages')
+        }else if (label === "Bookmarks"){
+            navigate('/bookmarks')
+        }else if (label === "Twitter Blue"){
+            navigate('/twitter_blue')
+        }else if (label === "Profile"){
+            navigate('/profile')
+        }else if (label === ""){
+            navigate('/home')
+        }else {
+            navigate('/home')
+        }
+    }
     
     return (
-        <HStack w='90%' h='60px'  pl={20}>
+        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} pl={20}>
             <Icon/> 
-            <Heading>{label} </Heading>
+            <Text  fontSize='1.5rem'>{label} </Text>
+            
         </HStack>
     )
 }
