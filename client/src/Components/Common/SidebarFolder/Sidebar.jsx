@@ -5,7 +5,7 @@ import ProfileBox from "../Profile/profileBox";
 
 const SideBar = () => {
   return (
-    <VStack w="18%" h="auto">
+    <VStack ml='2%' h="auto"  pos='fixed'>
       <SidbarItems label={""} />
       <SidbarItems label={"Home"} />
       <SidbarItems label={"Explore"} />
