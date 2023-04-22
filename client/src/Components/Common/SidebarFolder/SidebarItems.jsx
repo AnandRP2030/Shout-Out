@@ -63,7 +63,7 @@ const SidbarItems = ({label}) => {
         }else if (label === "Twitter Blue"){
             navigate('/twitter_blue')
         }else if (label === "Profile"){
-            navigate('/profile')
+            navigate('/signup')
         }else if (label === ""){
             navigate('/home')
         }else {

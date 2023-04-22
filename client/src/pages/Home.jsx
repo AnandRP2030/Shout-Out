@@ -5,9 +5,10 @@ import HomeCenterFeed from "../Components/HomeFeed/HomeFeed";
 const Home = () => {
   return (
     <Grid
-      h="200px"
+      h="auto"
       templateColumns="repeat(12, 1fr)"
       gap={4}
+     
     >
       <GridItem  colSpan={3} >
         <SideBar />

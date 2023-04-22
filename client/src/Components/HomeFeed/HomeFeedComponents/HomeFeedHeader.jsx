@@ -9,10 +9,14 @@ const HomeFeedHeader = () => {
       gap={4}
     >
       <GridItem rowSpan={1} colSpan={6}>
-        <Text fontSize='1.5rem' as='b'> Home </Text>
+        <Text fontSize='1.5rem' as='b' ml='2%' > Home </Text>
       </GridItem>
-      <GridItem rowSpan={1} colSpan={3} fontSize='1rem' as='b'>For you</GridItem>
-      <GridItem rowSpan={1} colSpan={3} fontSize='1rem' as='b'>Following</GridItem>
+      <GridItem rowSpan={1} margin='auto' colSpan={3} fontSize='1rem' as='b'> 
+        <Text fontSize='1.2rem' as='b'>For you </Text>
+      </GridItem>
+      <GridItem rowSpan={1} colSpan={3} fontSize='1rem' as='b' margin='auto'>
+        <Text fontSize='1.2rem' as='b'>Following</Text>
+      </GridItem>
     </Grid>
   );
 };
