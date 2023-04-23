@@ -8,7 +8,7 @@ const HomeCenterFeed = () => {
     }
 
     return (
-        <Box pt='20px' h='1000px' color='#fff'  style={homeCenterStyle} p={10}>
+        <Box h='1000px' color='#fff'  style={homeCenterStyle}  pt='10px' >
             <HomeFeedHeader/>
         </Box>  
     )

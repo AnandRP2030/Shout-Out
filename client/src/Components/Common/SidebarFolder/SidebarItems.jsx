@@ -77,13 +77,10 @@ const SidbarItems = ({label}) => {
         }
     }
     
-    let paddingLeft = 20;
-    if (!label){
-        paddingLeft = 0;
-    }
+ 
 
     return (
-        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} pl={paddingLeft}>
+        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} >
             <Icon/> 
             <Text  fontSize='1.5rem'>{label} </Text>
             
