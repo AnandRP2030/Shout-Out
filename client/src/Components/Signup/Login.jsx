@@ -17,10 +17,11 @@ import { RxGithubLogo } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif"
 
-const Signup = () => {
+const Login = () => {
 
   const formStyle = {
-    boxShadow: 'rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'
+     boxShadow: 'rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'
+
   };
 
   const btnStyle = {
@@ -67,13 +68,13 @@ const Signup = () => {
             </Center>
             <Text fontSize="3xl" as="b">
               {" "}
-              Get Started
+              Welcome Back
             </Text>
             <Text fontSize=".8rem" color="gray">
-              already have an account ?
-              <Link href="/login" color="green">
+              Don't you have an account ?
+              <Link href="/signup" color="green">
                 {" "}
-                Login{" "}
+                Signup{" "}
               </Link>
             </Text>
             <VStack w="100%" mt="20px" p={1}>
@@ -86,7 +87,7 @@ const Signup = () => {
                   className="signUpbtn"
                   style={btnStyle}
                 >
-                  <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
+                  <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Log in with
                   Google
                 </Button>
               </Link>
@@ -100,7 +101,7 @@ const Signup = () => {
               >
                 {" "}
                 <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
-                Sign up with Github
+                Log in with Github
               </Button>
             </VStack>
           </Box>
@@ -124,17 +125,12 @@ const Signup = () => {
             <Input
               style={userInputStyle}
               type="text"
-              placeholder="Username"
+              placeholder="Username or email"
               mt="20px"
             />
             <Spacer />
-            <Input
-              style={userInputStyle}
-              type="email"
-              placeholder="Enter your email"
-              mt="20px"
-            />
-            <br />
+           
+        
             <Input
               style={userInputStyle}
               type="password"
@@ -161,4 +157,4 @@ const Signup = () => {
     </Center>
   );
 };
-export default Signup;
+export default Login;

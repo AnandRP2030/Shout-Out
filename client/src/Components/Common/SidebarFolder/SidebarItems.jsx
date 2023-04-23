@@ -11,10 +11,15 @@ import BookmarkSvg from "../../Icon/bookmarkSvg";
 import { HStack, Heading, Text } from "@chakra-ui/react";
 import SpinTwit from '../../Icon/spinTwit';
 import { useNavigate } from 'react-router-dom';
-const SidbarItems = ({label}) => {
+import FlyBird from '../../Icon/flyBird';
 
+//bold
+import HomeBoldSvg from '../../Icon/BoldSvg/homeBoldSvg';
+
+const SidbarItems = ({label}) => {
     let Icon;
     if (label === "Home"){
+        Icon = HomeBoldSvg;
         Icon = HomeSvg;
     }else if (label === "Explore"){
         Icon = HashSvg;
@@ -31,7 +36,7 @@ const SidbarItems = ({label}) => {
     }else if (label === "Profile"){
         Icon = ProfileSvg;
     }else if (label === ""){
-        Icon = SpinTwit;
+        Icon = FlyBird;
     }else {
         Icon = MoreSvg;
     }
@@ -49,6 +54,7 @@ const SidbarItems = ({label}) => {
       const navigate = useNavigate();
     const redirectPage = () => {
         if (label === "Home"){
+
             navigate('/home')
         }else if (label === "Explore"){
             navigate('/explore')
@@ -71,8 +77,13 @@ const SidbarItems = ({label}) => {
         }
     }
     
+    let paddingLeft = 20;
+    if (!label){
+        paddingLeft = 0;
+    }
+
     return (
-        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} pl={20}>
+        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} pl={paddingLeft}>
             <Icon/> 
             <Text  fontSize='1.5rem'>{label} </Text>
             
