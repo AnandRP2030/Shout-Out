@@ -19,6 +19,8 @@ import flyTwit from "../../../asset/fly-bird.gif"
 
 const Signup = () => {
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const LOGIN_URL = import.meta.env.VITE_USER_LOGIN
   const formStyle = {
     boxShadow: 'rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'
   };
@@ -42,6 +44,60 @@ const Signup = () => {
     paddingLeft: "20px",
     boxSizing: "border-box"
   };
+
+  const [userDetails, setUserDetails] = useState({
+    username: '',
+    email:'',
+    password: ''
+  })
+
+  const handleChanges = (e) => {
+    const {name, value} = e.target;
+    setUserDetails({...userDetails, [name]: value});    
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(userDetails);
+    if (userDetails.username && userDetails.email && userDetails.password){
+      registerUser(userDetails);
+
+      // setUserDetails({
+      //   username: '',
+      //   email: '',
+      //   password: ''
+      // })
+    }else {
+      console.log('Please enter all the fields')
+    }
+
+
+  }
+
+    
+  const registerUser = async ({username, email, password}) => {
+    const REGISTRATION_URL =`${BASE_URL}/api/register`;
+
+    let res = await fetch(REGISTRATION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password
+      })
+    })
+    if (res.status != 200){
+      console.log(res.status);
+    }else {
+      let data = await res.json();
+      console.log(data);
+
+    }
+  }
+
 
 
   
@@ -107,8 +163,6 @@ const Signup = () => {
           <Box w="100%" margin="auto" mt="20px">
             <Box
               w="169px"
-              // pl="10px"
-              // pr="10px"
               m="auto"
               bg='#15202b'
               fontSize=".8rem"
@@ -126,6 +180,9 @@ const Signup = () => {
               type="text"
               placeholder="Username"
               mt="20px"
+              name="username"
+              value={userDetails.username}
+              onChange={handleChanges}
             />
             <Spacer />
             <Input
@@ -133,6 +190,9 @@ const Signup = () => {
               type="email"
               placeholder="Enter your email"
               mt="20px"
+              value={userDetails.email}
+              name="email"
+              onChange={handleChanges}
             />
             <br />
             <Input
@@ -140,6 +200,9 @@ const Signup = () => {
               type="password"
               placeholder="Enter your password"
               mt="20px"
+              name="password"
+              value={userDetails.password}
+              onChange={handleChanges}
             />
 
             <Button
@@ -150,8 +213,9 @@ const Signup = () => {
               type="submit"
               _hover={{ bg: "red" }}
               backgroundColor= "#29a8df"
+              onClick={handleSubmit}
             >
-              {" "}
+      
               GET STARTED{" "}
             </Button>
           </FormControl>
