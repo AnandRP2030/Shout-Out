@@ -56,24 +56,17 @@ const Signup = () => {
   };
 
   const handleSubmit = (event) => {
-    // e.preventDefault();
     event.preventDefault()
-    console.log('for checking')
-    console.log(userDetails);
-    if (userDetails.username && userDetails.email && userDetails.password) {
+    const {username, email, password} = userDetails;
+    if (username && email && password) {
       registerUser(userDetails);
-
-      // setUserDetails({
-      //   username: '',
-      //   email: '',
-      //   password: ''
-      // })
     } else {
       console.log("Please enter all the fields");
     }
   };
 
   const registerUser = async ({ username, email, password }) => {
+ 
     const REGISTRATION_URL = `${BASE_URL}/api/register`;
 
     let res = await fetch(REGISTRATION_URL, {
@@ -87,12 +80,14 @@ const Signup = () => {
         password,
       }),
     });
-    if (res.status != 200) {
-      console.log("error on request", res.status);
-    } else {
+    console.log(res.status);
+    if (res.status === 200) {
       let data = await res.json();
-      console.log(data.message);
+      console.log(data)
+    }else {
+      console.log('some error', res.status);
     }
+
   };
 
   return (

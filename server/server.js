@@ -1,13 +1,14 @@
+require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const app = express();
-const userRouter = require('./router/userRoutes');
-const cors = require('cors');
-require('dotenv').config();
+const userRouter = require('./controller/router/userRoutes');
+const {connectDb} = require('./config/config');
+
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-
-app.use(express.json());
 
 app.use('/api',userRouter)
 
@@ -15,8 +16,9 @@ app.get('/', (req, res) => {
     res.send('working')
 })
 
-
-app.listen(PORT,(err) => {
-    if (err) console.log('err on listen', err);
-    console.log('port running on '+PORT)
-});
+connectDb().then(() => {
+    app.listen(PORT,(err) => {
+        if (err) console.log('err on listen', err);
+        console.log('port running on '+PORT)
+    });
+}) 
