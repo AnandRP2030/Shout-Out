@@ -18,11 +18,11 @@ import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif"
 
 const Login = () => {
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
      boxShadow: 'rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'
+    };
 
-  };
 
   const btnStyle = {
     borderRadius: "100px",
@@ -44,8 +44,48 @@ const Login = () => {
     boxSizing: "border-box"
   };
 
-
+  const [userData, setUserData] = useState({
+    email: '',
+    password: ''
+  })
   
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const {email, password} = userData;
+    if (email && password) {
+      validateUser(userData);
+      setUserData({
+        email: '',
+        password: ''
+      })
+    }else {
+      console.log('email and password is required')
+    }
+  }
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setUserData({...userData, [name]: value})
+    
+  }
+
+  const validateUser = async ({email, password}) => {
+    const LOGIN_URL = `${BASE_URL}/api/login`;
+    let res = await fetch (LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email, password
+      })
+    })
+
+    let data = await res.json();
+    console.log('status ', res.status)
+    console.log('replay => ', data);
+  }
+
   return (
     <Center bgColor='#15202b' m='auto' h='auto' pt='50px' pb='200px' w='100%' >
   
@@ -108,8 +148,6 @@ const Login = () => {
           <Box w="100%" margin="auto" mt="20px">
             <Box
               w="169px"
-              // pl="10px"
-              // pr="10px"
               m="auto"
               bg='#15202b'
               fontSize=".8rem"
@@ -122,10 +160,16 @@ const Login = () => {
             <hr style={{ borderColor: "#15202b" }} />
           </Box>
           <FormControl h="auto" mt="20px">
+          <form onSubmit={handleSubmit}>
+
+          
             <Input
               style={userInputStyle}
-              type="text"
-              placeholder="Username or email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              type="email"
+              placeholder="Enter your email"
               mt="20px"
             />
             <Spacer />
@@ -134,11 +178,14 @@ const Login = () => {
             <Input
               style={userInputStyle}
               type="password"
+              onChange={handleChange}
+              value={userData.password}
+              name="password"
               placeholder="Enter your password"
               mt="20px"
             />
 
-            <Button
+            <Input
               color="white"
               style={btnStyle}
               w="100%"
@@ -146,10 +193,10 @@ const Login = () => {
               type="submit"
               _hover={{ bg: "red" }}
               backgroundColor= "#29a8df"
-            >
-              {" "}
-              GET STARTED{" "}
-            </Button>
+              value="Login"
+
+            />
+             </form>
           </FormControl>
         </Box>
        

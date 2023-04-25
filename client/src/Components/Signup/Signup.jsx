@@ -19,7 +19,6 @@ import flyTwit from "../../../asset/fly-bird.gif";
 
 const Signup = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const LOGIN_URL = import.meta.env.VITE_USER_LOGIN;
   const formStyle = {
     boxShadow:
       "rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
@@ -80,12 +79,13 @@ const Signup = () => {
         password,
       }),
     });
-    console.log(res.status);
     if (res.status === 200) {
       let data = await res.json();
-      console.log(data)
+      console.log('new user => ',data)
+      alert('Registration successful')
     }else {
-      console.log('some error', res.status);
+      alert('Email or username already use');
+      console.log('Email or username already use');
     }
 
   };
