@@ -2,8 +2,10 @@ import { HStack, Heading, Image, Box, GridItem, Grid } from "@chakra-ui/react";
 import SideBar from "../Components/Common/SidebarFolder/Sidebar";
 import HomeCenterFeed from "../Components/HomeFeed/HomeFeed";
 import HomeRightFeed from "../Components/HomeRightFeed/HomeRightFeed";
+import { useEffect } from "react";
 
 const Home = () => {
+
   return (
     <Grid
       h="auto"

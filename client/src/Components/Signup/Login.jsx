@@ -10,6 +10,8 @@ import {
   Icon,
 } from "@chakra-ui/react";
 
+
+
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
@@ -18,6 +20,9 @@ import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif"
 
 const Login = () => {
+  const navigate = useNavigate();
+
+
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
      boxShadow: 'rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'
@@ -52,8 +57,10 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const {email, password} = userData;
+ 
     if (email && password) {
       validateUser(userData);
+
       setUserData({
         email: '',
         password: ''
@@ -70,7 +77,9 @@ const Login = () => {
   }
 
   const validateUser = async ({email, password}) => {
+
     const LOGIN_URL = `${BASE_URL}/api/login`;
+ 
     let res = await fetch (LOGIN_URL, {
       method: 'POST',
       headers: {
@@ -82,8 +91,21 @@ const Login = () => {
     })
 
     let data = await res.json();
-    console.log('status ', res.status)
-    console.log('replay => ', data);
+    if (!data) {
+      console.log('no data')
+    }else {
+      console.log(data)
+    }
+    if (res.status === 200){
+      
+      const {username, email} = data.userData[0];
+      alert(`Welocme back ${username}`);
+      localStorage.setItem('user_email', JSON.stringify(email));
+      localStorage.setItem('token', JSON.stringify(data.token))
+      navigate('/')
+    }else {
+      alert('something wrong')
+    }
   }
 
   return (

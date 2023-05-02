@@ -81,7 +81,8 @@ const Signup = () => {
     });
     if (res.status === 200) {
       let data = await res.json();
-      console.log('new user => ',data)
+      console.log('new user => ',data.token)
+      console.log('new user => ',data.userData)
       alert('Registration successful')
     }else {
       alert('Email or username already use');

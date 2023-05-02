@@ -1,5 +1,7 @@
 import { Box } from "@chakra-ui/react"
 import Home from "./pages/Home"
+import { useEffect } from "react"
+
 
 function App() {
   return (
