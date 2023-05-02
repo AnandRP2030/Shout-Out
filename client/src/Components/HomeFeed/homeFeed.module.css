@@ -7,3 +7,20 @@
     color: #f91880;
     text-shadow: 0 0 20px #8a8e91;
 }
+
+.forYouHead {
+    width: 100%;
+    height: 50px;
+    margin: auto;
+    font-size:1rem;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.forYouHead:hover{
+    background-color:#24344394;
+    cursor:pointer;
+}
+
+
+    

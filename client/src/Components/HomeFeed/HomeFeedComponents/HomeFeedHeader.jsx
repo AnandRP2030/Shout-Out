@@ -25,10 +25,10 @@ const HomeFeedHeader = () => {
       <GridItem rowSpan={1} colSpan={6}>
         <Text className={style.cursorPointer} fontSize='1.5rem' as='b' ml='2%'  > Home </Text>
       </GridItem>
-      <GridItem rowSpan={1} margin='auto' colSpan={3} fontSize='1rem' onClick={handleForyou}> 
+      <GridItem className={style.forYouHead} rowSpan={1}  colSpan={3}  onClick={handleForyou}  > 
         <Text className={`${style.cursorPointer}  ${forYouActive ? style.headTextStyle: ''}`}  fontSize='1.2rem' >For you </Text>
       </GridItem>
-      <GridItem  rowSpan={1} colSpan={3} fontSize='1rem' margin='auto' onClick={handleFollowing}>
+      <GridItem className={style.forYouHead} rowSpan={1} colSpan={3} fontSize='1rem' margin='auto' onClick={handleFollowing}>
         <Text className={`${style.cursorPointer} ${!forYouActive ? style.headTextStyle: ''}`}  fontSize='1.2rem' >Following</Text>
       </GridItem>
     </Grid>

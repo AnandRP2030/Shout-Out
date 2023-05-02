@@ -44,6 +44,7 @@ const Signup = () => {
   };
 
   const [userDetails, setUserDetails] = useState({
+    name: "",
     username: "",
     email: "",
     password: "",
@@ -148,6 +149,16 @@ const Signup = () => {
         </Box>
         <FormControl h="auto" mt="20px" >
         <form onSubmit={handleSubmit}>
+        <Input
+            style={userInputStyle}
+            type="text"
+            placeholder="Name"
+            mt="20px"
+            name="name"
+            value={userDetails.user}
+            onChange={handleChanges}
+          />
+
           <Input
             style={userInputStyle}
             type="text"
