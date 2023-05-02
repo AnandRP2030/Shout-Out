@@ -4,9 +4,10 @@ const RegistrationModel = require("../../models/userSchema");
 const JWT_SECRET_KEY = process.env.SECRET_KEY;
 const jwt = require('jsonwebtoken')
 userRouter.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, username, email, password } = req.body;
   try {
     const newUser = await RegistrationModel.create({
+      name,
       username,
       email,
       password,
@@ -46,7 +47,7 @@ userRouter.get('/', (req, res) => {
 userRouter.get('/userDetails/:email/:token', async (req, res) => {
   const email = req.params.email;
   const token = req.params.token;
-  console.log(email, token);
+ 
   if (token && email) {
     const user = jwt.decode(token);
     if (!user) {

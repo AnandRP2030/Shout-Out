@@ -57,15 +57,15 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const {username, email, password} = userDetails;
-    if (username && email && password) {
+    const {name, username, email, password} = userDetails;
+    if (name, username && email && password) {
       registerUser(userDetails);
     } else {
       console.log("Please enter all the fields");
     }
   };
 
-  const registerUser = async ({ username, email, password }) => {
+  const registerUser = async ({name,  username, email, password }) => {
  
     const REGISTRATION_URL = `${BASE_URL}/api/register`;
 
@@ -75,6 +75,7 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name,
         username,
         email,
         password,

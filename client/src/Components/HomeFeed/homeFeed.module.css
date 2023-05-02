@@ -1,7 +1,9 @@
+
 .cursorPointer {
     cursor: pointer;
 }
 
+/* home header section  */
 .headTextStyle {
     font-weight: bold;
     color: #f91880;
@@ -22,5 +24,32 @@
     cursor:pointer;
 }
 
+/* home tweet section */
+.userProfilePic {
+    border-radius: 50%;
+    width: 80%;
+}
 
-    
+.selectAudience{
+    width: 50px;
+    background-color: red;
+    border-radius:50px;
+}
+
+.inputGrid{
+    margin-top: 10px;
+}
+
+.inputGrid .tweetInput{
+    height: 28px;
+    font-size: 1.4rem;
+    letter-spacing:1.5px;
+}
+
+.tweetBox .replayAudience {
+    color: #f91880;
+    letter-spacing: 1.5px;
+    font-size: 1rem;
+    font-weight:700;
+}
+

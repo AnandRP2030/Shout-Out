@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 
 const registrationScheam = Schema(
   {
+    name: {
+      type: String,
+      required: true
+    },
     username: {
       type: String,
       required: true,

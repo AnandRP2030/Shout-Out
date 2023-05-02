@@ -1,5 +1,8 @@
 import { Box, Text } from "@chakra-ui/react";
 import HomeFeedHeader from "./HomeFeedComponents/HomeFeedHeader";
+import HomeTweetInput from "./HomeFeedComponents/HomeTweetInput";
+
+
 const HomeCenterFeed = () => {
 
     const homeCenterStyle = {
@@ -10,6 +13,7 @@ const HomeCenterFeed = () => {
     return (
         <Box h='1000px' color='#fff'  style={homeCenterStyle}  pt='10px' >
             <HomeFeedHeader/>
+            <HomeTweetInput/>
         </Box>  
     )
 }

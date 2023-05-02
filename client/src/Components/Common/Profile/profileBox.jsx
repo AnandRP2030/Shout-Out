@@ -20,9 +20,12 @@ const ProfileBox = () => {
 
       if (token && email) {
         let userDetails = await getUserDetails(token, email);
-        console.log(userDetails);
-
-        setUserData({ ...userData, name: userDetails.username });
+        
+        setUserData({
+          ...userData,
+          name: userDetails.name,
+          username: userDetails.username,
+        });
       }
     };
     renderUserData();
