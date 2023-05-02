@@ -3,6 +3,12 @@
     cursor: pointer;
 }
 
+.tweetBox{
+    padding-left: 2%;
+    padding-right: 3%;
+    border-bottom: 1px solid rgb(45, 62, 79);
+}
+
 /* home header section  */
 .headTextStyle {
     font-weight: bold;
@@ -25,15 +31,17 @@
 }
 
 /* home tweet section */
+
+
 .userProfilePic {
     border-radius: 50%;
-    width: 80%;
+    width: 100%;
 }
 
-.selectAudience{
-    width: 50px;
-    background-color: red;
+.tweetBox .selectAudience{
+    color: #f91880;
     border-radius:50px;
+    height: 30px;
 }
 
 .inputGrid{
@@ -53,3 +61,33 @@
     font-weight:700;
 }
 
+.tweetIcons{
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tweetIcons > svg{
+    color: #f91880;
+    cursor: pointer;
+    display: flex;
+    
+}
+
+.tweetLine{
+    display:flex;
+    justify-content: space-between;
+}
+
+.tweetLine .tweetBtn {
+    background-color: #f91880;
+    color: white;
+    border-radius: 40px;
+    width: 120px;
+    font-size:1.2rem;
+    cursor: pointer;
+}
+
+.tweetLine .tweetBtn:hover {
+    background-color: #cd1068;
+}
