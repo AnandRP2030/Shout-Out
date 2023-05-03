@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react"
-import Home from "./pages/Home"
+import Home from "./views/Home"
 import { useEffect } from "react"
 
 

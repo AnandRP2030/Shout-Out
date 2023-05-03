@@ -11,7 +11,7 @@ const HomeCenterFeed = () => {
     }
 
     return (
-        <Box h='1000px' color='#fff'  style={homeCenterStyle}  pt='10px' >
+        <Box h='1000px' color='#fff' style={homeCenterStyle} pt='10px' >
             <HomeFeedHeader/>
             <HomeTweetInput/>
         </Box>  

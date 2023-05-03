@@ -4,9 +4,10 @@
 }
 
 .tweetBox{
-    padding-left: 2%;
-    padding-right: 3%;
+    padding: 10px 3% 10px 2%;
     border-bottom: 1px solid rgb(45, 62, 79);
+    height: auto;
+    margin-top: 40px;
 }
 
 /* home header section  */
@@ -41,11 +42,19 @@
 .tweetBox .selectAudience{
     color: #f91880;
     border-radius:50px;
-    height: 30px;
+    height: 24px;
+    width: 120px;
+    border-color:rgb(45, 62, 79);
+}
+
+.tweetBox .selectAudience option{
+    color: white;
+    background-color: #15202b;
+    border-radius: 100px;
 }
 
 .inputGrid{
-    margin-top: 10px;
+    
 }
 
 .inputGrid .tweetInput{
@@ -64,7 +73,7 @@
 .tweetIcons{
     width: 25%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .tweetIcons > svg{

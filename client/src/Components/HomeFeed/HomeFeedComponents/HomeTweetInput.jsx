@@ -1,3 +1,4 @@
+import style from "../homeFeed.module.css";
 import {
   Grid,
   Image,
@@ -7,56 +8,60 @@ import {
   Link,
   Text,
   Icon,
+  
   HStack,
   Button,
 } from "@chakra-ui/react";
-import style from "../homeFeed.module.css";
-import { IoEarth } from "react-icons/io5";
-import { BsImage } from "react-icons/bs";
-import { CgPoll } from "react-icons/all";
-import { BsEmojiHeartEyes } from "react-icons/bs";
-import { MdSchedule } from "react-icons/all";
-import { IoLocationOutline } from "react-icons/all";
+
+import {
+  MdSchedule,
+  BsEmojiHeartEyes,
+  CgPoll,
+  BsImage,
+  IoLocationOutline,
+  IoEarth,
+} from "react-icons/all";
+import { useState } from "react";
 
 const HomeTweetInput = () => {
   const imageUrl =
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*";
 
+  const [inputActive, setInputActive] = useState(false);
+
+
   return (
     <>
+     
       <Grid
-        h="200px"
-        templateRows="repeat(8, 1fr)"
-        templateColumns="repeat(22, 1fr)"
+        templateRows="repeat(4, 1fr)"
+        templateColumns="repeat(11, 1fr)"
         gap={4}
-        mt={10}
+        h={inputActive ? "200px" : "120px"}
         className={style.tweetBox}
       >
-        <GridItem rowSpan={8} colSpan={2}>
+        <GridItem rowSpan={4} colSpan={1}>
           <Image
             className={style.userProfilePic}
             src={imageUrl}
             alt="Profile"
           />
         </GridItem>
-        <GridItem colSpan={20} rowSpan={1}>
-          <Select w="150px" h="24px" className={style.selectAudience}>
-            <option style={{ color: "black" }} value="everyone">
-              Everyone
-            </option>
-            <option style={{ color: "black" }} value="private">
-              Private
-            </option>
+        <GridItem colSpan={10} rowSpan={1} display={inputActive ? "block": "none"}>
+          <Select w="120px" className={style.selectAudience}>
+            <option value="everyone">Everyone</option>
+            <option value="private">Private</option>
           </Select>
         </GridItem>
-        <GridItem colSpan={20} rowSpan={2} className={style.inputGrid}>
+        <GridItem colSpan={10} rowSpan={1} className={style.inputGrid}>
           <Input
             variant="unstyled"
             className={style.tweetInput}
             placeholder="What's happening?"
+            onClick={() => setInputActive(true)}
           />
         </GridItem>
-        <GridItem colSpan={20} rowSpan={2}>
+        <GridItem colSpan={10} rowSpan={1} display={inputActive ? "block": "none"}>
           <Link href="http://www.google.com" style={{ textDecoration: "none" }}>
             <HStack className={style.replayAudience}>
               <Icon as={IoEarth} boxSize={5} />
@@ -64,7 +69,7 @@ const HomeTweetInput = () => {
             </HStack>
           </Link>
         </GridItem>
-        <GridItem colSpan={20} rowSpan={2}>
+        <GridItem colSpan={10} rowSpan={1}>
           <HStack className={style.tweetLine}>
             <HStack className={style.tweetIcons}>
               <Icon as={BsImage} boxSize={5} />
