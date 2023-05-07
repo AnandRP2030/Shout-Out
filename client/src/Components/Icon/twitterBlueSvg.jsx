@@ -1,13 +1,15 @@
 import React from "react";
 
-function TwitterBlueSvg() {
+function TwitterBlueSvg({height, width}) {
+  
+
   return (
     <svg
       viewBox="0 0 24 24"
       aria-hidden="true"
       className="r-vlxjld r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e"
-      height="30px"
-      width="30px"
+      height={height ? height: '30px'}
+      width={width ? width : '30px'}
       style={{fill: "#1d9bf0"}}
     >
       <g>

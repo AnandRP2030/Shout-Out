@@ -17,11 +17,11 @@ const Home = () => {
   
 
   return (
-    <Grid h="auto" templateColumns="repeat(20, 1fr)" gap={4}>
+    <Grid templateColumns="repeat(18, 1fr)" gap={4}>
       <GridItem colSpan={4}>
         <SideBar />
       </GridItem>
-      <GridItem colSpan={11}>
+      <GridItem colSpan={9}>
         <HomeCenterFeed />
       </GridItem>
       <GridItem colSpan={5}>

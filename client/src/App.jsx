@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 function App() {
   return (
-    <Box bgColor='#15202b' w='100%' h='1000px'>
+    <Box bgColor='#15202b' w='100%' >
       <Home/>
     </Box>
   )
