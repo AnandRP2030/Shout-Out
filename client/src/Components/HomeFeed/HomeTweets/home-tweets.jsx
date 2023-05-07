@@ -9,7 +9,7 @@ const HomeTweets = () => {
       username: "elonmusk",
       userProfilePic: "https://m.media-amazon.com/images/I/6113Q8ahTWL._AC_SS450_.jpg",
       time: "1h",
-      content: "the bird is freed",
+      content: `lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum em ipsum lorem ipsum lorem ipsum lorem ipsum `,
       imageUrl:
         "https://pbs.twimg.com/media/FvFOBcvaYAEkR2n?format=jpg&name=900x900",
     },

@@ -1,10 +1,16 @@
-import { HStack, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { HStack, Grid, GridItem, Image, Text, grid } from "@chakra-ui/react";
 import style from "./tweet.module.css";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
-const Tweet = ({ tweetInfo }) => {
-  const { name, username, userProfilePic, content, time, imageUrl } = tweetInfo;
+import { useState } from "react";
 
-  console.log(username);
+const Tweet = ({ tweetInfo }) => {
+  let { name, username, userProfilePic, content, time, imageUrl } = tweetInfo;
+  if (content.length > 140)content = content.substring(0, 220);
+  let gridHeight = 6;
+  if (content.length < 220)gridHeight = 4;
+  else if (content.length < 100)gridHeight = 2;
+
+
   return (
     <Grid
       h="auto"
@@ -28,12 +34,14 @@ const Tweet = ({ tweetInfo }) => {
           <Text> {time} </Text>
         </HStack>
       </GridItem>
-      <GridItem rowSpan={6} colSpan={9}>
-        {/* here how i can change the rowSpan height depends on the content size, something like auto. maximum 
-        rowSpan 6, if content length exceeds that i want to show see more option */}
-        {content}
+      <GridItem rowSpan={gridHeight} colSpan={9}>
+       <Text className={style.textContent}>
+       {content}
+       </Text>
       </GridItem>
-      <GridItem rowSpan={18} colSpan={9} bg="papayawhip"></GridItem>
+      <GridItem rowSpan={18} colSpan={9} bg="papayawhip">
+        
+      </GridItem>
       <GridItem rowSpan={3} colSpan={9} bg="papayawhip"></GridItem>
     </Grid>
   );
