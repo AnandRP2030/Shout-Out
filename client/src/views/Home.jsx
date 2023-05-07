@@ -14,14 +14,7 @@ import HomeRightFeed from "../Components/HomeRightFeed/HomeRightFeed";
 import { useState, useEffect } from "react";
 import HomeSkeleton from "../Components/HomeFeed/HomeFeedComponents/HomeSkeleton";
 const Home = () => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  
 
   return (
     <Grid h="auto" templateColumns="repeat(20, 1fr)" gap={4}>

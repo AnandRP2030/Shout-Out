@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import HomeFeedHeader from "./HomeFeedComponents/HomeFeedHeader";
 import HomeTweetInput from "./HomeFeedComponents/HomeTweetInput";
-
+import HomeTweets from "./HomeTweets/home-tweets";
 
 const HomeCenterFeed = () => {
 
@@ -14,6 +14,7 @@ const HomeCenterFeed = () => {
         <Box h='1000px' color='#fff' style={homeCenterStyle} pt='10px' >
             <HomeFeedHeader/>
             <HomeTweetInput/>
+            <HomeTweets/>
         </Box>  
     )
 }

@@ -1,11 +1,11 @@
 import SidbarItems from "./SidebarItems";
-import { Stack, HStack, VStack, Image ,Spacer} from "@chakra-ui/react";
+import { Stack, HStack, VStack, Image, Spacer } from "@chakra-ui/react";
 import TweetButton from "../Button/tweetBtn";
 import ProfileBox from "../Profile/profileBox";
 
 const SideBar = () => {
   return (
-    <VStack ml='2%' h="auto"  pos='fixed' color='#fff'>
+    <VStack ml="2%" h="auto" pos="fixed" color="#fff">
       <SidbarItems label={""} />
       <SidbarItems label={"Home"} />
       <SidbarItems label={"Explore"} />
@@ -18,10 +18,9 @@ const SideBar = () => {
       <SidbarItems label={"More"} />
 
       <TweetButton colorCode={"#f91880"} content={"Tweet"} />
-      
-      <Spacer/>
-      <ProfileBox/>
-      
+
+      <Spacer />
+      <ProfileBox />
     </VStack>
   );
 };
