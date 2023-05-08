@@ -1,21 +1,9 @@
-import {
-  GridItem,
-  Grid,
-  Box,
-  Skeleton,
-  Stack,
-  SkeletonCircle,
-  SkeletonText,
-  HStack,
-} from "@chakra-ui/react";
+import { GridItem, Grid } from "@chakra-ui/react";
 import SideBar from "../Components/Common/SidebarFolder/Sidebar";
 import HomeCenterFeed from "../Components/HomeFeed/HomeFeed";
 import HomeRightFeed from "../Components/HomeRightFeed/HomeRightFeed";
-import { useState, useEffect } from "react";
-import HomeSkeleton from "../Components/HomeFeed/HomeFeedComponents/HomeSkeleton";
-const Home = () => {
-  
 
+const Home = () => {
   return (
     <Grid templateColumns="repeat(18, 1fr)" gap={4}>
       <GridItem colSpan={4}>
@@ -32,7 +20,6 @@ const Home = () => {
 };
 
 export default Home;
-
 
 // <GridItem colSpan={4}>
 // <Skeleton isLoaded={mounted}>

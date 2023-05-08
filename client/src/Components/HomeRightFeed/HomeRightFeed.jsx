@@ -1,10 +1,14 @@
 
-import { VStack, Input } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import TwitterSearch from "./HomeRightComponent/TwitterSearch";
+import WhatHappening from "./whatHappening/whatHappening";
+import style from "./homeRight.module.css";
+
 const HomeRightFeed = () => {
   return (
-    <VStack pt={4}>
+    <VStack className={style.homeRightParent} >
         <TwitterSearch/>
+        <WhatHappening/>
     </VStack>
   );
 };
