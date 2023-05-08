@@ -1,77 +1,69 @@
 .tweetBox {
-    margin-top: 10px;
-    padding: 20px;
-    border-bottom: 1px solid rgb(45, 62, 79);
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 20px;
+  border-bottom: 1px solid rgb(45, 62, 79);
+  cursor: pointer;
 }
 
-.tweetBox:hover{
-    background-color: #1d2731;
+.tweetBox:hover {
+  background-color: #1d2731;
 }
 
 .nameText {
-    color: white;
-    font-weight: 700;
-    font-size: 1.2rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
-.usernameText, .timeText {
-    color: #8b98a5;
-    font-size: 1.1rem;
+.usernameText,
+.timeText {
+  color: #8b98a5;
+  font-size: 1.1rem;
 }
-
-
 
 .userProfilePic {
-    border-radius: 5px;
-    width: 50px;
-    height: 50px;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
 }
 
-.textContent{
-    font-size:1.2rem;
+.textContent {
+  font-size: 1.2rem;
 }
 
-.tweetImage{
-    border-radius: 20px;
-    height: 500px;
-    margin-top: 20px;
+.tweetImage {
+  border-radius: 20px;
+  height: 500px;
+  margin-top: 20px;
 }
 
-.tweetOptions{
-    display: flex;
-    width: 70%;
-    justify-content: space-between;
-    box-sizing: border-box;
+.tweetOptions {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .tweetOptions div {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .tweetOptions div:first-child:hover {
-    font-size: 1.05rem;
-    color: #66FF66;
+  color: #66ff66;
 }
-    
-.tweetOptions div:nth-child(2):hover {
-    font-size: 1.05rem;
-    color: 	#FFAA1D;
-}
-    
-.tweetOptions div:nth-child(3):hover {
-    font-size: 1.05rem;
-    color: #FF00CC;
-}
-    
-.tweetOptions div:nth-child(4):hover {
-    font-size: 1.05rem;
-    color: #66FF66;
-}
-    
-.tweetOptions div:nth-child(5):hover {
-    font-size: 1.05rem;
-    color: #00CCCC;
-}
-    
 
+.tweetOptions div:nth-child(2):hover {
+  color: #ffaa1d;
+}
+
+.tweetOptions div:nth-child(3):hover {
+  color: #ff00cc;
+}
+
+.tweetOptions div:nth-child(4):hover {
+  color: #66ff66;
+}
+
+.tweetOptions div:nth-child(5):hover {
+  color: #00cccc;
+}
