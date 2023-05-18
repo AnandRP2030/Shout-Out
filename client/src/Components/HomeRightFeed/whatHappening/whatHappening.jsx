@@ -28,6 +28,7 @@ const WhatHappening = () => {
           What's Happening
         </Text>
       </GridItem>
+     
 
       <GridItem rowSpan={5} colSpan={25}>
         <Box className={style.trendingBox}>
@@ -83,6 +84,11 @@ const WhatHappening = () => {
 
           <Image w={20} h={20} src={trending4} alt="Trending" />
         </Box>
+      </GridItem>
+      <GridItem rowSpan={3} colSpan={25}>
+        <Text fontSize="md" cursor='pointer' color='#f8187f' as="b">
+          Show more
+        </Text>
       </GridItem>
     </Grid>
   );
