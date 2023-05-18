@@ -20,7 +20,40 @@ div .searchBox:focus {
 }
 
 /* What's happening  */
-div #trendingBox {
+ #trendingContainer {
     margin-top: 20px;
-    margin-left: 50px;
+    color: #fff;
+    background-color:#273340;
+    padding: 20px 15px;
+    border-radius: 20px;
+    
+}
+.trendingBox {
+    display: flex;
+    justify-content:space-between;
+}
+
+#trendingContainer .trendingBox div {
+    width: 300px;
+    text-align: left;
+}
+
+.trendingBox div p:last-child{
+    /* margin-right: 33px; */
+    margin-top: 0;
+}
+
+#trendingContainer .trendingBox div b{
+    margin-top: 0;
+}
+
+.trendingBox img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+
+
+.TredninghashTag {
+    color: #f8187f;
 }

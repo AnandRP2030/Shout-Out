@@ -1,32 +1,88 @@
-import { Grid,Center, GridItem } from "@chakra-ui/react";
+import {
+  Grid,
+  Center,
+  GridItem,
+  Heading,
+  VStack,
+  Box,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import style from "../homeRight.module.css";
 
 const WhatHappening = () => {
+  let trending1 = `https://rukminim1.flixcart.com/image/832/832/l5h2xe80/mobile/5/x/r/-original-imagg4xza5rehdqv.jpeg?q=70`;
+  let trending2 = `https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSFbSoytClcYQT1jF-iXyQBeMMJikDy50ARyLz3S_gqpEgbfVBcz75Jb0RizfjKFA0XOPCOFQSsqTs1DvE` 
+  let trending4 = `https://www.shefinds.com/files/2023/05/Jennifer-Lawrence-74th-Venice-Film-Festival-Italy.jpg`
+  let trending3 = `https://t4.ftcdn.net/jpg/05/95/69/35/240_F_595693569_w5sVhYnHyEe4vcpB09QoBJMzrQcZLqks.jpg`
+  let trending5 = `https://imgk.timesnownews.com/story/kohli-rcb-happy-AP_3.jpg?tr=w-400,h-300,fo-auto`
   return (
     <Grid
       templateRows="repeat(30, 1fr)"
-      templateColumns="repeat(28, 1fr)"
+      templateColumns="repeat(20, 1fr)"
       gap={4}
-      id={style.trendingBox}
+      id={style.trendingContainer}
     >
-      <GridItem rowSpan={3} colSpan={25} bg="tomato" >
-            
+      <GridItem rowSpan={3} colSpan={25}>
+        <Text fontSize="3xl" as="b">
+          What's Happening
+        </Text>
       </GridItem>
 
-      <GridItem rowSpan={5} colSpan={25} bg="tomato" >
-            
-      </GridItem>
-      <GridItem rowSpan={5} colSpan={25} bg="tomato" >
+      <GridItem rowSpan={5} colSpan={25}>
+        <Box className={style.trendingBox}>
+          <Box>
+            <Text color="#8b98a5"> Tredning in India </Text>
+            <Text as="b"> Nothing Phone</Text>
+            <Text color="#8b98a5"> 1200 Tweets</Text>
+          </Box>
 
+          <Image w={20} h={20} src={trending1} alt="Trending" />
+        </Box>
       </GridItem>
-      <GridItem rowSpan={5} colSpan={25} bg="tomato" >
+      <GridItem rowSpan={5} colSpan={25}>
+        <Box className={style.trendingBox}>
+          <Box>
+            <Text color="#8b98a5"> Sports · Trending</Text>
+            <Text as="b"> The Legend</Text>
+            <Text color="#8b98a5"> 134K Tweets </Text>
+          </Box>
 
+          <Image w={20} h={20} src={trending2} alt="Trending" />
+        </Box>
       </GridItem>
-      <GridItem rowSpan={5} colSpan={25} bg="tomato" >
+      <GridItem rowSpan={5} colSpan={25}>
+        <Box className={style.trendingBox}>
+          <Box>
+            <Text color="#8b98a5"> Technology · Trending</Text>
+            <Text as="b"> Artificial general intelligence</Text>
+            <Text color="#8b98a5"> 200 Tweets</Text>
+          </Box>
 
+          <Image w={20} h={20} src={trending3} alt="Trending" />
+        </Box>
       </GridItem>
-      <GridItem rowSpan={5} colSpan={25} bg="tomato" >
+      <GridItem rowSpan={5} colSpan={25}>
+        <Box className={style.trendingBox}>
+          <Box>
+            <Text color="#8b98a5"> IPL · Today </Text>
+            <Text as="b"> Congratulations RCB</Text>
+            <Text color="#8b98a5"> Trending with <span className={style.TredninghashTag}>  #RCBvsSRH </span></Text>
+          </Box>
 
+          <Image w={20} h={20} src={trending5} alt="Trending" />
+        </Box>
+      </GridItem>
+      <GridItem rowSpan={5} colSpan={25}>
+        <Box className={style.trendingBox}>
+          <Box>
+            <Text color="#8b98a5"> Entertainment </Text>
+            <Text as="b"> Jennifer Lawrence</Text>
+            <Text color="#8b98a5"> Tredning with <span className={style.TredninghashTag}> #Oscar </span> </Text>
+          </Box>
+
+          <Image w={20} h={20} src={trending4} alt="Trending" />
+        </Box>
       </GridItem>
     </Grid>
   );
