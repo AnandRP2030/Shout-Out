@@ -81,11 +81,14 @@ const Signup = () => {
         password,
       }),
     });
-    if (res.status === 200) {
+    if (res.status === 201) {
       let data = await res.json();
-      console.log('new user => ',data.token)
-      console.log('new user => ',data.userData)
+      console.log('new user => ',data.userData);
+      console.log('msg, ', data);
       alert('Registration successful')
+    }else if (res.status === 409){
+      let data = await res.json();
+      alert(data.error);
     }else {
       alert(res.status);
       console.log('Email or username already use');
