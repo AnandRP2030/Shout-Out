@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const registrationScheam = Schema(
+const registrationSchema = Schema(
   {
     name: {
       type: String,
@@ -23,12 +23,12 @@ const registrationScheam = Schema(
     },
   },
   {
-    collection: "user-data",
+    collection: "registration",
   }
 );
 
 const RegistrationModel = mongoose.model(
   "RegistrationModel",
-  registrationScheam
+  registrationSchema
 );
 module.exports = RegistrationModel;

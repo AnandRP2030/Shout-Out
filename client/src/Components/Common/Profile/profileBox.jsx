@@ -40,7 +40,7 @@ const ProfileBox = () => {
       email = email.slice(1, -1);
     }
 
-    const GET_USERDETAILS_URL = `${BASE_URL}/api/userDetails/${email}/${token}`;
+    const GET_USERDETAILS_URL = `${BASE_URL}/user/userDetails/${email}/${token}`;
 
     let res = await axios.get(GET_USERDETAILS_URL);
     return res.data[0];

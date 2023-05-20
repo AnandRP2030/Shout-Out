@@ -13,10 +13,21 @@ import SpinTwit from '../../Icon/spinTwit';
 import { useNavigate } from 'react-router-dom';
 import FlyBird from '../../Icon/flyBird';
 
-//bold
+// bold
 import HomeBoldSvg from '../../Icon/BoldSvg/homeBoldSvg';
 
 const SidbarItems = ({label}) => {
+
+    const removeItemLs = () => {
+        let token = localStorage.getItem("token");
+        if (token) {
+          localStorage.removeItem("token");
+        }
+        console.log('navigate')
+        navigate('/login')
+      }
+
+
     let Icon;
     if (label === "Home"){
         Icon = HomeBoldSvg;
@@ -37,8 +48,9 @@ const SidbarItems = ({label}) => {
         Icon = ProfileSvg;
     }else if (label === ""){
         Icon = FlyBird;
-    }else {
+    }else if (label === "More") {
         Icon = MoreSvg;
+        
     }
 
 
@@ -70,9 +82,10 @@ const SidbarItems = ({label}) => {
             navigate('/twitter_blue')
         }else if (label === "Profile"){
             navigate('/signup')
-        }else if (label === ""){
+        }else if (label === "More"){
+            removeItemLs()
             navigate('/home')
-        }else {
+        }else if (label === ""){
             navigate('/home')
         }
     }
@@ -80,7 +93,7 @@ const SidbarItems = ({label}) => {
  
 
     return (
-        <HStack sx={optionStyles} w='90%' h='50px' onClick={redirectPage} >
+        <HStack   sx={optionStyles} w='90%' h='50px' onClick={redirectPage} >
             <Icon/> 
             <Text  fontSize='1.5rem'>{label} </Text>
             

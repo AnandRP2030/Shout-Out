@@ -8,7 +8,7 @@ import Login from "./Components/Signup/Login";
 import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <React.StrictMode>                                             
     <ChakraProvider>
       <BrowserRouter>
         <Routes>
@@ -21,7 +21,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="bookmarks" element={<App />} />
           <Route path="twitter_blue" element={<App />} />
           <Route path="profile" element={<Signup />} />
-          {/* ths profile url sign up for temporory  */}
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route path="/*" element={<Notfound />} />

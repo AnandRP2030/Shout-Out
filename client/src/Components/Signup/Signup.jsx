@@ -67,7 +67,7 @@ const Signup = () => {
 
   const registerUser = async ({name,  username, email, password }) => {
  
-    const REGISTRATION_URL = `${BASE_URL}/api/register`;
+    const REGISTRATION_URL = `${BASE_URL}/user/register`;
 
     let res = await fetch(REGISTRATION_URL, {
       method: "POST",
@@ -87,7 +87,7 @@ const Signup = () => {
       console.log('new user => ',data.userData)
       alert('Registration successful')
     }else {
-      alert('Email or username already use');
+      alert(res.status);
       console.log('Email or username already use');
     }
 
