@@ -23,6 +23,7 @@ const registrationSchema = Schema(
     },
   },
   {
+    timestamps: true,
     collection: "registration",
   }
 );

@@ -6,8 +6,6 @@ const jwt = require("jsonwebtoken");
 registerUser = async (req, res) => {
   const { name, username, email, password } = req.body;
 
-
-
   const existingEmail = await RegistrationModel.findOne({
     email,
   });
@@ -41,6 +39,7 @@ registerUser = async (req, res) => {
 
 
 loginUser = async (req, res) => {
+ 
   try {
     const { email, password } = req.body;
     //can't find password here its hashed on the registration time
@@ -57,14 +56,18 @@ loginUser = async (req, res) => {
       return res.status(401).send({ error: "Password is not valid" });
     }
 
+    console.log('usr ', userData[0])
     //generate token
     const token = jwt.sign(
       {
+
         userId: userData[0]._id,
+        name: userData[0].name,
         email,
         username: userData[0].username,
+
       },
-      JWT_SECRET_KEY
+      JWT_SECRET_KEY, {expiresIn: '10h'}
     );
 
     const UserPassingData = {
@@ -72,7 +75,6 @@ loginUser = async (req, res) => {
       username: userData[0].username,
     };
     
-
     return res
       .status(200)
       .send({ message: "Login Successful", UserPassingData, token });
@@ -82,4 +84,7 @@ loginUser = async (req, res) => {
   }
 };
 
+// getUserData = async (req, res) => {
+
+// }
 module.exports = { loginUser, registerUser };
