@@ -93,22 +93,19 @@ const Login = () => {
       }),
     });
     
-    let data = await res.json();
-    if (!data) {
-      console.log("no data");
-    } else {
-      navigate("/");
-      console.log(data);
-    }
-    console.log('res', res);
+   
     if (res.status === 200) {
-      const { username, email } = data.userData[0];
-      alert(`Welocme back ${username}`);
-      localStorage.setItem("user_email", JSON.stringify(email));
+      let data = await res.json();
+      console.log('res data', data);
+
+      const { username, name } = data.UserPassingData;
+      alert(`Welocme back ${name}`);
       localStorage.setItem("token", JSON.stringify(data.token));
-    
-    } else {
-      alert("something wrong");
+      navigate('/')
+    }else {
+      let output = await res.json();
+      alert(output.error);
+
     }
   };
 

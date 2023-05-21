@@ -1,1 +1,2 @@
-1. all db functions are asyns
+//common errors i faced (its only for my refs, will delete in future)
+1.db functions are asyns

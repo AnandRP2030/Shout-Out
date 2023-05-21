@@ -61,7 +61,7 @@ const Signup = () => {
     if (name, username && email && password) {
       registerUser(userDetails);
     } else {
-      console.log("Please enter all the fields");
+      alert("Please enter all the fields");
     }
   };
 
@@ -93,7 +93,6 @@ const Signup = () => {
       alert(res.status);
       console.log('Email or username already use');
     }
-
   };
 
   return (
