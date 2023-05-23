@@ -1,2 +1,3 @@
-//common errors i faced (its only for my refs, will delete in future)
-1.db functions are asyns
+(its only for my refs, will delete in future)
+//common errors i faced 
+1.db functions are async. (eg:  Model.create())

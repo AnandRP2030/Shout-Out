@@ -1,102 +1,116 @@
-
 .cursorPointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.tweetBox{
-    padding: 10px 3% 10px 2%;
-    border-bottom: 1px solid rgb(45, 62, 79);
-    height: auto;
-    margin-top: 40px;
+.tweetBox {
+  padding: 10px 3% 10px 2%;
+  border-bottom: 1px solid rgb(45, 62, 79);
+  height: auto;
+  margin-top: 40px;
 }
+
+/* .tweetBox>div:not(:first-child){
+  position: relative;
+  left: 40px;
+} */
 
 /* home header section  */
 .headTextStyle {
-    font-weight: bold;
-    color: #f91880;
-    text-shadow: 0 0 20px #8a8e91;
+  font-weight: bold;
+  color: #f91880;
+  text-shadow: 0 0 20px #8a8e91;
 }
 
 .forYouHead {
-    width: 100%;
-    height: 50px;
-    margin: auto;
-    font-size:1rem;
-    text-align: center;
-    padding-top: 10px;
+  width: 100%;
+  height: 50px;
+  margin: auto;
+  font-size: 1rem;
+  text-align: center;
+  padding-top: 10px;
 }
 
-.forYouHead:hover{
-    background-color:#24344394;
-    cursor:pointer;
+.forYouHead:hover {
+  background-color: #24344394;
+  cursor: pointer;
 }
 
 /* home tweet section */
 
-
 .userProfilePic {
-    border-radius: 50%;
-    width: 100%;
+  border-radius: 50%;
+  width: 100%;
 }
 
-.tweetBox .selectAudience{
-    color: #f91880;
-    border-radius:50px;
-    height: 24px;
-    width: 120px;
-    border-color:rgb(45, 62, 79);
+.tweetBox .selectAudience {
+  color: #f91880;
+  border-radius: 50px;
+  height: 24px;
+  width: 120px;
+  border-color: rgb(45, 62, 79);
 }
 
-.tweetBox .selectAudience option{
-    color: white;
-    background-color: #15202b;
-    border-radius: 100px;
+.tweetBox .selectAudience option {
+  color: white;
+  background-color: #15202b;
+  border-radius: 100px;
 }
 
-.inputGrid{
-    
+.inputGrid {
 }
 
-.inputGrid .tweetInput{
-    height: 28px;
-    font-size: 1.4rem;
-    letter-spacing:1.5px;
+.inputGrid .tweetInput {
+  height: 28px;
+  font-size: 1.4rem;
+  letter-spacing: 1.5px;
 }
 
 .tweetBox .replayAudience {
-    color: #f91880;
-    letter-spacing: 1.5px;
-    font-size: 1rem;
-    font-weight:700;
+  color: #f91880;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
-.tweetIcons{
-    width: 25%;
-    display: flex;
-    justify-content: space-between;
+.tweetIcons {
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.tweetIcons > svg{
-    color: #f91880;
-    cursor: pointer;
-    display: flex;
-    
+.tweetIcons > svg {
+  color: #f91880;
+  cursor: pointer;
+  display: flex;
 }
 
-.tweetLine{
-    display:flex;
-    justify-content: space-between;
+.tweetLine {
+  display: flex;
+  justify-content: space-between;
 }
 
 .tweetLine .tweetBtn {
-    background-color: #f91880;
-    color: white;
-    border-radius: 40px;
-    width: 120px;
-    font-size:1.2rem;
-    cursor: pointer;
+  background-color: #f91880;
+  color: white;
+  border-radius: 40px;
+  width: 120px;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .tweetLine .tweetBtn:hover {
-    background-color: #cd1068;
+  background-color: #cd1068;
+}
+
+/* drop box  */
+.dropbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 20px auto;
+  height: 100px;
+  background-color: #273340;
 }
