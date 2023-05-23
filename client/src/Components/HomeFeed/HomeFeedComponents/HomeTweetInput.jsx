@@ -1,4 +1,5 @@
 import style from "../homeFeed.module.css";
+import ImageUploading from "react-images-uploading";
 import {
   Grid,
   Image,
@@ -35,7 +36,13 @@ const HomeTweetInput = () => {
     setDragAreaOpen(!dragAreaOpen);
   };
 
-  console.log("input",inputActive, "drag",dragAreaOpen);
+  // drag drop
+  const [images, setImages] = useState();
+  const maxNumber = 4;
+  const onChange = (imageList, addUpdateIndex) => {
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
 
   return (
     <>
@@ -94,15 +101,49 @@ const HomeTweetInput = () => {
           </Link>
         </GridItem>
         <GridItem colSpan={10} ml="80px">
-          <Box
-            display={dragAreaOpen ? "block" : "none"}
-            className={style.dropbox}
+          {/* start  */}
+
+          <ImageUploading
+            multiple
+            value={images}
+            onChange={onChange}
+            maxNumber={maxNumber}
+            dataURLKey="data_url"
+            acceptType={["jpg"]}
           >
-            <Icon as={TiDropbox} boxSize={10}></Icon>
-            <Text ml="20px" fontSize={20}>
-              Drag and drop or click here
-            </Text>
-          </Box>
+            {({
+              imageList,
+              onImageUpload,
+              onImageRemoveAll,
+              onImageUpdate,
+              onImageRemove,
+              isDragging,
+              dragProps,
+            }) => (
+              // write your building UI
+              <Box
+                display={dragAreaOpen ? "flex" : "none"}
+                className={style.dropbox}
+                style={isDragging ? { color: "red" } : null}
+                onClick={onImageUpload}
+                {...dragProps}
+              >
+                <Icon as={TiDropbox} boxSize={10}></Icon>
+                <Text ml="20px" fontSize={20}>
+                  Drag and drop or click here
+                </Text>
+                {imageList.map((image, idx) => {
+                  return (
+                    <div key={idx}>
+                      <Image w='20px' h='20px' src={image.data_url} alt="" width="100" />
+                    </div>
+                  );
+                })}
+              </Box>
+            )}
+          </ImageUploading>
+
+          {/* end  */}
           <HStack className={style.tweetLine}>
             <HStack className={style.tweetIcons}>
               <Icon onClick={uploadImg} as={BsImage} boxSize={5} />
