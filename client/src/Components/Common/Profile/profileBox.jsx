@@ -2,9 +2,8 @@ import { Grid, Image, GridItem, Text } from "@chakra-ui/react";
 import ThreedotSvg from "../../Icon/threedotSvg";
 import { useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
 import { useState } from "react";
-
+import axios from "axios";
 const ProfileBox = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [userData, setUserData] = useState({
@@ -15,35 +14,29 @@ const ProfileBox = () => {
 
   useEffect(() => {
     const renderUserData = async () => {
-      let token = localStorage.getItem("token");
-      let email = localStorage.getItem("user_email");
-
-      if (token && email) {
-        let userDetails = await getUserDetails(token, email);
-        
-        setUserData({
-          ...userData,
-          name: userDetails.name,
-          username: userDetails.username,
-        });
-      }
+      let userDetails = await getUserDetails();
+      
+      setUserData({
+        ...userData,
+        name: userDetails.name,
+        username: userDetails.username,
+      });
     };
+
     renderUserData();
   }, []);
 
-  const getUserDetails = async (token, email) => {
-    if (token.at(0) === '"' && token.at(-1) === '"') {
-      token = token.slice(1, -1);
-    }
-
-    if (email.at(0) === '"' && email.at(-1) === '"') {
-      email = email.slice(1, -1);
-    }
-
-    const GET_USERDETAILS_URL = `${BASE_URL}/user/userDetails/${email}/${token}`;
-
-    let res = await axios.get(GET_USERDETAILS_URL);
-    return res.data[0];
+  const getUserDetails = async () => {
+    const GET_USERDETAILS_URL = `${BASE_URL}/user/user-details`;
+    let token = localStorage.getItem("token");
+    token = token.replaceAll('"', "");
+    let res = await axios.get(GET_USERDETAILS_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('data  ',res.data);
+    return res.data;
   };
 
   const profileImg = {

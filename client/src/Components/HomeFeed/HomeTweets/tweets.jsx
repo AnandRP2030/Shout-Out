@@ -19,7 +19,7 @@ import { FaShare } from "react-icons/all";
 
 const Tweet = ({ tweetInfo }) => {
   let { name, username, userProfilePic, content, time, imageUrl } = tweetInfo;
-  console.log(content.length);
+
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
@@ -27,9 +27,9 @@ const Tweet = ({ tweetInfo }) => {
   else if (len < 170) gridHeight = 3;
 
   let iconSize = {
-    height: '20px',
-    width: '20px'
-  }
+    height: "20px",
+    width: "20px",
+  };
   return (
     <Grid
       h="auto"
@@ -48,9 +48,8 @@ const Tweet = ({ tweetInfo }) => {
         <GridItem>
           <HStack>
             <Text className={style.nameText}> {name}</Text>
-            <Box >
-              <TwitterBlueSvg height='25px' width='25px'  />
-              
+            <Box>
+              <TwitterBlueSvg height="25px" width="25px" />
             </Box>
             <Text className={style.usernameText}>@{username} ·</Text>
             <Text className={style.timeText}> {time} </Text>
@@ -66,8 +65,10 @@ const Tweet = ({ tweetInfo }) => {
             objectFit="contain"
             alt="content-img"
           />
+
+          
         </GridItem>
-        <GridItem mt='20px'>
+        <GridItem mt="20px">
           <HStack className={style.tweetOptions}>
             <HStack>
               <Icon as={FaRegComment} boxSize={5} />

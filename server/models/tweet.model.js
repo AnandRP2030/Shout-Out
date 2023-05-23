@@ -11,13 +11,13 @@ const tweetSchema = new Schema({
   },
   imageUrls: String,
   likes: { type: Number, required: true, default: 0},
-  comments: [{ body: { type: String, required: true }, date: Date }],
+  comments: [{ body: { type: String }, date: Date }],
   retweets: {type: Number, default: 0},
   views: {type: Number,  default: 1},
   private: {type: Boolean, default: false}
 },{
     timestaps: true,
-    collection: tweetsCollections
+    collection: "tweetsCollections"
 });
 
 const TweetModel = mongoose.model('TweetModel',tweetSchema);
