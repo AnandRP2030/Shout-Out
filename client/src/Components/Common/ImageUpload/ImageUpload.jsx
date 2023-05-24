@@ -58,3 +58,14 @@ const ImageUpload = ({ dragAreaOpen }) => {
   );
 };
 export default ImageUpload;
+
+
+// upload images 
+
+// {images && images?.map((image, idx) => {
+//   return (
+//     <div key={idx}>
+//       <Image w='200px' h='200px' src={image.data_url} alt="" width="100" />
+//     </div>
+//   );
+// })}

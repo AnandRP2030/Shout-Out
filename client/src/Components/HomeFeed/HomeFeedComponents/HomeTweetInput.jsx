@@ -30,7 +30,7 @@ const HomeTweetInput = () => {
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*";
 
   const [inputActive, setInputActive] = useState(false);
-
+  
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
   const uploadImg = () => {
     setDragAreaOpen(!dragAreaOpen);
@@ -109,7 +109,7 @@ const HomeTweetInput = () => {
             onChange={onChange}
             maxNumber={maxNumber}
             dataURLKey="data_url"
-            acceptType={["jpg"]}
+            acceptType={["jpg", "png", "gif "]}
           >
             {({
               imageList,
@@ -132,13 +132,7 @@ const HomeTweetInput = () => {
                 <Text ml="20px" fontSize={20}>
                   Drag and drop or click here
                 </Text>
-                {imageList.map((image, idx) => {
-                  return (
-                    <div key={idx}>
-                      <Image w='20px' h='20px' src={image.data_url} alt="" width="100" />
-                    </div>
-                  );
-                })}
+               
               </Box>
             )}
           </ImageUploading>
@@ -153,6 +147,8 @@ const HomeTweetInput = () => {
               <Icon as={IoLocationOutline} boxSize={5} />
             </HStack>
             <Button className={style.tweetBtn}> Tweet </Button>
+          
+
           </HStack>
         </GridItem>
       </Grid>
