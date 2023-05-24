@@ -67,16 +67,28 @@ const HomeTweetInput = () => {
   };
   // tweeting
   const userTweeted = async () => {
+    
+    const newImage = images?.map((elem) => {
+      return elem.data_url
+    })
+
+    console.log(newImage)
     const tweetObj = {
       content: tweetData.content,
-      imageUrls: images,
+      imageUrls: newImage,
       audience: tweetData.audience,
     };
     const data = await connectServer(tweetObj);
+    setTweetData({
+      content: "",
+      audience: "",
+    })
+    setImages([])
     console.log("respo -> ", data);
   };
 
   const connectServer = async (tweet) => {
+    console.log('twe', tweet);
     let token = localStorage.getItem("token");
     token = token.replaceAll('"', "");
     const headers = {

@@ -11,7 +11,6 @@ createTweet = async (req, res) => {
 
     const owner = req.user;
     console.log('client ',{ content, imageUrls, private, owner: owner.userId });
-
     const tweet = await TweetModel.create({
       content,
       imageUrls,
