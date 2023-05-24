@@ -35,7 +35,6 @@ const ProfileBox = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('data  ',res.data);
     return res.data;
   };
 

@@ -23,25 +23,73 @@ import {
   IoLocationOutline,
   IoEarth,
 } from "react-icons/all";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const HomeTweetInput = () => {
+  const [tweetData, setTweetData] = useState({
+    content: "",
+    audience: "Everyone",
+  });
+  const [images, setImages] = useState([]);
+
   const imageUrl =
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*";
 
   const [inputActive, setInputActive] = useState(false);
-  
+
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
   const uploadImg = () => {
     setDragAreaOpen(!dragAreaOpen);
   };
 
+  useEffect(() => {
+    if (tweetData.content.length > 0) {
+      setInputActive(true);
+    } else {
+      setInputActive(false);
+    }
+    if (images.length > 0) {
+      setDragAreaOpen(true);
+    }
+  }, [images, tweetData]);
+
   // drag drop
-  const [images, setImages] = useState();
+
   const maxNumber = 4;
-  const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
+  const imageAdded = (imageList, addUpdateIndex) => {
     setImages(imageList);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setTweetData({ ...tweetData, [name]: value });
+  };
+  // tweeting
+  const userTweeted = async () => {
+    const tweetObj = {
+      content: tweetData.content,
+      imageUrls: images,
+      audience: tweetData.audience,
+    };
+    const data = await connectServer(tweetObj);
+    console.log("respo -> ", data);
+  };
+
+  const connectServer = async (tweet) => {
+    let token = localStorage.getItem("token");
+    token = token.replaceAll('"', "");
+    const headers = {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDZhNTcyMjI0OWIyMTgxZWZkYzU1ODYiLCJuYW1lIjoiYSIsImVtYWlsIjoiYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImEiLCJpYXQiOjE2ODQ5NDc2MzEsImV4cCI6MTY4NDk4MzYzMX0.pbqKxmg0H4clY7SbWZKj11MDfcjbZyEJyoItoiE_mqg`,
+    };
+    const createTweetUrl = `${
+      import.meta.env.VITE_BASE_URL
+    }/user/tweets/create`;
+    const response = await axios.post(createTweetUrl, tweet, {
+      headers: headers,
+    });
+
+    return response.data;
   };
 
   return (
@@ -71,9 +119,16 @@ const HomeTweetInput = () => {
           />
         </GridItem>
         <GridItem colSpan={10} display={inputActive ? "block" : "none"}>
-          <Select w="120px" ml="0" className={style.selectAudience}>
-            <option value="everyone">Everyone</option>
-            <option value="private">Private</option>
+          <Select
+            w="120px"
+            ml="0"
+            onChange={handleChange}
+            className={style.selectAudience}
+            name="audience"
+            value={tweetData.audience}
+          >
+            <option value="Everyone">Everyone</option>
+            <option value="Private">Private</option>
           </Select>
         </GridItem>
         <GridItem
@@ -85,6 +140,9 @@ const HomeTweetInput = () => {
             variant="unstyled"
             className={style.tweetInput}
             placeholder="What's happening?"
+            name="content"
+            onChange={handleChange}
+            value={tweetData.content}
             onClick={() => setInputActive(!inputActive)}
           />
         </GridItem>
@@ -106,7 +164,7 @@ const HomeTweetInput = () => {
           <ImageUploading
             multiple
             value={images}
-            onChange={onChange}
+            onChange={imageAdded}
             maxNumber={maxNumber}
             dataURLKey="data_url"
             acceptType={["jpg", "png", "gif "]}
@@ -132,7 +190,19 @@ const HomeTweetInput = () => {
                 <Text ml="20px" fontSize={20}>
                   Drag and drop or click here
                 </Text>
-               
+
+                {images &&
+                  images?.map((image, idx) => {
+                    return (
+                      <Box key={idx}>
+                        <Image
+                          src={image.data_url}
+                          alt="uploading..."
+                          className={style.uploadingImages}
+                        />
+                      </Box>
+                    );
+                  })}
               </Box>
             )}
           </ImageUploading>
@@ -146,9 +216,10 @@ const HomeTweetInput = () => {
               <Icon as={MdSchedule} boxSize={5} />
               <Icon as={IoLocationOutline} boxSize={5} />
             </HStack>
-            <Button className={style.tweetBtn}> Tweet </Button>
-          
-
+            <Button className={style.tweetBtn} onClick={userTweeted}>
+              {" "}
+              Tweet{" "}
+            </Button>
           </HStack>
         </GridItem>
       </Grid>

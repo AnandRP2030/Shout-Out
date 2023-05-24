@@ -113,3 +113,11 @@
   height: 100px;
   background-color: #273340;
 }
+
+.uploadingImages {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 50%;
+  opacity: 0.9;
+}

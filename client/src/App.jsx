@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
  
-    console.log('tOKEN',token)
     if (token) {
       setTokenAvail(true);
     }else {

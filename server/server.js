@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
+
 app.use(authenticateUser)
 app.use('/user/tweets', tweetRouter);
 
