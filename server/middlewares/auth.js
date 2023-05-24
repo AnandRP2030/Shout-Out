@@ -10,8 +10,7 @@ const authenticateUser = (req, res, next) => {
                 if (err) {
                     console.log("err on authenticate user", err);
                     return res.status(403).send({error: "Token is not valid"})
-                }
-                console.log(user);  
+                }  
                 req.user = user;
 
                 next();

@@ -1,22 +1,25 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
 const tweetSchema = new Schema({
   content: {
     type: String,
     required: true,
   },
   owner: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref:'RegistrationModel',
     required: true,
   },
-  imageUrls: String,
-  likes: { type: Number, required: true, default: 0},
+  imageUrls:  [String],
+  videoUrls: [String],
+  likes: { type: Number,  default: 0},
   comments: [{ body: { type: String }, date: Date }],
   retweets: {type: Number, default: 0},
   views: {type: Number,  default: 1},
   private: {type: Boolean, default: false}
 },{
-    timestaps: true,
+    timestamps: true,
     collection: "tweetsCollections"
 });
 
