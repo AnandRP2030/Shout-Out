@@ -88,11 +88,10 @@ const HomeTweetInput = () => {
   };
 
   const connectServer = async (tweet) => {
-    console.log('twe', tweet);
     let token = localStorage.getItem("token");
     token = token.replaceAll('"', "");
     const headers = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDZhNTcyMjI0OWIyMTgxZWZkYzU1ODYiLCJuYW1lIjoiYSIsImVtYWlsIjoiYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImEiLCJpYXQiOjE2ODQ5NDc2MzEsImV4cCI6MTY4NDk4MzYzMX0.pbqKxmg0H4clY7SbWZKj11MDfcjbZyEJyoItoiE_mqg`,
+      Authorization: `Bearer ${token}`,
     };
     const createTweetUrl = `${
       import.meta.env.VITE_BASE_URL

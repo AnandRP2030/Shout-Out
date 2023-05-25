@@ -67,7 +67,7 @@ loginUser = async (req, res) => {
         username: userData[0].username,
 
       },
-      JWT_SECRET_KEY, {expiresIn: '10h'}
+      JWT_SECRET_KEY, {expiresIn: '100h'}
     );
 
     const UserPassingData = {

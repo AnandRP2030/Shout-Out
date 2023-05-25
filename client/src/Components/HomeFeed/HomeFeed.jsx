@@ -7,11 +7,12 @@ const HomeCenterFeed = () => {
 
     const homeCenterStyle = {
         borderLeft: '1px solid #2d3e4f',
-        borderRight: '1px solid #2d3e4f'
+        borderRight: '1px solid #2d3e4f',
+        color:'#fff'
     }
 
     return (
-        <Box  color='#fff' style={homeCenterStyle} pt='10px' >
+        <Box  style={homeCenterStyle} minHeight='1000px' pt='10px' >
             <HomeFeedHeader/>
             <HomeTweetInput/>
             <HomeTweets/>
