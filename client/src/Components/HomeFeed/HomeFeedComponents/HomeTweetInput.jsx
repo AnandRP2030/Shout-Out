@@ -58,8 +58,6 @@ const HomeTweetInput = () => {
   useEffect(() => {
     const callData = async () => {
       let userData = await getUserDetails();
-      
-    
       setProfilePicture(userData.profilePicture)
     };
     callData();

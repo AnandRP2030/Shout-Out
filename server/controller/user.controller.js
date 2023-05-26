@@ -30,7 +30,6 @@ registerUser = async (req, res) => {
       profilePicture
     });
     const { password: omit, ...userData } = newUser._doc;
-    console.log('userData =>',userData);
     return res.status(201).send({ message: "User created", userData });
   } catch (err) {
     console.error("err on register", err);
@@ -57,7 +56,6 @@ loginUser = async (req, res) => {
       return res.status(401).send({ error: "Password is not valid" });
     }
 
-    console.log('usr ', userData[0])
     //generate token
     const token = jwt.sign(
       {

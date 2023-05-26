@@ -1,14 +1,14 @@
-require("dotenv").config();
-const cors = require("cors");
 const express = require("express");
-const app = express();
+const cors = require("cors");
+require("dotenv").config();
 const userRouter = require("./routes/user.router.js");
 const { connectDb } = require("./config/config");
 const { tweetRouter } = require("./routes/tweet.router.js");
 const { authenticateUser } = require("./middlewares/auth.js");
 
-app.use(cors());
+const app = express();
 app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => {

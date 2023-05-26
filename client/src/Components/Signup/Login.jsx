@@ -105,7 +105,6 @@ const Login = () => {
         redirectHome()
       }
       function redirectHome () {
-        console.log('rrrr')
         navigate('/')
       }
 

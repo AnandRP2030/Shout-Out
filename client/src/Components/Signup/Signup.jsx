@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
     boxShadow:
@@ -48,9 +49,8 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    profilePicture: ""
+    profilePicture: "",
   });
- 
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -58,20 +58,26 @@ const Signup = () => {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    const {name, username, email, password} = userDetails;
-    if (name, username && email && password) {
+    event.preventDefault();
+    const { name, username, email, password } = userDetails;
+    if ((name, username && email && password)) {
       registerUser(userDetails);
     } else {
       alert("Please enter all the fields");
     }
   };
 
-  const registerUser = async ({name,  username, email, password, profilePicture }) => {
-    console.log('pic', profilePicture)
+  const registerUser = async ({
+    name,
+    username,
+    email,
+    password,
+    profilePicture,
+  }) => {
     const REGISTRATION_URL = `${BASE_URL}/user/register`;
     if (!profilePicture) {
-      profilePicture = "https://t4.ftcdn.net/jpg/04/60/03/13/360_F_460031310_ObbCLA1tKrqjsHa7je6G6BSa7iAYBANP.jpg";
+      profilePicture =
+        "https://t4.ftcdn.net/jpg/04/60/03/13/360_F_460031310_ObbCLA1tKrqjsHa7je6G6BSa7iAYBANP.jpg";
     }
 
     let res = await fetch(REGISTRATION_URL, {
@@ -84,20 +90,28 @@ const Signup = () => {
         username,
         email,
         password,
-        profilePicture
+        profilePicture,
       }),
     });
     if (res.status === 201) {
       let data = await res.json();
-      console.log('new user => ',data.userData);
-      console.log('msg, ', data);
-      alert('Registration successful')
-    }else if (res.status === 409){
+      console.log("new user => ", data.userData);
+      console.log("msg, ", data);
+      alert("Registration successful");
+      setUserDetails({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        profilePicture: "",
+      });
+      navigate('/login')
+    } else if (res.status === 409) {
       let data = await res.json();
       alert(data.error);
-    }else {
+    } else {
       alert(res.status);
-      console.log('Email or username already use');
+      console.log("Email or username already use");
     }
   };
 
@@ -156,71 +170,69 @@ const Signup = () => {
           </Box>
           <hr style={{ borderColor: "#15202b" }} />
         </Box>
-        <FormControl h="auto" mt="20px" >
-        <form onSubmit={handleSubmit}>
-        <Input
-            style={userInputStyle}
-            type="text"
-            placeholder="Name"
-            mt="20px"
-            name="name"
-            value={userDetails.user}
-            onChange={handleChanges}
-          />
+        <FormControl h="auto" mt="20px">
+          <form onSubmit={handleSubmit}>
+            <Input
+              style={userInputStyle}
+              type="text"
+              placeholder="Name"
+              mt="20px"
+              name="name"
+              value={userDetails.name}
+              onChange={handleChanges}
+            />
 
-          <Input
-            style={userInputStyle}
-            type="text"
-            placeholder="Username"
-            mt="20px"
-            name="username"
-            value={userDetails.username}
-            onChange={handleChanges}
-          />
-           <Spacer />
-          <Input
-            style={userInputStyle}
-            type="text"
-            placeholder="Profile Picture Link (Optional)"
-            mt="20px"
-            value={userDetails.profilePicture}
-            name="profilePicture"
-            onChange={handleChanges}
-          />
-          <Spacer />
-          <Input
-            style={userInputStyle}
-            type="email"
-            placeholder="Enter your email"
-            mt="20px"
-            value={userDetails.email}
-            name="email"
-            onChange={handleChanges}
-          />
-         
-          <br />
-          <Input
-            style={userInputStyle}
-            type="password"
-            placeholder="Enter your password"
-            mt="20px"
-            name="password"
-            value={userDetails.password}
-            onChange={handleChanges}
-          />
+            <Input
+              style={userInputStyle}
+              type="text"
+              placeholder="Username"
+              mt="20px"
+              name="username"
+              value={userDetails.username}
+              onChange={handleChanges}
+            />
+            <Spacer />
+            <Input
+              style={userInputStyle}
+              type="text"
+              placeholder="Profile Picture Link (Optional)"
+              mt="20px"
+              value={userDetails.profilePicture}
+              name="profilePicture"
+              onChange={handleChanges}
+            />
+            <Spacer />
+            <Input
+              style={userInputStyle}
+              type="email"
+              placeholder="Enter your email"
+              mt="20px"
+              value={userDetails.email}
+              name="email"
+              onChange={handleChanges}
+            />
 
-  
+            <br />
+            <Input
+              style={userInputStyle}
+              type="password"
+              placeholder="Enter your password"
+              mt="20px"
+              name="password"
+              value={userDetails.password}
+              onChange={handleChanges}
+            />
 
-          <Input
-            color="white"
-            style={btnStyle}
-            w="100%"
-            mt="50px"
-            _hover={{ bg: "red" }}
-            backgroundColor="#29a8df"
-            value="Get Started"
-            type="submit"
-          />
+            <Input
+              color="white"
+              style={btnStyle}
+              w="100%"
+              mt="50px"
+              _hover={{ bg: "red" }}
+              backgroundColor="#29a8df"
+              value="Get Started"
+              type="submit"
+            />
           </form>
         </FormControl>
       </Box>
