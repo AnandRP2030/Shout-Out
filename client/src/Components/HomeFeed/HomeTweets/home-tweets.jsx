@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // import '~video-react/dist/video-react.css';
 import { Player } from "video-react";
 import axios from "axios";
-const HomeTweets = () => {
+const HomeTweets = ({newTweet}) => {
  
   // let dummyData = [
   //   {
@@ -35,7 +35,7 @@ const HomeTweets = () => {
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
     collectData();
-  }, []);
+  }, [newTweet]);
 
   const collectData = async () => {
     let token = localStorage.getItem("token").replaceAll('"', "");

@@ -26,7 +26,7 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const HomeTweetInput = () => {
+const HomeTweetInput = ({newTweet, setNewTweet}) => {
   const [tweetData, setTweetData] = useState({
     content: "",
     audience: "Everyone",
@@ -98,16 +98,15 @@ const HomeTweetInput = () => {
       imageUrls: newImage,
       audience: tweetData.audience,
     };
-    const data = await connectServer(tweetObj);
+    const data = await sendToServer(tweetObj);
     setTweetData({
       content: "",
       audience: "",
     });
     setImages([]);
-    console.log("respo -> ", data);
   };
 
-  const connectServer = async (tweet) => {
+  const sendToServer = async (tweet) => {
     let token = localStorage.getItem("token");
     token = token.replaceAll('"', "");
     const headers = {
@@ -120,6 +119,9 @@ const HomeTweetInput = () => {
       headers: headers,
     });
 
+    if (response.status === 201) {
+      setNewTweet(!newTweet)
+    }
     return response.data;
   };
 
