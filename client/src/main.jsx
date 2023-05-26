@@ -8,9 +8,13 @@ import Login from "./Components/Signup/Login";
 import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  
+  
   <React.StrictMode>                                             
     <ChakraProvider>
+      
       <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="home" element={<App />} />

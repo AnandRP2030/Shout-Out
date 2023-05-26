@@ -5,32 +5,32 @@ import { Player } from "video-react";
 import axios from "axios";
 const HomeTweets = () => {
  
-  let dummyData = [
-    {
-      tweetId: "xyz1234",
-      name: "Elon Musk",
-      username: "elonmusk",
-      userProfilePic:
-        "https://m.media-amazon.com/images/I/6113Q8ahTWL._AC_SS450_.jpg",
-      time: "1h",
-      content: `My 99℅ of the problem are all related to money
-      `,
-      imageUrl:
-        "https://pbs.twimg.com/media/FwvkKN9XsAAWKrx?format=jpg&name=medium",
-    },
-    {
-      tweetId: "xyz1234",
-      name: "Elon Musk",
-      username: "elonmusk",
-      userProfilePic:
-        "https://m.media-amazon.com/images/I/6113Q8ahTWL._AC_SS450_.jpg",
-      time: "1h",
-      content: `My 99℅ of the problem are all related to money
-      `,
-      imageUrl:
-        "https://pbs.twimg.com/media/FwvkKN9XsAAWKrx?format=jpg&name=medium",
-    },
-  ];
+  // let dummyData = [
+  //   {
+  //     tweetId: "xyz1234",
+  //     name: "Elon Musk",
+  //     username: "elonmusk",
+  //     userProfilePic:
+  //       "https://m.media-amazon.com/images/I/6113Q8ahTWL._AC_SS450_.jpg",
+  //     time: "1h",
+  //     content: `My 99℅ of the problem are all related to money
+  //     `,
+  //     imageUrl:
+  //       "https://pbs.twimg.com/media/FwvkKN9XsAAWKrx?format=jpg&name=medium",
+  //   },
+  //   {
+  //     tweetId: "xyz1234",
+  //     name: "Elon Musk",
+  //     username: "elonmusk",
+  //     userProfilePic:
+  //       "https://m.media-amazon.com/images/I/6113Q8ahTWL._AC_SS450_.jpg",
+  //     time: "1h",
+  //     content: `My 99℅ of the problem are all related to money
+  //     `,
+  //     imageUrl:
+  //       "https://pbs.twimg.com/media/FwvkKN9XsAAWKrx?format=jpg&name=medium",
+  //   },
+  // ];
 
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
@@ -52,14 +52,16 @@ const HomeTweets = () => {
   const displayContent = (data) => {
     const { tweets, ownersInfo } = data;
     let Tweets = [];
-    for (let i = 0; i < tweets?.length; i++) {
-      let { username, name, email, _id } = ownersInfo[i]._doc;
+    for (let i = tweets.length-1; i >= 0; i--) {
+      let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
       let ownerData = {
         username,
         name,
         email,
         userId: _id,
+        profilePicture
       };
+     
 
       let tweet = {
         content: tweets[i].content,
@@ -80,7 +82,6 @@ const HomeTweets = () => {
     setAllTweets(Tweets);
   };
   
-  console.log(allTweets)
   return (
     <>
       {allTweets?.map((elem, idx) => {

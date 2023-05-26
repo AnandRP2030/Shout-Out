@@ -48,7 +48,9 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
+    profilePicture: ""
   });
+ 
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -65,9 +67,12 @@ const Signup = () => {
     }
   };
 
-  const registerUser = async ({name,  username, email, password }) => {
- 
+  const registerUser = async ({name,  username, email, password, profilePicture }) => {
+    console.log('pic', profilePicture)
     const REGISTRATION_URL = `${BASE_URL}/user/register`;
+    if (!profilePicture) {
+      profilePicture = "https://t4.ftcdn.net/jpg/04/60/03/13/360_F_460031310_ObbCLA1tKrqjsHa7je6G6BSa7iAYBANP.jpg";
+    }
 
     let res = await fetch(REGISTRATION_URL, {
       method: "POST",
@@ -79,6 +84,7 @@ const Signup = () => {
         username,
         email,
         password,
+        profilePicture
       }),
     });
     if (res.status === 201) {
@@ -171,6 +177,16 @@ const Signup = () => {
             value={userDetails.username}
             onChange={handleChanges}
           />
+           <Spacer />
+          <Input
+            style={userInputStyle}
+            type="text"
+            placeholder="Profile Picture Link (Optional)"
+            mt="20px"
+            value={userDetails.profilePicture}
+            name="profilePicture"
+            onChange={handleChanges}
+          />
           <Spacer />
           <Input
             style={userInputStyle}
@@ -181,6 +197,7 @@ const Signup = () => {
             name="email"
             onChange={handleChanges}
           />
+         
           <br />
           <Input
             style={userInputStyle}

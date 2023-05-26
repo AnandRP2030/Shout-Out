@@ -33,8 +33,9 @@ const HomeTweetInput = () => {
   });
   const [images, setImages] = useState([]);
 
-  const imageUrl =
-    "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*";
+  const [profilePicture, setProfilePicture] = useState(
+    "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
+  );
 
   const [inputActive, setInputActive] = useState(false);
 
@@ -54,6 +55,29 @@ const HomeTweetInput = () => {
     }
   }, [images, tweetData]);
 
+  useEffect(() => {
+    const callData = async () => {
+      let userData = await getUserDetails();
+      
+    
+      setProfilePicture(userData.profilePicture)
+    };
+    callData();
+  }, []);
+
+  const getUserDetails = async () => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    const GET_USERDETAILS_URL = `${BASE_URL}/user/user-details`;
+    let token = localStorage.getItem("token");
+    token = token.replaceAll('"', "");
+    let res = await axios.get(GET_USERDETAILS_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  };
+
   // drag drop
 
   const maxNumber = 4;
@@ -67,12 +91,10 @@ const HomeTweetInput = () => {
   };
   // tweeting
   const userTweeted = async () => {
-    
     const newImage = images?.map((elem) => {
-      return elem.data_url
-    })
+      return elem.data_url;
+    });
 
-    console.log(newImage)
     const tweetObj = {
       content: tweetData.content,
       imageUrls: newImage,
@@ -82,8 +104,8 @@ const HomeTweetInput = () => {
     setTweetData({
       content: "",
       audience: "",
-    })
-    setImages([])
+    });
+    setImages([]);
     console.log("respo -> ", data);
   };
 
@@ -125,7 +147,7 @@ const HomeTweetInput = () => {
         <GridItem colSpan={1}>
           <Image
             className={style.userProfilePic}
-            src={imageUrl}
+            src={profilePicture}
             alt="Profile"
           />
         </GridItem>

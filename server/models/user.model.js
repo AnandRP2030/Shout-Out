@@ -21,6 +21,10 @@ const registrationSchema = Schema(
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,

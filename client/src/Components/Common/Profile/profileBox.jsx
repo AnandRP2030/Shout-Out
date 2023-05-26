@@ -7,7 +7,7 @@ import axios from "axios";
 const ProfileBox = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [userData, setUserData] = useState({
-    img: "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*",
+    profilePicture: "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*",
     name: "Elon Musk",
     username: "@elonmusk",
   });
@@ -20,6 +20,7 @@ const ProfileBox = () => {
         ...userData,
         name: userDetails.name,
         username: userDetails.username,
+        profilePicture: userDetails.profilePicture
       });
     };
 
@@ -57,7 +58,7 @@ const ProfileBox = () => {
       style={profileStyle}
     >
       <GridItem rowSpan={2} colSpan={1}>
-        <Image style={profileImg} src={userData.img} alt="" />
+        <Image style={profileImg} src={userData.profilePicture} alt="" />
       </GridItem>
       <GridItem colSpan={2} rowSpan={1} ml="10px">
         <Text fontSize="1.3rem" as="b">

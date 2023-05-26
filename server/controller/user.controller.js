@@ -4,7 +4,7 @@ const JWT_SECRET_KEY = process.env.SECRET_KEY;
 const jwt = require("jsonwebtoken");
 
 registerUser = async (req, res) => {
-  const { name, username, email, password } = req.body;
+  const { name, username, email, password, profilePicture } = req.body;
 
   const existingEmail = await RegistrationModel.findOne({
     email,
@@ -27,6 +27,7 @@ registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      profilePicture
     });
     const { password: omit, ...userData } = newUser._doc;
     console.log('userData =>',userData);
@@ -65,7 +66,7 @@ loginUser = async (req, res) => {
         name: userData[0].name,
         email,
         username: userData[0].username,
-
+        profilePicture: userData[0].profilePicture
       },
       JWT_SECRET_KEY, {expiresIn: '100h'}
     );

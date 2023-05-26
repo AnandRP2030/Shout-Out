@@ -30,25 +30,7 @@ const Tweet = ({ tweetInfo }) => {
     views,
     videoUrls,
   } = tweetInfo;
-  let { username, name, email, userId } = tweetInfo.tweetOwner;
-
-  // console.log(
-  //   username,
-  //   name,
-  //   email,
-  //   tweetId,
-  //   views,
-  //   videoUrls,
-  //   userId,
-  //   content,
-  //   comments,
-  //   likes,
-  //   isPrivate,
-  //   retweets,
-  //   totalNoCmts
-  // );
-
-  console.log(imageUrls, 'uu')
+  let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
@@ -65,9 +47,7 @@ const Tweet = ({ tweetInfo }) => {
       <GridItem className={style.userProfilePicBox} colSpan={1}>
         <Image
           className={style.userProfilePic}
-          src={
-            "https://pbs.twimg.com/media/Fw7e1UhXwAMRJFQ?format=jpg&name=medium"
-          }
+          src={profilePicture}
           alt="userProfilePic"
         />
       </GridItem>

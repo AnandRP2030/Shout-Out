@@ -4,10 +4,15 @@ import Login from "./Components/Signup/Login";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [tokenAvail, setTokenAvail] = useState(true);
+  const [tokenAvail, setTokenAvail] = useState(false);
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
- 
+    let token = JSON.parse(localStorage.getItem("token")) || "";
+    if (token) {
+      console.log('worked')
+    }else {
+      console.log('not wor')
+      
+    }
     if (token) {
       setTokenAvail(true);
     }else {

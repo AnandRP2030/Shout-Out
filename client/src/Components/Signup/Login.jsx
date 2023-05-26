@@ -100,8 +100,16 @@ const Login = () => {
 
       const { username, name } = data.UserPassingData;
       alert(`Welocme back ${name}`);
-      localStorage.setItem("token", JSON.stringify(data.token));
-      navigate('/')
+      const setToken = () => {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        redirectHome()
+      }
+      function redirectHome () {
+        console.log('rrrr')
+        navigate('/')
+      }
+
+      setToken()
     }else {
       let output = await res.json();
       alert(output.error);
