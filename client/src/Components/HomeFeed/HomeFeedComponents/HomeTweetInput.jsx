@@ -25,8 +25,10 @@ import {
 } from "react-icons/all";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { NEW_TWEET_ADDED } from "../../../Redux/ActionTypes/tweetActionTypes.js";
+import { store } from "../../../Redux/store.js";
 
-const HomeTweetInput = ({newTweet, setNewTweet}) => {
+const HomeTweetInput = () => {
   const [tweetData, setTweetData] = useState({
     content: "",
     audience: "Everyone",
@@ -58,7 +60,7 @@ const HomeTweetInput = ({newTweet, setNewTweet}) => {
   useEffect(() => {
     const callData = async () => {
       let userData = await getUserDetails();
-      setProfilePicture(userData.profilePicture)
+      setProfilePicture(userData.profilePicture);
     };
     callData();
   }, []);
@@ -106,6 +108,8 @@ const HomeTweetInput = ({newTweet, setNewTweet}) => {
     setImages([]);
   };
 
+
+
   const sendToServer = async (tweet) => {
     let token = localStorage.getItem("token");
     token = token.replaceAll('"', "");
@@ -120,7 +124,13 @@ const HomeTweetInput = ({newTweet, setNewTweet}) => {
     });
 
     if (response.status === 201) {
-      setNewTweet(!newTweet)
+     
+      const addNewTweet = () => {
+        return {
+          type: NEW_TWEET_ADDED,
+        };
+      };
+      store.dispatch(addNewTweet());
     }
     return response.data;
   };
