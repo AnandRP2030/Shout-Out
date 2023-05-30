@@ -11,7 +11,7 @@ const store = configureStore({
     }
 }, applyMiddleware(logger));
 
-console.log(applyMiddleware)
+// console.log(applyMiddleware)
 // console.log('current state',store.getState());
 
 export {store}

@@ -5,18 +5,25 @@ import { Player } from "video-react";
 import axios from "axios";
 import {store} from "../../../Redux/store.js";
 
-let tweetCount = -1;
-const unSubscribe = store.subscribe(() => {
-  tweetCount = store.getState().tweets.newTweetsCount
-})
+
 
 const HomeTweets = () => {
- 
+  
+const findTweetCount = () => {
+  return store.getState().tweets.newTweetsCount;
+}
+const[newTweetCount, setNewTweetCount] = useState(findTweetCount());
+
+const unSubscribe = store.subscribe(() => {
+  const count = findTweetCount();
+  setNewTweetCount(count);
+})
+
 
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
     collectData();
-  }, [tweetCount]);
+  }, [newTweetCount]);
 
   const collectData = async () => {
     let token = localStorage.getItem("token").replaceAll('"', "");
