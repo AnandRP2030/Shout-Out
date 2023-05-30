@@ -66,24 +66,28 @@ const Tweet = ({ tweetInfo }) => {
         />
       </GridItem>
       <GridItem colSpan={9} h="auto">
-        <GridItem>
+        <HStack className={style.tweetHeader}>
           <HStack>
-            <Text className={style.nameText}> {name}</Text>
+            <Box>
+              <Text className={style.nameText}> {name}</Text>
+            </Box>
             <Box>
               <TwitterBlueSvg height="25px" width="25px" />
             </Box>
             <Text className={style.usernameText}>@{username} ·</Text>
-            <Text className={style.timeText}> {"1h"} </Text>
-
-            <Tooltip label="More">
-              <CustomCard bgColor="transparent" color="white" ml="345px">
-                <Text>
-                  <Icon as={FiMoreHorizontal} boxSize={5} />{" "}
-                </Text>
+            <Text className={style.timeText} ml="200px">
+              {" "}
+              {"1h"}{" "}
+            </Text>
+          </HStack>
+          <Box>
+            <Tooltip label="More" bgColor="red">
+              <CustomCard bgColor="transparent" color="white">
+                <Icon as={FiMoreHorizontal} boxSize={5} />{" "}
               </CustomCard>
             </Tooltip>
-          </HStack>
-        </GridItem>
+          </Box>
+        </HStack>
         <GridItem mt={2}>
           <Text className={style.textContent}>{content}</Text>
         </GridItem>

@@ -9,6 +9,11 @@
   background-color: #1d2731;
 }
 
+.tweetHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
 .nameText {
   color: white;
   font-weight: 700;
