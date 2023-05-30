@@ -6,16 +6,21 @@ import {
   GridItem,
   Image,
   Text,
+  Tooltip,
+  Tag,
   grid,
 } from "@chakra-ui/react";
 import style from "./tweet.module.css";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
-import { useState } from "react";
-import { FaRegComment, IoCompassSharp } from "react-icons/all";
-import { AiOutlineRetweet } from "react-icons/all";
-import { AiOutlineHeart } from "react-icons/all";
-import { BiBarChart } from "react-icons/all";
-import { FaShare } from "react-icons/all";
+import {
+  FaRegComment,
+  AiOutlineRetweet,
+  AiOutlineHeart,
+  BiBarChart,
+  FaShare,
+  FiMoreHorizontal,
+} from "react-icons/all";
+import React from "react";
 
 const Tweet = ({ tweetInfo }) => {
   let {
@@ -37,12 +42,21 @@ const Tweet = ({ tweetInfo }) => {
   if (len < 100) gridHeight = 2;
   else if (len < 170) gridHeight = 3;
 
+  const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
+    <Box>
+      <Tag ref={ref} {...rest}>
+        {children}
+      </Tag>
+    </Box>
+  ));
+
   return (
     <Grid
       h="auto"
       templateColumns="repeat(10, 1fr)"
       gap={4}
       className={style.tweetBox}
+      // bgColor='red'
     >
       <GridItem className={style.userProfilePicBox} colSpan={1}>
         <Image
@@ -60,6 +74,14 @@ const Tweet = ({ tweetInfo }) => {
             </Box>
             <Text className={style.usernameText}>@{username} ·</Text>
             <Text className={style.timeText}> {"1h"} </Text>
+
+            <Tooltip label="More">
+              <CustomCard bgColor="transparent" color="white" ml="345px">
+                <Text>
+                  <Icon as={FiMoreHorizontal} boxSize={5} />{" "}
+                </Text>
+              </CustomCard>
+            </Tooltip>
           </HStack>
         </GridItem>
         <GridItem mt={2}>
@@ -81,23 +103,56 @@ const Tweet = ({ tweetInfo }) => {
         <GridItem mt="20px">
           <HStack className={style.tweetOptions}>
             <HStack>
-              <Icon as={FaRegComment} boxSize={5} />
-              <Text> {totalNoCmts}</Text>
+              <Tooltip label="Replay">
+                <CustomCard bgColor="transparent" color="white" p={0}>
+                  <Icon as={FaRegComment} boxSize={5} />
+                  <Text fontSize="1.1rem" ml="2">
+                    {" "}
+                    {totalNoCmts}
+                  </Text>
+                </CustomCard>
+              </Tooltip>
             </HStack>
             <HStack>
-              <Icon as={AiOutlineRetweet} boxSize={5} />
-              <Text> {retweets}</Text>
+              <Tooltip label="Retweet">
+                <CustomCard bgColor="transparent" color="white" p={0}>
+                  <Icon as={AiOutlineRetweet} boxSize={5} />
+                  <Text fontSize="1.1rem" ml="2">
+                    {" "}
+                    {retweets}
+                  </Text>
+                </CustomCard>
+              </Tooltip>
+            </HStack>
+
+            <HStack>
+              <Tooltip label="Like">
+                <CustomCard bgColor="transparent" color="white" p={0}>
+                  <Icon as={AiOutlineHeart} boxSize={5} />
+                  <Text fontSize="1.1rem" ml="2">
+                    {" "}
+                    {likes}
+                  </Text>
+                </CustomCard>
+              </Tooltip>
             </HStack>
             <HStack>
-              <Icon as={AiOutlineHeart} boxSize={5} />
-              <Text> {likes}</Text>
+              <Tooltip label="View">
+                <CustomCard bgColor="transparent" color="white" p={0}>
+                  <Icon as={BiBarChart} boxSize={5} />
+                  <Text fontSize="1.1rem" ml="2">
+                    {" "}
+                    {views}
+                  </Text>
+                </CustomCard>
+              </Tooltip>
             </HStack>
             <HStack>
-              <Icon as={BiBarChart} boxSize={5} />
-              <Text> {views}</Text>
-            </HStack>
-            <HStack>
-              <Icon as={FaShare} boxSize={5} />
+              <Tooltip label="Share">
+                <CustomCard bgColor="transparent" color="white" p={0}>
+                  <Icon as={FaShare} boxSize={5} />
+                </CustomCard>
+              </Tooltip>
             </HStack>
           </HStack>
         </GridItem>

@@ -1,8 +1,8 @@
 .tweetBox {
-  margin-top: 10px;
-  padding: 20px;
+  padding: 10px 20px 20px;
   border-bottom: 1px solid rgb(45, 62, 79);
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .tweetBox:hover {
@@ -20,6 +20,7 @@
   color: #8b98a5;
   font-size: 1.1rem;
 }
+
 
 .userProfilePic {
   border-radius: 5px;
