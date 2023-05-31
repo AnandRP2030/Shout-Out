@@ -1,2 +1,3 @@
 const NEW_TWEET_ADDED = "tweet/newTweetAdded";
-export {NEW_TWEET_ADDED};
+const TWEET_DELETED = "tweet/tweetDeleted"
+export {NEW_TWEET_ADDED, TWEET_DELETED};

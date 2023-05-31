@@ -30,6 +30,9 @@ import {
 import style from "./tweet.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { TWEET_DELETED } from "../../../Redux/ActionTypes/tweetActionTypes";
+import { store } from "../../../Redux/store.js";
 
 const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
@@ -60,34 +63,50 @@ const Tweet = ({ tweetInfo }) => {
       </Tag>
     </Box>
   ));
-  
+
   let tweetOperations = {
     width: "335px",
     fontSize: "1.3rem",
     boxShadow: "rgba(164, 141, 141, 50%) 0px 3px 8px",
     padding: "15px",
     backgroundColor: "#1b2b3c",
-    height: '307px',
-    lineHeight: '46px',
-    position: 'absolute',
-    left: '810px',
-    borderRadius: '10px',
-
+    height: "307px",
+    lineHeight: "46px",
+    position: "absolute",
+    left: "810px",
+    borderRadius: "10px",
   };
 
-  const HoverHStack = ({children}) => {
-    return (
-      <HStack  _hover = {{bg: '#213346'}}>
-        {children}
-      </HStack>
-    )
-  }
+  const HoverHStack = ({ children }) => {
+    return <HStack _hover={{ bg: "#213346" }}>{children}</HStack>;
+  };
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  let token = localStorage.getItem("token").replaceAll('"', "");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
   // tweet crud methods
-  const deleteTweet = () => {
-    
-  }
+  const deleteTweet = async () => {
+    const DELETE_URL = `${BASE_URL}/user/tweets/delete/${tweetId}`;
+    let res = await axios.delete(DELETE_URL, config);
+    if (res.status === 204) {
+      console.log(content, "item deleted");
 
+      const deleteTweet = () => {
+        return {
+          type: TWEET_DELETED,
+        };
+      };
+      store.dispatch(deleteTweet());
+    }else if (res.status === 403) {
+      console.log('You can\'t delete others tweet ');
+    }else {
+      console.log('server error');
+    }
+  };
 
   return (
     <Grid
@@ -119,7 +138,12 @@ const Tweet = ({ tweetInfo }) => {
             </Text>
           </HStack>
           <Box>
-            <Tooltip label="More" bgColor="#f91880">
+            <Tooltip
+              label="More"
+              bgColor="#f91880"
+              openDelay={400}
+              closeDelay={400}
+            >
               <CustomCard
                 onClick={() => setMoreOpen(!moreOpen)}
                 bgColor="transparent"
@@ -131,32 +155,38 @@ const Tweet = ({ tweetInfo }) => {
           </Box>
         </HStack>
 
-        <Box style={tweetOperations} display={moreOpen ? 'block': 'none'}>
-          <HoverHStack _hover={{bg: '#213346'}}>
-            <Icon mr='10px'  as={TbMoodSadSquint} box={7} />
+        <Box style={tweetOperations} display={moreOpen ? "block" : "none"}>
+          <HStack _hover={{ bg: "#213346" }}>
+            <Icon mr="10px" as={TbMoodSadSquint} box={7} />
             <Text> Not interested in this Tweet </Text>
-          </HoverHStack>
-          <HoverHStack >
-            <Icon onClick={deleteTweet} mr='10px' as={RiDeleteBin6Line} box={7} />
-            <Text onClick={deleteTweet} > Delete Tweet</Text>
-          </HoverHStack>
+          </HStack>
+          <HStack  onClick={deleteTweet} _hover={{ bg: "#213346" }}>
+            <Icon
+             
+              mr="10px"
+              as={RiDeleteBin6Line}
+              box={7}
+            />
+            <Text onClick={deleteTweet}> Delete Tweet</Text>
+          </HStack>
 
-          <HoverHStack>
-            <Icon  mr='10px' as={AiOutlineEdit} box={7} />
-            <Text > Edit Tweet </Text>
-          </HoverHStack>
-          <HoverHStack>
-            <Icon mr='10px'  as={VscMute} box={7} />
+          <HStack>
+            <Icon mr="10px" as={AiOutlineEdit} box={7} />
+            <Text> Edit Tweet </Text>
+          </HStack>
+
+          <HStack>
+            <Icon mr="10px" as={VscMute} box={7} />
             <Text> Mute Author</Text>
-          </HoverHStack>
-          <HoverHStack>
-            <Icon mr='10px' as={MdReportGmailerrorred} box={7} />
+          </HStack>
+          <HStack>
+            <Icon mr="10px" as={MdReportGmailerrorred} box={7} />
             <Text> Report Tweet </Text>
-          </HoverHStack>
-          <HoverHStack>
-            <Icon mr='10px' as={BiBlock} box={7} />
+          </HStack>
+          <HStack>
+            <Icon mr="10px" as={BiBlock} box={7} />
             <Text> Block User</Text>
-          </HoverHStack>
+          </HStack>
         </Box>
         <GridItem mt={2}>
           <Text className={style.textContent}>{content}</Text>
@@ -177,7 +207,12 @@ const Tweet = ({ tweetInfo }) => {
         <GridItem mt="20px">
           <HStack className={style.tweetOptions}>
             <HStack>
-              <Tooltip bgColor="#f91880" label="Replay">
+              <Tooltip
+                bgColor="#f91880"
+                label="Replay"
+                openDelay={400}
+                closeDelay={400}
+              >
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={FaRegComment} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -188,7 +223,12 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip bgColor="#f91880" label="Retweet">
+              <Tooltip
+                bgColor="#f91880"
+                label="Retweet"
+                openDelay={400}
+                closeDelay={400}
+              >
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={AiOutlineRetweet} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -200,7 +240,12 @@ const Tweet = ({ tweetInfo }) => {
             </HStack>
 
             <HStack>
-              <Tooltip bgColor="#f91880" label="Like">
+              <Tooltip
+                bgColor="#f91880"
+                label="Like"
+                openDelay={400}
+                closeDelay={400}
+              >
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={AiOutlineHeart} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -211,7 +256,12 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip bgColor="#f91880" label="View">
+              <Tooltip
+                bgColor="#f91880"
+                label="View"
+                openDelay={400}
+                closeDelay={400}
+              >
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={BiBarChart} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -222,7 +272,12 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip bgColor="#f91880" label="Share">
+              <Tooltip
+                bgColor="#f91880"
+                label="Share"
+                openDelay={400}
+                closeDelay={400}
+              >
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={FaShare} boxSize={5} />
                 </CustomCard>
