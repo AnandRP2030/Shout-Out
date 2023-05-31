@@ -102,27 +102,23 @@ editTweet = async (req, res) => {
 
       let updatedValue;
       if (likes) {
-        console.log('lik')
         updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { likes });
       }
 
       if (content) {
-        console.log('con')
         updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { content });
       }
 
       if (retweets) {
-        console.log('ret')
         updatedValue = await TweetModel.findByIdAndUpdate(tweetId, {
           retweets,
         });
       }
       if (views) {
-        console.log('vie')
         updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { views });
       }
 
-      res.status(200).send({message: "content successfully updated"});
+      res.status(200).send({ message: "content successfully updated" });
     } else {
       res.status(403).send({ error: "you don't have the permission to edit" });
     }

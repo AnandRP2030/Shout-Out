@@ -42,7 +42,13 @@ import { store } from "../../../Redux/store.js";
 
 const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
+  const handleTweetClick = () => {
+    if (moreOpen) {
+      setMoreOpen(false);
+    }
+  }
   let {
     content,
     comments,
@@ -108,6 +114,7 @@ const Tweet = ({ tweetInfo }) => {
 
       store.dispatch({ type: TWEET_EDITED });
     }
+    setEditOpen(false);
   };
 
   return (
@@ -117,6 +124,7 @@ const Tweet = ({ tweetInfo }) => {
         templateColumns="repeat(10, 1fr)"
         gap={4}
         className={style.tweetBox}
+        onClick={handleTweetClick}
       >
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
@@ -168,7 +176,12 @@ const Tweet = ({ tweetInfo }) => {
               <Text onClick={deleteTweet}> Delete Tweet</Text>
             </HStack>
 
-            <HStack>
+            <HStack
+              onClick={() => {
+                setEditOpen(true);
+                setMoreOpen(false);
+              }}
+            >
               <Icon mr="10px" as={AiOutlineEdit} box={7} />
               <Text> Edit Tweet </Text>
             </HStack>
@@ -286,20 +299,31 @@ const Tweet = ({ tweetInfo }) => {
         </GridItem>
       </Grid>
 
-      <HStack className={style.editBox}>
-        <Textarea
-          onChange={(e) => setEditContent(e.target.value)}
-          value={editContent}
-          resize="vertical"
-          style={{ minHeight: "50px", maxHeight: "100px" }}
-          placeholder="Empty tweet not allowed"
-        />
-        <Button bg="red"> Discard </Button>
-        <Button onClick={submitEditedContent} bg="#3182ce">
-          {" "}
-          Save{" "}
-        </Button>
-      </HStack>
+      {editOpen && (
+        <HStack className={style.editBox}>
+          <Textarea
+            onChange={(e) => setEditContent(e.target.value)}
+            value={editContent}
+            resize="vertical"
+            style={{ minHeight: "50px", maxHeight: "100px" }}
+            placeholder="Empty tweet not allowed"
+          />
+          <Button
+            onClick={() => {
+              setEditOpen(false);
+              setEditContent(content);
+            }}
+            bg="red"
+          >
+            {" "}
+            Discard{" "}
+          </Button>
+          <Button onClick={submitEditedContent} bg="#3182ce">
+            {" "}
+            Save{" "}
+          </Button>
+        </HStack>
+      )}
     </>
   );
 };
