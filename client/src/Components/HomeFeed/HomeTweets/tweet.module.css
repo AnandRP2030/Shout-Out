@@ -14,6 +14,37 @@
   justify-content: space-between;
 }
 
+.moreBox {
+  width: 335px;
+  font-size: 1.3rem;
+  box-shadow: "rgba(164, 141, 141, 50%) 0px 3px 8px";
+  background-color: #1b2b3c;
+  height: 307px;
+  line-height: 46px;
+  position: absolute;
+  left: 810px;
+  border-radius: 10px;
+  padding: 15px;
+}
+  
+.moreBox>div:hover{
+  background-color: #213346;
+}
+
+.editBox {
+  background-color:#15202b;
+  position: absolute;
+  width: 813px;
+  margin-left: 15px;
+  height: 100px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: rgba(212, 201, 201, 0.24) 0px 3px 8px;
+}
+
+
+
 .nameText {
   color: white;
   font-weight: 700;

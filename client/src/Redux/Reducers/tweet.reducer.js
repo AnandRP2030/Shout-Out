@@ -1,10 +1,11 @@
-import {NEW_TWEET_ADDED, TWEET_DELETED} from "../ActionTypes/tweetActionTypes.js";
+import {NEW_TWEET_ADDED, TWEET_DELETED, TWEET_EDITED} from "../ActionTypes/tweetActionTypes.js";
 import {store} from "../store.js";
 
 const initialState = {newTweetsCount: 0};
 
 
 function tweetsReducer(state = initialState, action) {
+    console.log('red')
     if (action.type === NEW_TWEET_ADDED){
         return {
             ...state,
@@ -14,6 +15,12 @@ function tweetsReducer(state = initialState, action) {
         return {
             ...state, 
             newTweetsCount: state.newTweetsCount - 1
+        }
+    }else if (action.type === TWEET_EDITED) {
+        return {
+            ...state, 
+            newTweetsCount: state.newTweetsCount + 1
+
         }
     }
 
