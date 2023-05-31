@@ -9,8 +9,8 @@ import {
   Tooltip,
   Tag,
   grid,
+  background,
 } from "@chakra-ui/react";
-import style from "./tweet.module.css";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import {
   FaRegComment,
@@ -19,10 +19,21 @@ import {
   BiBarChart,
   FaShare,
   FiMoreHorizontal,
+  RiDeleteBin6Line,
+  AiOutlineEdit,
+  TbMoodSadSquint,
+  GrVolumeMute,
+  MdReportGmailerrorred,
+  BiBlock,
+  VscMute,
 } from "react-icons/all";
+import style from "./tweet.module.css";
 import React from "react";
+import { useState, useEffect } from "react";
 
 const Tweet = ({ tweetInfo }) => {
+  const [moreOpen, setMoreOpen] = useState(false);
+
   let {
     content,
     comments,
@@ -49,6 +60,34 @@ const Tweet = ({ tweetInfo }) => {
       </Tag>
     </Box>
   ));
+  
+  let tweetOperations = {
+    width: "335px",
+    fontSize: "1.3rem",
+    boxShadow: "rgba(164, 141, 141, 50%) 0px 3px 8px",
+    padding: "15px",
+    backgroundColor: "#1b2b3c",
+    height: '307px',
+    lineHeight: '46px',
+    position: 'absolute',
+    left: '810px',
+    borderRadius: '10px',
+
+  };
+
+  const HoverHStack = ({children}) => {
+    return (
+      <HStack  _hover = {{bg: '#213346'}}>
+        {children}
+      </HStack>
+    )
+  }
+
+  // tweet crud methods
+  const deleteTweet = () => {
+    
+  }
+
 
   return (
     <Grid
@@ -56,7 +95,6 @@ const Tweet = ({ tweetInfo }) => {
       templateColumns="repeat(10, 1fr)"
       gap={4}
       className={style.tweetBox}
-      // bgColor='red'
     >
       <GridItem className={style.userProfilePicBox} colSpan={1}>
         <Image
@@ -81,13 +119,45 @@ const Tweet = ({ tweetInfo }) => {
             </Text>
           </HStack>
           <Box>
-            <Tooltip label="More" bgColor="red">
-              <CustomCard bgColor="transparent" color="white">
+            <Tooltip label="More" bgColor="#f91880">
+              <CustomCard
+                onClick={() => setMoreOpen(!moreOpen)}
+                bgColor="transparent"
+                color="white"
+              >
                 <Icon as={FiMoreHorizontal} boxSize={5} />{" "}
               </CustomCard>
             </Tooltip>
           </Box>
         </HStack>
+
+        <Box style={tweetOperations} display={moreOpen ? 'block': 'none'}>
+          <HoverHStack _hover={{bg: '#213346'}}>
+            <Icon mr='10px'  as={TbMoodSadSquint} box={7} />
+            <Text> Not interested in this Tweet </Text>
+          </HoverHStack>
+          <HoverHStack >
+            <Icon onClick={deleteTweet} mr='10px' as={RiDeleteBin6Line} box={7} />
+            <Text onClick={deleteTweet} > Delete Tweet</Text>
+          </HoverHStack>
+
+          <HoverHStack>
+            <Icon  mr='10px' as={AiOutlineEdit} box={7} />
+            <Text > Edit Tweet </Text>
+          </HoverHStack>
+          <HoverHStack>
+            <Icon mr='10px'  as={VscMute} box={7} />
+            <Text> Mute Author</Text>
+          </HoverHStack>
+          <HoverHStack>
+            <Icon mr='10px' as={MdReportGmailerrorred} box={7} />
+            <Text> Report Tweet </Text>
+          </HoverHStack>
+          <HoverHStack>
+            <Icon mr='10px' as={BiBlock} box={7} />
+            <Text> Block User</Text>
+          </HoverHStack>
+        </Box>
         <GridItem mt={2}>
           <Text className={style.textContent}>{content}</Text>
         </GridItem>
@@ -107,7 +177,7 @@ const Tweet = ({ tweetInfo }) => {
         <GridItem mt="20px">
           <HStack className={style.tweetOptions}>
             <HStack>
-              <Tooltip label="Replay">
+              <Tooltip bgColor="#f91880" label="Replay">
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={FaRegComment} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -118,7 +188,7 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip label="Retweet">
+              <Tooltip bgColor="#f91880" label="Retweet">
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={AiOutlineRetweet} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -130,7 +200,7 @@ const Tweet = ({ tweetInfo }) => {
             </HStack>
 
             <HStack>
-              <Tooltip label="Like">
+              <Tooltip bgColor="#f91880" label="Like">
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={AiOutlineHeart} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -141,7 +211,7 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip label="View">
+              <Tooltip bgColor="#f91880" label="View">
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={BiBarChart} boxSize={5} />
                   <Text fontSize="1.1rem" ml="2">
@@ -152,7 +222,7 @@ const Tweet = ({ tweetInfo }) => {
               </Tooltip>
             </HStack>
             <HStack>
-              <Tooltip label="Share">
+              <Tooltip bgColor="#f91880" label="Share">
                 <CustomCard bgColor="transparent" color="white" p={0}>
                   <Icon as={FaShare} boxSize={5} />
                 </CustomCard>
