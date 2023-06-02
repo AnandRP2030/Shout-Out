@@ -5,7 +5,6 @@ const initialState = {newTweetsCount: 0};
 
 
 function tweetsReducer(state = initialState, action) {
-    console.log('red')
     if (action.type === NEW_TWEET_ADDED){
         return {
             ...state,

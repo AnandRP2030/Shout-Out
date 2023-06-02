@@ -39,6 +39,7 @@ const unSubscribe = store.subscribe(() => {
 
   const displayContent = (data) => {
     const { tweets, ownersInfo } = data;
+    console.log(tweets)
     let Tweets = [];
     for (let i = tweets.length-1; i >= 0; i--) {
       let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
@@ -55,7 +56,7 @@ const unSubscribe = store.subscribe(() => {
         content: tweets[i].content,
         comments: tweets[i].comments,
         totalNoCmts: tweets[i].comments.length,
-        likes: tweets[i].likes,
+        likes: tweets[i].likes.length,
         retweets: tweets[i].retweets,
         views: tweets[i].views,
         isPrivate: tweets[i].private,
@@ -64,6 +65,7 @@ const unSubscribe = store.subscribe(() => {
         videoUrls: tweets[i].videoUrls,
         tweetOwner: ownerData,
       };
+      
       Tweets.push(tweet);
     }
 

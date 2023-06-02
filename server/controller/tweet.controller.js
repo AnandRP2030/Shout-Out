@@ -97,28 +97,15 @@ editTweet = async (req, res) => {
     const tweetOwnerId = editingTweet.owner.toString();
 
     if (requestedUserId === tweetOwnerId) {
-      const { likes, retweets, views, editContent } = req.body;
+      const { editContent } = req.body;
       let content = editContent;
 
-      let updatedValue;
-      if (likes) {
-        updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { likes });
-      }
-
       if (content) {
-        updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { content });
+        await TweetModel.findByIdAndUpdate(tweetId, { content });
+        return res
+          .status(200)
+          .send({ message: "content successfully updated" });
       }
-
-      if (retweets) {
-        updatedValue = await TweetModel.findByIdAndUpdate(tweetId, {
-          retweets,
-        });
-      }
-      if (views) {
-        updatedValue = await TweetModel.findByIdAndUpdate(tweetId, { views });
-      }
-
-      res.status(200).send({ message: "content successfully updated" });
     } else {
       res.status(403).send({ error: "you don't have the permission to edit" });
     }
@@ -127,4 +114,33 @@ editTweet = async (req, res) => {
   }
 };
 
-module.exports = { createTweet, getTweets, deleteTweet, editTweet };
+likeTweet = async (req, res) => {
+  console.log('we')
+  try {
+    let tweetId = req.params.tweetId;
+    let tweet = await TweetModel.findById(tweetId);
+    let likes = tweet.likes;
+    let userId = req.user.userId.toString();
+    let alreadyLiked = likes.findIndex((elem) => elem.toString() === userId);
+    console.log(typeof alreadyLiked, alreadyLiked);
+
+    if (alreadyLiked === -1) {
+      tweet.likes.push(userId);
+      await tweet.save();
+      return res
+        .status(201)
+        .json({ message: "Tweet liked", totalLikes: likes.length });
+    } else {
+      tweet.likes.splice(alreadyLiked, 1);
+      await tweet.save();
+      console.log(tweet, "remove");
+      return res
+        .status(200)
+        .json({ message: "Tweet unliked", totalLikes: likes.length });
+    }
+  } catch (err) {
+    return res.status(500).send({ error: err });
+  }
+};
+
+module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet };

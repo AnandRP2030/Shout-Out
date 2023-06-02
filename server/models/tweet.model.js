@@ -13,7 +13,7 @@ const tweetSchema = new Schema({
   },
   imageUrls:  [String],
   videoUrls: [String],
-  likes: { type: Number,  default: 0},
+  likes: [{type: Schema.Types.ObjectId, ref: 'RegistrationModel'}],
   comments: [{ body: { type: String }, date: Date }],
   retweets: {type: Number, default: 0},
   views: {type: Number,  default: 1},

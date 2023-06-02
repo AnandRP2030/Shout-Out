@@ -29,6 +29,7 @@ import {
   MdReportGmailerrorred,
   BiBlock,
   VscMute,
+  FcLike
 } from "react-icons/all";
 import style from "./tweet.module.css";
 import React from "react";
@@ -43,7 +44,11 @@ import { store } from "../../../Redux/store.js";
 const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-
+  const [heartIcon, setHeartIcon] = useState({
+    liked: false,
+    retweeted: false
+  })
+  
   const handleTweetClick = () => {
     if (moreOpen) {
       setMoreOpen(false);
@@ -116,6 +121,25 @@ const Tweet = ({ tweetInfo }) => {
     }
     setEditOpen(false);
   };
+
+
+  const tweetLiked = async () => {
+    const LIKE_URL =  `${BASE_URL}/user/tweets/like/${tweetId}`;
+    let res = await axios.patch(LIKE_URL, {},config);
+    if (res.status === 201) {
+      setHeartIcon(prevState => ({
+        ...prevState,
+        liked: true
+      }))
+    }else {
+      setHeartIcon(prevState => ({
+        ...prevState,
+        liked: false
+      }))
+    }
+    store.dispatch({ type: TWEET_EDITED });
+  }
+
 
   return (
     <>
@@ -257,8 +281,8 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0}>
-                    <Icon as={AiOutlineHeart} boxSize={5} />
+                  <CustomCard bgColor="transparent" color="white" p={0} onClick={tweetLiked}>
+                    <Icon as={heartIcon.liked ? FcLike: AiOutlineHeart} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2">
                       {" "}
                       {likes}
