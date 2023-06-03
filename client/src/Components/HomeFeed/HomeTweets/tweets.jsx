@@ -29,7 +29,8 @@ import {
   MdReportGmailerrorred,
   BiBlock,
   VscMute,
-  FcLike
+  FcLike,
+  FaRetweet
 } from "react-icons/all";
 import style from "./tweet.module.css";
 import React from "react";
@@ -44,10 +45,7 @@ import { store } from "../../../Redux/store.js";
 const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [heartIcon, setHeartIcon] = useState({
-    liked: false,
-    retweeted: false
-  })
+
   
   const handleTweetClick = () => {
     if (moreOpen) {
@@ -67,6 +65,8 @@ const Tweet = ({ tweetInfo }) => {
     videoUrls,
   } = tweetInfo;
   let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
+  let {liked, retweeted, shared} = tweetInfo.tweetStatus;
+  console.log(retweeted, 'rt')
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
@@ -126,19 +126,15 @@ const Tweet = ({ tweetInfo }) => {
   const tweetLiked = async () => {
     const LIKE_URL =  `${BASE_URL}/user/tweets/like/${tweetId}`;
     let res = await axios.patch(LIKE_URL, {},config);
-    if (res.status === 201) {
-      setHeartIcon(prevState => ({
-        ...prevState,
-        liked: true
-      }))
-    }else {
-      setHeartIcon(prevState => ({
-        ...prevState,
-        liked: false
-      }))
-    }
     store.dispatch({ type: TWEET_EDITED });
   }
+  
+  const tweetRetweeted = async () => {
+    const RETWEET_URL =  `${BASE_URL}/user/tweets/retweet/${tweetId}`;
+    let res = await axios.patch(RETWEET_URL, {}, config);
+    store.dispatch({type: TWEET_EDITED})
+  }
+
 
 
   return (
@@ -264,8 +260,8 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0}>
-                    <Icon as={AiOutlineRetweet} boxSize={5} />
+                  <CustomCard bgColor="transparent" color="white" p={0} onClick={tweetRetweeted}>
+                    <Icon as={retweeted ? AiOutlineRetweet: FaRetweet} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2">
                       {" "}
                       {retweets}
@@ -282,7 +278,7 @@ const Tweet = ({ tweetInfo }) => {
                   closeDelay={400}
                 >
                   <CustomCard bgColor="transparent" color="white" p={0} onClick={tweetLiked}>
-                    <Icon as={heartIcon.liked ? FcLike: AiOutlineHeart} boxSize={5} />
+                    <Icon as={liked ? FcLike: AiOutlineHeart} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2">
                       {" "}
                       {likes}

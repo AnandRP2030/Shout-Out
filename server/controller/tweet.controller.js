@@ -11,7 +11,6 @@ createTweet = async (req, res) => {
     }
 
     const owner = req.user;
-
     const tweet = await TweetModel.create({
       content,
       imageUrls,
@@ -27,15 +26,42 @@ createTweet = async (req, res) => {
 getTweets = async (req, res) => {
   try {
     let tweets = await TweetModel.find({});
-
+    let tweetsStatus = findStatus(tweets, req.user.userId);
     let ownersInfo = await findOwner(tweets);
-
     // console.log(tweets)
-    return res.status(200).send({ message: "All Tweets", tweets, ownersInfo });
+    return res.status(200).send({ message: "All Tweets", tweets, ownersInfo, tweetsStatus });
   } catch (err) {
     return res.status(500).send({ error: err });
   }
 };
+
+const findStatus  = (tweets, activeUserId) => {
+  let statusArr = [];
+  tweets.forEach(tweet => {
+    let status = {
+      liked: false,
+      retweeted: false,
+      shared: false
+    }
+
+    let isLiked = tweet.likes.findIndex((ids) => {
+      return ids.toString() === activeUserId
+    });
+    let isRetweeted = tweet.retweets.findIndex((ids) => {
+      return ids.toString() === activeUserId
+    });
+
+    if (isLiked !== -1) {
+      status.liked = true;
+    }
+    if (isRetweeted !== -1) {
+      status.retweeted = true;
+    }
+
+    statusArr.push(status);
+  });
+  return statusArr;
+} 
 
 const findOwner = async (tweets) => {
   let ownersData = await Promise.all(
@@ -115,14 +141,13 @@ editTweet = async (req, res) => {
 };
 
 likeTweet = async (req, res) => {
-  console.log('we')
   try {
     let tweetId = req.params.tweetId;
     let tweet = await TweetModel.findById(tweetId);
     let likes = tweet.likes;
     let userId = req.user.userId.toString();
     let alreadyLiked = likes.findIndex((elem) => elem.toString() === userId);
-    console.log(typeof alreadyLiked, alreadyLiked);
+  
 
     if (alreadyLiked === -1) {
       tweet.likes.push(userId);
@@ -133,7 +158,6 @@ likeTweet = async (req, res) => {
     } else {
       tweet.likes.splice(alreadyLiked, 1);
       await tweet.save();
-      console.log(tweet, "remove");
       return res
         .status(200)
         .json({ message: "Tweet unliked", totalLikes: likes.length });
@@ -143,4 +167,31 @@ likeTweet = async (req, res) => {
   }
 };
 
-module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet };
+retweet = async (req, res) => {
+  try {
+    let tweetId = req.params.tweetId;
+    let tweet = await TweetModel.findById(tweetId);
+    let retweeets = tweet.retweets;
+    let userId = req.user.userId.toString();
+    let alreadyTweeted = retweeets.findIndex((elem) => elem.toString() === userId); 
+    if (alreadyTweeted === -1) {
+      tweet.retweets.push(userId);
+      console.log(tweet, "retweet");
+      await tweet.save();
+      return res
+        .status(201)
+        .json({ message: "retweeted", totalRetweeets: retweeets.length });
+    } else {
+      tweet.retweets.splice(alreadyTweeted, 1);
+      await tweet.save();
+      console.log(tweet, "undo retweet");
+      return res
+        .status(200)
+        .json({ message: "undo retweet", totalRetweeets: retweeets.length });
+    }
+  } catch (err) {
+    return res.status(500).send({ error: err });
+  }
+};
+
+module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet,  retweet};

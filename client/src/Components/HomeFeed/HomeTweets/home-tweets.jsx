@@ -38,8 +38,7 @@ const unSubscribe = store.subscribe(() => {
   };
 
   const displayContent = (data) => {
-    const { tweets, ownersInfo } = data;
-    console.log(tweets)
+    const { tweets, ownersInfo, tweetsStatus } = data;
     let Tweets = [];
     for (let i = tweets.length-1; i >= 0; i--) {
       let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
@@ -51,19 +50,19 @@ const unSubscribe = store.subscribe(() => {
         profilePicture
       };
      
-
       let tweet = {
         content: tweets[i].content,
         comments: tweets[i].comments,
         totalNoCmts: tweets[i].comments.length,
         likes: tweets[i].likes.length,
-        retweets: tweets[i].retweets,
+        retweets: tweets[i].retweets.length,
         views: tweets[i].views,
         isPrivate: tweets[i].private,
         tweetId: tweets[i]._id,
         imageUrls: tweets[i].imageUrls,
         videoUrls: tweets[i].videoUrls,
         tweetOwner: ownerData,
+        tweetStatus: tweetsStatus[i]
       };
       
       Tweets.push(tweet);

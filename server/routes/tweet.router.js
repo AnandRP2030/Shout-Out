@@ -1,4 +1,4 @@
-const { createTweet , getTweets, deleteTweet, editTweet, likeTweet} = require('../controller/tweet.controller');
+const { createTweet , getTweets, deleteTweet, editTweet, likeTweet, retweet} = require('../controller/tweet.controller');
 const {findOwner}  = require('../middlewares/tweet.middleware')
 const tweetRouter = require('express').Router();
 
@@ -9,4 +9,5 @@ tweetRouter.delete('/delete/:tweetId', deleteTweet);
 tweetRouter.patch('/edit/:tweetId', editTweet);
 
 tweetRouter.patch('/like/:tweetId', likeTweet);
+tweetRouter.patch('/retweet/:tweetId', retweet);
 module.exports = {tweetRouter}

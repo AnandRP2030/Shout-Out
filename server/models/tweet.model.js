@@ -15,7 +15,7 @@ const tweetSchema = new Schema({
   videoUrls: [String],
   likes: [{type: Schema.Types.ObjectId, ref: 'RegistrationModel'}],
   comments: [{ body: { type: String }, date: Date }],
-  retweets: {type: Number, default: 0},
+  retweets:  [{type: Schema.Types.ObjectId, ref: 'RegistrationModel'}],
   views: {type: Number,  default: 1},
   private: {type: Boolean, default: false}
 },{
