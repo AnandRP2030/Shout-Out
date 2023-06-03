@@ -246,7 +246,7 @@ const Tweet = ({ tweetInfo }) => {
                 >
                   <CustomCard bgColor="transparent" color="white" p={0}>
                     <Icon as={FaRegComment} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2">
+                    <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
                       {totalNoCmts}
                     </Text>
@@ -260,9 +260,9 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0} onClick={tweetRetweeted}>
-                    <Icon as={retweeted ? AiOutlineRetweet: FaRetweet} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2">
+                  <CustomCard color={retweeted ? '#82ff82': 'white'} bgColor="transparent"  p={0} onClick={tweetRetweeted}>
+                    <Icon  as={retweeted ? AiOutlineRetweet: AiOutlineRetweet} boxSize={5} />
+                    <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
                       {retweets}
                     </Text>
@@ -277,9 +277,9 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0} onClick={tweetLiked}>
-                    <Icon as={liked ? FcLike: AiOutlineHeart} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2">
+                  <CustomCard bgColor="transparent" color={liked ? '#ff0076': 'white'} p={0} onClick={tweetLiked}>
+                    <Icon color='#ff0076' as={liked ? FcLike: AiOutlineHeart}  boxSize={5} />
+                    <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
                       {likes}
                     </Text>
@@ -295,7 +295,7 @@ const Tweet = ({ tweetInfo }) => {
                 >
                   <CustomCard bgColor="transparent" color="white" p={0}>
                     <Icon as={BiBarChart} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2">
+                    <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
                       {views}
                     </Text>
