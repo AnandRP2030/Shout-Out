@@ -104,3 +104,12 @@
 .tweetOptions div:nth-child(5):hover {
   color: #00cccc;
 }
+
+/* comment box component  */
+.commentBox {
+  height: 300px;
+  width: 300px;
+  background-color:#15202b;
+  position:absolute;
+  top: 50px;
+}

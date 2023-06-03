@@ -41,12 +41,13 @@ import {
   TWEET_EDITED,
 } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { store } from "../../../Redux/store.js";
+import CommentBox from "../HomeFeedComponents/CommentBox";
 
 const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-
-  
+  const [commentBox, setCommentBox] = useState(false);
+  console.log(commentBox)
   const handleTweetClick = () => {
     if (moreOpen) {
       setMoreOpen(false);
@@ -66,7 +67,6 @@ const Tweet = ({ tweetInfo }) => {
   } = tweetInfo;
   let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
   let {liked, retweeted, shared} = tweetInfo.tweetStatus;
-  console.log(retweeted, 'rt')
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
@@ -137,6 +137,7 @@ const Tweet = ({ tweetInfo }) => {
 
 
 
+
   return (
     <>
       <Grid
@@ -186,6 +187,7 @@ const Tweet = ({ tweetInfo }) => {
             </Box>
           </HStack>
 
+          {commentBox && <CommentBox/>}
           <Box className={style.moreBox} display={moreOpen ? "block" : "none"}>
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
@@ -244,7 +246,7 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0}>
+                  <CustomCard bgColor="transparent" color="white" p={0} onClick={() => setCommentBox(!commentBox)}>
                     <Icon as={FaRegComment} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
@@ -277,7 +279,7 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color={liked ? '#ff0076': 'white'} p={0} onClick={tweetLiked}>
+                  <CustomCard bgColor="transparent" color={liked ? '#f44336': 'white'} p={0} onClick={tweetLiked}>
                     <Icon color='#ff0076' as={liked ? FcLike: AiOutlineHeart}  boxSize={5} />
                     <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
