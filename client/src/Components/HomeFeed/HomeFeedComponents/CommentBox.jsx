@@ -3,9 +3,10 @@ import React from "react";
 import style from "../HomeTweets/tweet.module.css";
 import { FiMoreHorizontal } from "react-icons/fi";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
+import { AiOutlineClose, AiOutlineCloseSquare } from "react-icons/ai";
 
-const CommentBox = () => {
-
+const CommentBox = ({boxPosition, setCommentBox}) => {
+  
     const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
         <Box>
           <Tag ref={ref} {...rest}>
@@ -20,11 +21,15 @@ const CommentBox = () => {
         templateColumns="repeat(10, 1fr)"
         gap={4}
         className={style.commentBox}
+        pos='absolute'
+        top={boxPosition.top}
+        left={boxPosition.left}
       >
+
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
             className={style.userProfilePic}
-            src=''
+            src='https://pbs.twimg.com/profile_images/864282616597405701/M-FEJMZ0_400x400.jpg'
             alt="userProfilePic"
           />
         </GridItem>
@@ -45,7 +50,7 @@ const CommentBox = () => {
             </HStack>
             <Box>
               <Tooltip
-                label="More"
+                label="Close"
                 bgColor="#f91880"
                 openDelay={400}
                 closeDelay={400}
@@ -53,8 +58,9 @@ const CommentBox = () => {
                 <CustomCard
                   bgColor="transparent"
                   color="white"
+                  onClick={() => setCommentBox(false)}
                 >
-                  <Icon as={FiMoreHorizontal} boxSize={5} />{" "}
+                  <Icon as={AiOutlineClose} boxSize={7} color='#b5aaaa' />{" "}
                 </CustomCard>
               </Tooltip>
             </Box>

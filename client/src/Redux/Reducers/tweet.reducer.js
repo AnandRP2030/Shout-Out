@@ -1,5 +1,5 @@
 import {NEW_TWEET_ADDED, TWEET_DELETED, TWEET_EDITED} from "../ActionTypes/tweetActionTypes.js";
-import {store} from "../store.js";
+
 
 const initialState = {newTweetsCount: 0};
 
@@ -19,7 +19,6 @@ function tweetsReducer(state = initialState, action) {
         return {
             ...state, 
             newTweetsCount: state.newTweetsCount + 1
-
         }
     }
 

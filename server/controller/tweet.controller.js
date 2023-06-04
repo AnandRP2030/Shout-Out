@@ -176,7 +176,6 @@ retweet = async (req, res) => {
     let alreadyTweeted = retweeets.findIndex((elem) => elem.toString() === userId); 
     if (alreadyTweeted === -1) {
       tweet.retweets.push(userId);
-      console.log(tweet, "retweet");
       await tweet.save();
       return res
         .status(201)

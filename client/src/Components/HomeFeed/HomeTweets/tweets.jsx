@@ -47,7 +47,8 @@ const Tweet = ({ tweetInfo }) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
-  console.log(commentBox)
+  const [commentPosition, setCommentPosition] = useState({top: 0, left: 0});
+  
   const handleTweetClick = () => {
     if (moreOpen) {
       setMoreOpen(false);
@@ -119,6 +120,7 @@ const Tweet = ({ tweetInfo }) => {
 
       store.dispatch({ type: TWEET_EDITED });
     }
+
     setEditOpen(false);
   };
 
@@ -135,6 +137,17 @@ const Tweet = ({ tweetInfo }) => {
     store.dispatch({type: TWEET_EDITED})
   }
 
+  const toggleCommentBox = (event) => {
+    const tweetReact = event.currentTarget.getBoundingClientRect();
+    const topPosition =  window.scrollY + 100;
+    console.log(topPosition)
+    const leftPosition = tweetReact.left;
+    if (! commentBox) {
+      setCommentBox(!commentBox);
+
+    }
+    setCommentPosition({top: topPosition, left: leftPosition})
+  }
 
 
 
@@ -187,7 +200,7 @@ const Tweet = ({ tweetInfo }) => {
             </Box>
           </HStack>
 
-          {commentBox && <CommentBox/>}
+          {commentBox && <CommentBox boxPosition={commentPosition} setCommentBox={setCommentBox}/>}
           <Box className={style.moreBox} display={moreOpen ? "block" : "none"}>
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
@@ -246,7 +259,7 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0} onClick={() => setCommentBox(!commentBox)}>
+                  <CustomCard bgColor="transparent" color="white" p={0} onClick={toggleCommentBox}>
                     <Icon as={FaRegComment} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2" as='b'>
                       {" "}
