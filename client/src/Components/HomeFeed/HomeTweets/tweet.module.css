@@ -107,8 +107,8 @@
 
 /* comment box component  */
 .commentBox {
-  height: 400px;
   width: 600px;
+  min-height: 335px;
   background-color:#15202b;
   padding: 25px 25px;
   box-sizing: border-box;

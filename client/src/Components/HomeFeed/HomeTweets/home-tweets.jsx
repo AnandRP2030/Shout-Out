@@ -3,22 +3,24 @@ import { useState, useEffect } from "react";
 // import '~video-react/dist/video-react.css';
 import { Player } from "video-react";
 import axios from "axios";
-import {store} from "../../../Redux/store.js";
-
-
+import { store } from "../../../Redux/store.js";
 
 const HomeTweets = () => {
-  
-const findTweetCount = () => {
-  return store.getState().tweets.newTweetsCount;
-}
-const[newTweetCount, setNewTweetCount] = useState(findTweetCount());
+  const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
+  const toggleCommentBox = (index) => {
+    setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
+  };
 
-const unSubscribe = store.subscribe(() => {
-  const count = findTweetCount();
-  setNewTweetCount(count);
-})
+  const findTweetCount = () => {
+    return store.getState().tweets.newTweetsCount;
+  };
 
+  const [newTweetCount, setNewTweetCount] = useState(findTweetCount());
+
+  const unSubscribe = store.subscribe(() => {
+    const count = findTweetCount();
+    setNewTweetCount(count);
+  });
 
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
@@ -40,16 +42,16 @@ const unSubscribe = store.subscribe(() => {
   const displayContent = (data) => {
     const { tweets, ownersInfo, tweetsStatus } = data;
     let Tweets = [];
-    for (let i = tweets.length-1; i >= 0; i--) {
+    for (let i = tweets.length - 1; i >= 0; i--) {
       let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
       let ownerData = {
         username,
         name,
         email,
         userId: _id,
-        profilePicture
+        profilePicture,
       };
-     
+
       let tweet = {
         content: tweets[i].content,
         comments: tweets[i].comments,
@@ -62,19 +64,27 @@ const unSubscribe = store.subscribe(() => {
         imageUrls: tweets[i].imageUrls,
         videoUrls: tweets[i].videoUrls,
         tweetOwner: ownerData,
-        tweetStatus: tweetsStatus[i]
+        tweetStatus: tweetsStatus[i],
       };
-      
+
       Tweets.push(tweet);
     }
 
     setAllTweets(Tweets);
   };
-  
+
   return (
     <>
       {allTweets?.map((elem, idx) => {
-        return <Tweet key={elem.tweetId} tweetInfo={elem} />;
+        return (
+          <Tweet
+            key={elem.tweetId}
+            index={idx}
+            tweetInfo={elem}
+            commentBoxIndex={commentBoxIndex}
+            toggleCommentBox={toggleCommentBox}
+          />
+        );
       })}
     </>
   );

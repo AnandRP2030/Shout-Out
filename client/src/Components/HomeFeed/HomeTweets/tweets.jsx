@@ -14,6 +14,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
+
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import {
   FaRegComment,
@@ -30,7 +31,7 @@ import {
   BiBlock,
   VscMute,
   FcLike,
-  FaRetweet
+  FaRetweet,
 } from "react-icons/all";
 import style from "./tweet.module.css";
 import React from "react";
@@ -39,21 +40,25 @@ import axios from "axios";
 import {
   TWEET_DELETED,
   TWEET_EDITED,
+  COMMENT_BOX_EVENT,
 } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { store } from "../../../Redux/store.js";
 import CommentBox from "../HomeFeedComponents/CommentBox";
 
-const Tweet = ({ tweetInfo }) => {
+const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
+  
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [commentPosition, setCommentPosition] = useState({ top: 0 });
+
   const [commentBox, setCommentBox] = useState(false);
-  const [commentPosition, setCommentPosition] = useState({top: 0, left: 0});
-  
+
+
   const handleTweetClick = () => {
     if (moreOpen) {
       setMoreOpen(false);
     }
-  }
+  };
   let {
     content,
     comments,
@@ -67,13 +72,14 @@ const Tweet = ({ tweetInfo }) => {
     videoUrls,
   } = tweetInfo;
   let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
-  let {liked, retweeted, shared} = tweetInfo.tweetStatus;
+  let { liked, retweeted, shared } = tweetInfo.tweetStatus;
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
   if (len < 100) gridHeight = 2;
   else if (len < 170) gridHeight = 3;
 
+  const [editContent, setEditContent] = useState(content);
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
     <Box>
       <Tag ref={ref} {...rest}>
@@ -109,47 +115,35 @@ const Tweet = ({ tweetInfo }) => {
     }
   };
 
-  const [editContent, setEditContent] = useState(content);
-
   const submitEditedContent = async () => {
     const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
     let res = await axios.patch(EDIT_URL, { editContent }, config);
 
     if (res.status === 200) {
       console.log("edited successfully");
-
       store.dispatch({ type: TWEET_EDITED });
     }
-
     setEditOpen(false);
   };
 
-
   const tweetLiked = async () => {
-    const LIKE_URL =  `${BASE_URL}/user/tweets/like/${tweetId}`;
-    let res = await axios.patch(LIKE_URL, {},config);
+    const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
+    let res = await axios.patch(LIKE_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
-  }
-  
+  };
+
   const tweetRetweeted = async () => {
-    const RETWEET_URL =  `${BASE_URL}/user/tweets/retweet/${tweetId}`;
+    const RETWEET_URL = `${BASE_URL}/user/tweets/retweet/${tweetId}`;
     let res = await axios.patch(RETWEET_URL, {}, config);
-    store.dispatch({type: TWEET_EDITED})
-  }
+    store.dispatch({ type: TWEET_EDITED });
+  };
 
-  const toggleCommentBox = (event) => {
-    const tweetReact = event.currentTarget.getBoundingClientRect();
-    const topPosition =  window.scrollY + 100;
-    console.log(topPosition)
-    const leftPosition = tweetReact.left;
-    if (! commentBox) {
-      setCommentBox(!commentBox);
+  const toggleCommentBox2 = (event) => {
+    const topPosition = window.scrollY + 100;
+    setCommentBox(!commentBox);
+    setCommentPosition({ top: topPosition });
 
-    }
-    setCommentPosition({top: topPosition, left: leftPosition})
-  }
-
-
+  };
 
   return (
     <>
@@ -200,7 +194,15 @@ const Tweet = ({ tweetInfo }) => {
             </Box>
           </HStack>
 
-          {commentBox && <CommentBox boxPosition={commentPosition} setCommentBox={setCommentBox}/>}
+      
+          {commentBoxIndex === index && commentBox && (
+            <CommentBox
+               tweetInfo={tweetInfo}
+              boxPosition={commentPosition}
+              setCommentBox={setCommentBox}
+            />
+          )}
+
           <Box className={style.moreBox} display={moreOpen ? "block" : "none"}>
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
@@ -259,9 +261,16 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color="white" p={0} onClick={toggleCommentBox}>
+                  <CustomCard
+                    bgColor="transparent"
+                    color="white"
+                    p={0}
+                    onClick={(event) => {
+                      toggleCommentBox(index), toggleCommentBox2(event);
+                    }}
+                  >
                     <Icon as={FaRegComment} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2" as='b'>
+                    <Text fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {totalNoCmts}
                     </Text>
@@ -275,9 +284,17 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard color={retweeted ? '#82ff82': 'white'} bgColor="transparent"  p={0} onClick={tweetRetweeted}>
-                    <Icon  as={retweeted ? AiOutlineRetweet: AiOutlineRetweet} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2" as='b'>
+                  <CustomCard
+                    color={retweeted ? "#82ff82" : "white"}
+                    bgColor="transparent"
+                    p={0}
+                    onClick={tweetRetweeted}
+                  >
+                    <Icon
+                      as={retweeted ? AiOutlineRetweet : AiOutlineRetweet}
+                      boxSize={5}
+                    />
+                    <Text fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {retweets}
                     </Text>
@@ -292,9 +309,18 @@ const Tweet = ({ tweetInfo }) => {
                   openDelay={400}
                   closeDelay={400}
                 >
-                  <CustomCard bgColor="transparent" color={liked ? '#f44336': 'white'} p={0} onClick={tweetLiked}>
-                    <Icon color='#ff0076' as={liked ? FcLike: AiOutlineHeart}  boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2" as='b'>
+                  <CustomCard
+                    bgColor="transparent"
+                    color={liked ? "#f44336" : "white"}
+                    p={0}
+                    onClick={tweetLiked}
+                  >
+                    <Icon
+                      color="#ff0076"
+                      as={liked ? FcLike : AiOutlineHeart}
+                      boxSize={5}
+                    />
+                    <Text fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {likes}
                     </Text>
@@ -310,7 +336,7 @@ const Tweet = ({ tweetInfo }) => {
                 >
                   <CustomCard bgColor="transparent" color="white" p={0}>
                     <Icon as={BiBarChart} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2" as='b'>
+                    <Text fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {views}
                     </Text>

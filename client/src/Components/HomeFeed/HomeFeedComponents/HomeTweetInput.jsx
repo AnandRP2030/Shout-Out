@@ -138,7 +138,7 @@ const HomeTweetInput = () => {
   return (
     <>
       <Grid
-        // templateRows="repeat(10, 1fr)"
+        
         templateColumns="repeat(11, 1fr)"
         gap={4}
         h={

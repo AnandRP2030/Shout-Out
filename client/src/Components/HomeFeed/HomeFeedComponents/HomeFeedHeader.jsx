@@ -21,6 +21,7 @@ const HomeFeedHeader = () => {
       gap={4}
       borderBottom="1px solid #2d3e4f"
       pb={5}
+      
     >
       <GridItem rowSpan={1} colSpan={6}>
         <Text className={style.cursorPointer} fontSize='1.5rem' as='b' ml='2%'  > Home </Text>
