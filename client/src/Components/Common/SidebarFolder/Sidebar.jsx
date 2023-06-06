@@ -17,11 +17,11 @@ const SideBar = () => {
       <SidbarItems label={"Notifications"} />
       <SidbarItems label={"Messages"} />
       <SidbarItems label={"Bookmarks"} />
-      <SidbarItems label={"Twitter Blue"} />
+      <SidbarItems label={"Shout Pro"} />
       <SidbarItems label={"Profile"} />
       <SidbarItems label={"More"} />
 
-      <TweetButton colorCode={"#f91880"} content={"Tweet"} />
+      <TweetButton colorCode={"#f91880"} content={"Shout"} />
 
       <Spacer />
       <ProfileBox />

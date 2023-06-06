@@ -193,4 +193,24 @@ retweet = async (req, res) => {
   }
 };
 
-module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet,  retweet};
+
+comment = async (req, res) => {
+  try {
+    let {commentContent} = req.body;
+
+    if (!commentContent) {
+      return res.status(400).json({error: 'Comment should not be empty'});
+    }
+    let tweetId = req.params.tweetId;
+    let tweet = await TweetModel.findById(tweetId);
+    let commenter = req.user.userId.toString();
+    tweet.comments.push({commenter, commentContent})
+    await tweet.save()
+    return res.status(201).send({message: "Comment added"})    
+  } catch (err) {
+    return res.status(500).send({ error: err });
+  }
+};
+
+
+module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet,  retweet, comment};

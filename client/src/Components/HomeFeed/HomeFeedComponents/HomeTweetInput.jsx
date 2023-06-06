@@ -261,7 +261,7 @@ const HomeTweetInput = () => {
             </HStack>
             <Button className={style.tweetBtn} onClick={userTweeted}>
               {" "}
-              Tweet{" "}
+              Shout{" "}
             </Button>
           </HStack>
         </GridItem>

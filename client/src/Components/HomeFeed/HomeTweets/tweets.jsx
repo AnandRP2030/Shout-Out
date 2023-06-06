@@ -142,8 +142,11 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     const topPosition = window.scrollY + 100;
     setCommentBox(!commentBox);
     setCommentPosition({ top: topPosition });
-
+    toggleCommentBox(index)
   };
+  
+
+
 
   return (
     <>
@@ -197,7 +200,9 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
       
           {commentBoxIndex === index && commentBox && (
             <CommentBox
-               tweetInfo={tweetInfo}
+              tweetInfo={tweetInfo}
+              index={index}
+              toggleCommentBox={toggleCommentBox}
               boxPosition={commentPosition}
               setCommentBox={setCommentBox}
             />
@@ -266,7 +271,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
                     color="white"
                     p={0}
                     onClick={(event) => {
-                      toggleCommentBox(index), toggleCommentBox2(event);
+                    toggleCommentBox2(event);
                     }}
                   >
                     <Icon as={FaRegComment} boxSize={5} />

@@ -16,22 +16,58 @@ import {
 import React from "react";
 import style from "../HomeTweets/tweet.module.css";
 import style2 from "../homeFeed.module.css";
-
+import { useState } from "react";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import { AiOutlineClose, AiOutlineCloseSquare } from "react-icons/ai";
 import { BsEmojiHeartEyes, BsImage } from "react-icons/bs";
 import { CgPoll } from "react-icons/cg";
 import { MdSchedule } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { TWEET_EDITED } from "../../../Redux/ActionTypes/tweetActionTypes";
 
-const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
+const CommentBox = ({
+  boxPosition,
+  tweetInfo,
+  setCommentBox,
+  toggleCommentBox,
+  index,
+}) => {
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   const { content } = tweetInfo;
-
+  const [commentContent, setCommentContent] = useState("");
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
+  const dispatch = useDispatch();
 
+  const newComment = async () => {
+    if (!commentContent) return;
+    let res = await saveComment(commentContent);
+    if (res.status === 201) {
+      console.log("comment added");
+    } else {
+      console.log(res);
+    }
 
+    dispatch({ type: TWEET_EDITED });
+    toggleCommentBox(index);
+    setCommentBox(false);
+  };
+
+  const saveComment = async (commentContent) => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    let token = localStorage.getItem("token").replaceAll('"', "");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let tweetId = tweetInfo.tweetId;
+    const COMMENT_URL = `${BASE_URL}/user/tweets/comment/${tweetId}`;
+    let res = await axios.patch(COMMENT_URL, { commentContent }, config);
+    return res;
+  };
 
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
     <Box>
@@ -40,11 +76,10 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
       </Tag>
     </Box>
   ));
-
   return (
     <Box pos="absolute" top={boxPosition.top} className={style.commentBox}>
       <Grid templateColumns="repeat(10, 1fr)" gap={4}>
-        <GridItem className={style.userProfilePicBox} colSpan={1} >
+        <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
             className={style.userProfilePic}
             src={profilePicture}
@@ -76,7 +111,10 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
                 <CustomCard
                   bgColor="transparent"
                   color="white"
-                  onClick={() => setCommentBox(false)}
+                  onClick={() => {
+                    setCommentBox(false);
+                    toggleCommentBox(index);
+                  }}
                 >
                   <Icon as={AiOutlineClose} boxSize={7} color="#b5aaaa" />{" "}
                 </CustomCard>
@@ -85,7 +123,9 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
           </HStack>
         </GridItem>
         <GridItem colSpan={1}> </GridItem>
-        <GridItem bg='#141e28' p={1} colSpan={9}>{content}</GridItem>
+        <GridItem bg="#141e28" p={1} colSpan={9}>
+          {content}
+        </GridItem>
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
             className={style.userProfilePic}
@@ -93,10 +133,17 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
             alt="userProfilePic"
           />
         </GridItem>
-        <GridItem h='120px'  colSpan={9} >
-          <Textarea h='120px' fontSize='1.2rem' letterSpacing={2}  placeholder="Tweet your replay!"/>
-          
-          <HStack className={style2.tweetLine} mt='20px'>
+        <GridItem h="120px" colSpan={9}>
+          <Textarea
+            value={commentContent}
+            onChange={(e) => setCommentContent(e.target.value)}
+            h="120px"
+            fontSize="1.2rem"
+            letterSpacing={2}
+            placeholder="Tweet your replay!"
+          />
+
+          <HStack className={style2.tweetLine} mt="20px">
             <HStack className={style2.tweetIcons}>
               <Icon as={BsImage} boxSize={5} />
               <Icon as={CgPoll} boxSize={5} />
@@ -104,9 +151,9 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
               <Icon as={MdSchedule} boxSize={5} />
               <Icon as={IoLocationOutline} boxSize={5} />
             </HStack>
-            <Button className={style2.tweetBtn}>
+            <Button onClick={newComment} className={style2.tweetBtn}>
               {" "}
-              Tweet{" "}
+              Comment{" "}
             </Button>
           </HStack>
         </GridItem>

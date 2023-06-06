@@ -42,7 +42,7 @@ const SidbarItems = ({label}) => {
         Icon = MsgSvg;
     }else if (label === "Bookmarks"){
         Icon = BookmarkSvg;
-    }else if (label === "Twitter Blue"){
+    }else if (label === "Shout Pro"){
         Icon = TwitterBlueSvg;
     }else if (label === "Profile"){
         Icon = ProfileSvg;
@@ -50,7 +50,6 @@ const SidbarItems = ({label}) => {
         Icon = FlyBird;
     }else if (label === "More") {
         Icon = MoreSvg;
-        
     }
 
 
