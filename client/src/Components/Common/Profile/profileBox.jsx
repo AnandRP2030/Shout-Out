@@ -16,12 +16,15 @@ const ProfileBox = () => {
     const renderUserData = async () => {
       let userDetails = await getUserDetails();
       
-      setUserData({
-        ...userData,
-        name: userDetails.name,
-        username: userDetails.username,
-        profilePicture: userDetails.profilePicture
-      });
+      if (userData) {
+
+        setUserData({
+          ...userData,
+          name: userDetails.name,
+          username: userDetails.username,
+          profilePicture: userDetails.profilePicture
+        });
+      }
     };
 
     renderUserData();
@@ -30,13 +33,16 @@ const ProfileBox = () => {
   const getUserDetails = async () => {
     const GET_USERDETAILS_URL = `${BASE_URL}/user/user-details`;
     let token = localStorage.getItem("token");
-    token = token.replaceAll('"', "");
-    let res = await axios.get(GET_USERDETAILS_URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
+    if (token) {
+      token = token.replaceAll('"', "");
+      let res = await axios.get(GET_USERDETAILS_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    }
+      return null;
   };
 
   const profileImg = {

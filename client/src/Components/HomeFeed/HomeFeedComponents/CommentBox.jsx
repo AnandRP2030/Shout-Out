@@ -11,6 +11,7 @@ import {
   Input,
   Textarea,
   Button,
+  StatHelpText,
 } from "@chakra-ui/react";
 import React from "react";
 import style from "../HomeTweets/tweet.module.css";
@@ -22,10 +23,14 @@ import { BsEmojiHeartEyes, BsImage } from "react-icons/bs";
 import { CgPoll } from "react-icons/cg";
 import { MdSchedule } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import {useSelector} from 'react-redux';
 
 const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   const { content } = tweetInfo;
+
+  const activeUserProPic = useSelector((state) => state.user.profilePicture);
+
 
 
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
@@ -84,7 +89,7 @@ const CommentBox = ({ boxPosition, tweetInfo, setCommentBox }) => {
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
             className={style.userProfilePic}
-            src={profilePicture}
+            src={activeUserProPic}
             alt="userProfilePic"
           />
         </GridItem>

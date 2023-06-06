@@ -18,7 +18,8 @@ const HomeTweets = () => {
   const [newTweetCount, setNewTweetCount] = useState(findTweetCount());
 
   const unSubscribe = store.subscribe(() => {
-    const count = findTweetCount();
+ 
+   const count = findTweetCount();
     setNewTweetCount(count);
   });
 
