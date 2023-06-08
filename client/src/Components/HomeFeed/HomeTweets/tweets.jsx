@@ -37,6 +37,7 @@ import style from "./tweet.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   TWEET_DELETED,
   TWEET_EDITED,
@@ -52,13 +53,9 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const [commentPosition, setCommentPosition] = useState({ top: 0 });
 
   const [commentBox, setCommentBox] = useState(false);
+  const navigate = useNavigate();
 
-
-  const handleTweetClick = () => {
-    if (moreOpen) {
-      setMoreOpen(false);
-    }
-  };
+  
   let {
     content,
     comments,
@@ -73,11 +70,19 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   } = tweetInfo;
   let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
   let { liked, retweeted, shared } = tweetInfo.tweetStatus;
+
   if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
   if (len < 100) gridHeight = 2;
   else if (len < 170) gridHeight = 3;
+
+  const handleTweetClick = () => {
+    if (moreOpen) {
+      setMoreOpen(false);
+    }
+    navigate(`/fulltweet/${tweetId}`)
+  };
 
   const [editContent, setEditContent] = useState(content);
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (

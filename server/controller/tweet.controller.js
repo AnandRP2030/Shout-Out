@@ -1,6 +1,67 @@
 const TweetModel = require("../models/tweet.model.js");
 const RegistrationModel = require("../models/user.model.js");
 const mongoose = require("mongoose");
+
+const findTweet = async (tweetId) => {
+  let validTweetId = mongoose.isValidObjectId(tweetId);
+  if (validTweetId) {
+    let tweet = await TweetModel.findById(tweetId);
+    if (!tweet) {
+      return res.status(404).send({ error: "Tweet not found" });
+    } else {
+      return tweet;
+    }
+  } else {
+    return res.status(404).send({ error: "Invalid tweet Id" });
+  }
+};
+
+const findStatus = (tweets, activeUserId) => {
+  let statusArr = [];
+  tweets.forEach((tweet) => {
+    let status = {
+      liked: false,
+      retweeted: false,
+      shared: false,
+    };
+
+    let isLiked = tweet.likes.findIndex((ids) => {
+      return ids.toString() === activeUserId;
+    });
+    let isRetweeted = tweet.retweets.findIndex((ids) => {
+      return ids.toString() === activeUserId;
+    });
+
+    if (isLiked !== -1) {
+      status.liked = true;
+    }
+    if (isRetweeted !== -1) {
+      status.retweeted = true;
+    }
+
+    statusArr.push(status);
+  });
+  return statusArr;
+};
+
+const findOwner = async (tweets) => {
+  let ownersData = await Promise.all(
+    tweets.map(async (tweet, idx) => {
+      const tweetOwner = await RegistrationModel.find({ _id: tweet.owner });
+      return tweetOwner;
+    })
+  );
+
+  let modifiedOwners = [];
+  for (const owner of ownersData) {
+    let modifiedData = { ...owner[0] };
+    delete modifiedData.password;
+    modifiedOwners.push(modifiedData);
+  }
+
+  return modifiedOwners;
+};
+
 createTweet = async (req, res) => {
   try {
     let { content, imageUrls, audience = "Everyone" } = req.body;
@@ -29,69 +90,31 @@ getTweets = async (req, res) => {
     let tweetsStatus = findStatus(tweets, req.user.userId);
     let ownersInfo = await findOwner(tweets);
     // console.log(tweets)
-    return res.status(200).send({ message: "All Tweets", tweets, ownersInfo, tweetsStatus });
+    return res
+      .status(200)
+      .send({ message: "All Tweets", tweets, ownersInfo, tweetsStatus });
   } catch (err) {
     return res.status(500).send({ error: err });
   }
 };
 
-const findStatus  = (tweets, activeUserId) => {
-  let statusArr = [];
-  tweets.forEach(tweet => {
-    let status = {
-      liked: false,
-      retweeted: false,
-      shared: false
-    }
+getATweet = async (req, res) => {
+  const tweetId = req.params.tweetId;
+  try {
+    let tweets = [];
+    let ownersInfo = [];
+    let tweetsStatus = [];
 
-    let isLiked = tweet.likes.findIndex((ids) => {
-      return ids.toString() === activeUserId
-    });
-    let isRetweeted = tweet.retweets.findIndex((ids) => {
-      return ids.toString() === activeUserId
-    });
+    const tweet = await findTweet(tweetId);
+    const tweetsStatusObj = findStatus(tweets, req.user.userId);
+    const ownersInfoObj = await findOwner(tweets);
+    tweets.push(tweet);
+    ownersInfo.push(ownersInfoObj);
+    tweetsStatus.push(ownersInfoObj);
+    return res.status(200).send({message: "Tweet", tweets, ownersInfo, tweetsStatus});
 
-    if (isLiked !== -1) {
-      status.liked = true;
-    }
-    if (isRetweeted !== -1) {
-      status.retweeted = true;
-    }
-
-    statusArr.push(status);
-  });
-  return statusArr;
-} 
-
-const findOwner = async (tweets) => {
-  let ownersData = await Promise.all(
-    tweets.map(async (tweet, idx) => {
-      const tweetOwner = await RegistrationModel.find({ _id: tweet.owner });
-      return tweetOwner;
-    })
-  );
-
-  let modifiedOwners = [];
-  for (const owner of ownersData) {
-    let modifiedData = { ...owner[0] };
-    delete modifiedData.password;
-    modifiedOwners.push(modifiedData);
-  }
-
-  return modifiedOwners;
-};
-
-const findTweet = async (tweetId) => {
-  let validTweetId = mongoose.isValidObjectId(tweetId);
-  if (validTweetId) {
-    let tweet = await TweetModel.findById(tweetId);
-    if (!tweet) {
-      return res.status(404).send({ error: "Tweet not found" });
-    } else {
-      return tweet;
-    }
-  } else {
-    return res.status(404).send({ error: "Invalid tweet Id" });
+  } catch (err) {
+    return res.status(500).send({ error: err });
   }
 };
 
@@ -147,7 +170,6 @@ likeTweet = async (req, res) => {
     let likes = tweet.likes;
     let userId = req.user.userId.toString();
     let alreadyLiked = likes.findIndex((elem) => elem.toString() === userId);
-  
 
     if (alreadyLiked === -1) {
       tweet.likes.push(userId);
@@ -173,7 +195,9 @@ retweet = async (req, res) => {
     let tweet = await TweetModel.findById(tweetId);
     let retweeets = tweet.retweets;
     let userId = req.user.userId.toString();
-    let alreadyTweeted = retweeets.findIndex((elem) => elem.toString() === userId); 
+    let alreadyTweeted = retweeets.findIndex(
+      (elem) => elem.toString() === userId
+    );
     if (alreadyTweeted === -1) {
       tweet.retweets.push(userId);
       await tweet.save();
@@ -193,24 +217,31 @@ retweet = async (req, res) => {
   }
 };
 
-
 comment = async (req, res) => {
   try {
-    let {commentContent} = req.body;
+    let { commentContent } = req.body;
 
     if (!commentContent) {
-      return res.status(400).json({error: 'Comment should not be empty'});
+      return res.status(400).json({ error: "Comment should not be empty" });
     }
     let tweetId = req.params.tweetId;
     let tweet = await TweetModel.findById(tweetId);
     let commenter = req.user.userId.toString();
-    tweet.comments.push({commenter, commentContent})
-    await tweet.save()
-    return res.status(201).send({message: "Comment added"})    
+    tweet.comments.push({ commenter, commentContent });
+    await tweet.save();
+    return res.status(201).send({ message: "Comment added" });
   } catch (err) {
     return res.status(500).send({ error: err });
   }
 };
 
-
-module.exports = { createTweet, getTweets, deleteTweet, editTweet, likeTweet,  retweet, comment};
+module.exports = {
+  createTweet,
+  getTweets,
+  getATweet,
+  deleteTweet,
+  editTweet,
+  likeTweet,
+  retweet,
+  comment,
+};

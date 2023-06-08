@@ -9,6 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Responsive from "./Components/Common/responsive";
 import { Provider } from "react-redux";
 import {store} from "./Redux/store.js";
+import FullTweet from "./Components/FullTweet/fullTweet";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="home" element={<App />} />
+            <Route path="/fulltweet/:tweetId" element={<FullTweet/>} />
             <Route path="explore" element={<App />} />
             <Route path="communities" element={<App />} />
             <Route path="notifications" element={<App />} />

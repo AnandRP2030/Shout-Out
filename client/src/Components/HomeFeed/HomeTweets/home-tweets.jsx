@@ -5,7 +5,7 @@ import { Player } from "video-react";
 import axios from "axios";
 import { store } from "../../../Redux/store.js";
 
-const HomeTweets = () => {
+const HomeTweets = ({tweetIdentity}) => {
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
   const toggleCommentBox = (index) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
@@ -35,16 +35,18 @@ const HomeTweets = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const GET_ALL_TWEETS = `${import.meta.env.VITE_BASE_URL}/user/tweets`;
+    let GET_ALL_TWEETS = `${import.meta.env.VITE_BASE_URL}/user/tweets`;
     const data = await axios.get(GET_ALL_TWEETS, config);
     displayContent(data.data);
   };
 
   const displayContent = (data) => {
-    const { tweets, ownersInfo, tweetsStatus } = data;
+    
+    const {tweets, ownersInfo, tweetsStatus} = data;
     let Tweets = [];
     for (let i = tweets.length - 1; i >= 0; i--) {
       let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
+      
       let ownerData = {
         username,
         name,
@@ -68,7 +70,16 @@ const HomeTweets = () => {
         tweetStatus: tweetsStatus[i],
       };
 
-      Tweets.push(tweet);
+      if (tweetIdentity) {
+        if (tweetIdentity === tweet.tweetId) {
+         
+          Tweets.push(tweet);
+          break;
+        }
+      }else {
+        Tweets.push(tweet);
+      }
+
     }
 
     setAllTweets(Tweets);

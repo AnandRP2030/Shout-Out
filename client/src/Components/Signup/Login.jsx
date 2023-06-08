@@ -20,13 +20,6 @@ import flyTwit from "../../../asset/fly-bird.gif";
 const Login = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   let token = JSON.parse(localStorage.getItem("token"));
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // }, []);
-
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
     boxShadow:
