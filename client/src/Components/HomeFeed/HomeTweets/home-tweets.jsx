@@ -81,7 +81,6 @@ const HomeTweets = ({tweetIdentity}) => {
       }
 
     }
-
     setAllTweets(Tweets);
   };
 

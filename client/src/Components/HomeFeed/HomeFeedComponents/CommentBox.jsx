@@ -16,7 +16,6 @@ import {
 import React from "react";
 import style from "../HomeTweets/tweet.module.css";
 import style2 from "../homeFeed.module.css";
-import { useState } from "react";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import { AiOutlineClose, AiOutlineCloseSquare } from "react-icons/ai";
 import { BsEmojiHeartEyes, BsImage } from "react-icons/bs";
@@ -37,7 +36,7 @@ const CommentBox = ({
 }) => {
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   const { content } = tweetInfo;
-  const [commentContent, setCommentContent] = useState("");
+  
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
   const dispatch = useDispatch();
 

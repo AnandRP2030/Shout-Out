@@ -16,6 +16,26 @@ const findTweet = async (tweetId) => {
   }
 };
 
+findUserById = async (req, res) => {
+  const { userId } = req.params;
+
+  console.log(req.params)
+  try {
+    let validUserId = mongoose.isValidObjectId(userId);
+    if (validUserId) {
+      const user = await RegistrationModel.findById(userId);
+      console.log(user)
+      if (user) {
+        return res.status(200).send({ user });
+      }
+    } else {
+      return res.status(404).send({ error: "Invalid User Id" });
+    }
+  } catch (error) {
+    return res.status(500).send({ error: error });
+  }
+};
+
 const findStatus = (tweets, activeUserId) => {
   let statusArr = [];
   tweets.forEach((tweet) => {
@@ -111,8 +131,9 @@ getATweet = async (req, res) => {
     tweets.push(tweet);
     ownersInfo.push(ownersInfoObj);
     tweetsStatus.push(ownersInfoObj);
-    return res.status(200).send({message: "Tweet", tweets, ownersInfo, tweetsStatus});
-
+    return res
+      .status(200)
+      .send({ message: "Tweet", tweets, ownersInfo, tweetsStatus });
   } catch (err) {
     return res.status(500).send({ error: err });
   }
@@ -238,6 +259,7 @@ comment = async (req, res) => {
 module.exports = {
   createTweet,
   getTweets,
+  findUserById,
   getATweet,
   deleteTweet,
   editTweet,
