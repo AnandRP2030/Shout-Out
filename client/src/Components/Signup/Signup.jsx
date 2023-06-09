@@ -16,8 +16,10 @@ import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
+import { useToast } from "@chakra-ui/react";
 
 const Signup = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
@@ -64,6 +66,7 @@ const Signup = () => {
       registerUser(userDetails);
     } else {
       alert("Please enter all the fields");
+      
     }
   };
 
@@ -95,9 +98,7 @@ const Signup = () => {
     });
     if (res.status === 201) {
       let data = await res.json();
-      console.log("new user => ", data.userData);
-      console.log("msg, ", data);
-      alert("Registration successful");
+      
       setUserDetails({
         name: "",
         username: "",
@@ -105,7 +106,19 @@ const Signup = () => {
         password: "",
         profilePicture: "",
       });
-      navigate('/login')
+      toast({
+        position: 'top-center',
+        render: () => (
+          <Box color='white' p={3} bg='blue.500'>
+            
+            <Text textAlign='center' fontSize='1.2rem'> Registration Completed. </Text>
+          </Box>
+        ),
+      })
+      
+      setTimeout(() => {
+        navigate('/login')
+      },1550)
     } else if (res.status === 409) {
       let data = await res.json();
       alert(data.error);

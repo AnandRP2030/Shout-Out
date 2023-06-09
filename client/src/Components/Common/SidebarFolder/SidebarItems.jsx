@@ -48,7 +48,7 @@ const SidbarItems = ({label}) => {
         Icon = ProfileSvg;
     }else if (label === ""){
         Icon = FlyBird;
-    }else if (label === "More") {
+    }else if (label === "Logout") {
         Icon = MoreSvg;
     }
 
@@ -81,7 +81,7 @@ const SidbarItems = ({label}) => {
             navigate('/twitter_blue')
         }else if (label === "Profile"){
             navigate('/signup')
-        }else if (label === "More"){
+        }else if (label === "Logout"){
             removeItemLs()
             navigate('/home')
         }else if (label === ""){

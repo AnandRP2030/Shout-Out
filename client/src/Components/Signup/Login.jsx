@@ -16,10 +16,11 @@ import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
+import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const toast = useToast();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const formStyle = {
     boxShadow:
@@ -52,7 +53,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-   
+
     const { email, password } = userData;
 
     if (email && password) {
@@ -74,7 +75,7 @@ const Login = () => {
 
   const validateUser = async ({ email, password }) => {
     const LOGIN_URL = `${BASE_URL}/user/login`;
-    
+
     let res = await fetch(LOGIN_URL, {
       method: "POST",
       headers: {
@@ -85,27 +86,30 @@ const Login = () => {
         password,
       }),
     });
-    
-   
+
     if (res.status === 200) {
       let data = await res.json();
-      console.log('res data', data);
 
       const { username, name } = data.UserPassingData;
-      alert(`Welocme back ${name}`);
-      const setToken = () => {
-        localStorage.setItem("token", JSON.stringify(data.token));
-        redirectHome()
-      }
-      function redirectHome () {
-        navigate('/')
-      }
 
-      setToken()
-    }else {
+      toast({
+        position: "top-center",
+        render: () => (
+          <Box color="white" p={3} bg="blue.500">
+            <Text textAlign="center" fontSize="1.2rem">
+              {" "}
+              Welocme back {name}{" "}
+            </Text>
+          </Box>
+        ),
+      });
+
+      localStorage.setItem("token", JSON.stringify(data.token));
+
+      navigate("/");
+    } else {
       let output = await res.json();
       alert(output.error);
-
     }
   };
 

@@ -27,6 +27,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { NEW_TWEET_ADDED } from "../../../Redux/ActionTypes/tweetActionTypes.js";
 import { store } from "../../../Redux/store.js";
+import {useToast} from "@chakra-ui/react";
 
 const HomeTweetInput = () => {
   const [tweetData, setTweetData] = useState({
@@ -34,7 +35,7 @@ const HomeTweetInput = () => {
     audience: "Everyone",
   });
   const [images, setImages] = useState([]);
-
+  const toast = useToast();
   const [profilePicture, setProfilePicture] = useState(
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
   );
@@ -42,7 +43,8 @@ const HomeTweetInput = () => {
   const [inputActive, setInputActive] = useState(false);
 
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
-  const uploadImg = () => {
+  const uploadImg = (e) => {
+    e.stopPropagation();
     setDragAreaOpen(!dragAreaOpen);
   };
 
@@ -106,6 +108,17 @@ const HomeTweetInput = () => {
       audience: "",
     });
     setImages([]);
+  
+    toast({
+      duration: 1500,
+      position: 'bottom-center',
+      render: () => (
+        <Box color='white' p={3} bg='#f91880'>
+          <Text textAlign='center'> Your Tweet was sent. </Text>
+        </Box>
+      ),
+    })
+
   };
 
 
@@ -209,7 +222,6 @@ const HomeTweetInput = () => {
             value={images}
             onChange={imageAdded}
             maxNumber={maxNumber}
-            dataURLKey="data_url"
             acceptType={["jpg", "png", "gif "]}
           >
             {({

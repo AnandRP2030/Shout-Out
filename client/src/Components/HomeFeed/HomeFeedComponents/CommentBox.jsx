@@ -27,6 +27,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { TWEET_EDITED } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
+
 const CommentBox = ({
   boxPosition,
   tweetInfo,
@@ -34,8 +36,13 @@ const CommentBox = ({
   toggleCommentBox,
   index,
 }) => {
+  const toast = useToast();
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
-  const { content } = tweetInfo;
+  let { content } = tweetInfo;
+  if (content.length > 100) {
+    content = content.substring(0, 100); 
+    content += '...'
+  }
   const [commentContent, setCommentContent] = useState("");
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
   const dispatch = useDispatch();
@@ -53,6 +60,16 @@ const CommentBox = ({
     dispatch({ type: TWEET_EDITED });
     toggleCommentBox(index);
     setCommentBox(false);
+
+    toast({
+      duration: 1000,
+      position: 'bottom-center',
+      render: () => (
+        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
+          <Text textAlign='center' fontSize='1.2rem'> Your Replay was sent. </Text>
+        </Box>
+      ),
+    })
   };
 
   const saveComment = async (commentContent) => {

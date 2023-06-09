@@ -35,7 +35,7 @@ import {
 } from "react-icons/all";
 import style from "./tweet.module.css";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -45,8 +45,10 @@ import {
 } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { store } from "../../../Redux/store.js";
 import CommentBox from "../HomeFeedComponents/CommentBox";
+import { useToast } from "@chakra-ui/react";
 
 const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
+  const toast = useToast();
   const [moreOpen, setMoreOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [commentPosition, setCommentPosition] = useState({ top: 0 });
@@ -69,7 +71,6 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
   let { liked, retweeted, shared } = tweetInfo.tweetStatus;
 
-  if (content.length > 300) content = content.substring(0, 220);
   let gridHeight = 4;
   let len = content.length;
   if (len < 100) gridHeight = 2;
@@ -93,7 +94,6 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   let token = localStorage.getItem("token");
-  console.log(typeof token, 'token type')
   if (!token) {
     navigate('/signup');
   }
@@ -119,6 +119,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
         };
       };
       store.dispatch(deleteTweet());
+
+      toast({
+        duration: 1000,
+        position: 'bottom-center',
+        render: () => (
+          <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
+            <Text textAlign='center' fontSize='1.2rem'> Your Tweet was deleted. </Text>
+          </Box>
+        ),
+      })
     } else if (res.status === 403) {
       console.log("You can't delete others tweet ");
     } else {
@@ -136,6 +146,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
       store.dispatch({ type: TWEET_EDITED });
     }
     setEditOpen(false);
+   
+    toast({
+      duration: 1500,
+      position: 'bottom-center',
+      render: () => (
+        <Box color='white' p={3} bg='#f91880'>
+          <Text textAlign='center'> Your Tweet was Edited. </Text>
+        </Box>
+      ),
+    })
   };
 
   const tweetLiked = async (event) => {
@@ -143,6 +163,17 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
     let res = await axios.patch(LIKE_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
+
+
+    toast({
+      duration: 1000,
+      position: 'bottom-center',
+      render: () => (
+        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
+          <Text textAlign='center' fontSize='1.2rem'> Tweet Liked. </Text>
+        </Box>
+      ),
+    })
   };
 
   const tweetRetweeted = async (event) => {
@@ -150,6 +181,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     const RETWEET_URL = `${BASE_URL}/user/tweets/retweet/${tweetId}`;
     let res = await axios.patch(RETWEET_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
+
+    toast({
+      duration: 1000,
+      position: 'bottom-center',
+      render: () => (
+        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
+          <Text textAlign='center' fontSize='1.2rem'> Tweet Retweeted. </Text>
+        </Box>
+      ),
+    })
   };
 
   const toggleCommentBox2 = (event) => {
@@ -409,3 +450,4 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   );
 };
 export default Tweet;
+
