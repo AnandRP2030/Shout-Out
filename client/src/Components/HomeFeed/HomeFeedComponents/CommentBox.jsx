@@ -26,7 +26,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { TWEET_EDITED } from "../../../Redux/ActionTypes/tweetActionTypes";
-
+import { useState } from "react";
 const CommentBox = ({
   boxPosition,
   tweetInfo,
@@ -36,11 +36,12 @@ const CommentBox = ({
 }) => {
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   const { content } = tweetInfo;
-  
+  const [commentContent, setCommentContent] = useState("");
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
   const dispatch = useDispatch();
 
-  const newComment = async () => {
+  const newComment = async (e) => {
+    e.stopPropagation();
     if (!commentContent) return;
     let res = await saveComment(commentContent);
     if (res.status === 201) {
@@ -135,7 +136,8 @@ const CommentBox = ({
         <GridItem h="120px" colSpan={9}>
           <Textarea
             value={commentContent}
-            onChange={(e) => setCommentContent(e.target.value)}
+            onChange={(e) =>{e.stopPropagation(); setCommentContent(e.target.value)}}
+            onClick={(e) => e.stopPropagation()}
             h="120px"
             fontSize="1.2rem"
             letterSpacing={2}

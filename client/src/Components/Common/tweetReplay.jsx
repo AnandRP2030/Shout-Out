@@ -66,10 +66,10 @@ const TweetReplay = () => {
             letterSpacing={2}
             placeholder="Tweet your replay!"
             onFocus={() => {
-              inputActive(true);
+              setInputActive(true);
             }}
             onBlur={() => {
-              inputActive(false);
+              setInputActive(false);
             }}
           />
 

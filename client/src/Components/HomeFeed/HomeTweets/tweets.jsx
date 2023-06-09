@@ -277,6 +277,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
                     color="white"
                     p={0}
                     onClick={(event) => {
+                      event.stopPropagation()
                       toggleCommentBox2(event);
                     }}
                   >
