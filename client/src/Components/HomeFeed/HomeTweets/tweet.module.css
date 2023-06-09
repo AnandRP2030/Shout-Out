@@ -1,6 +1,7 @@
 .tweetBox {
   padding: 10px 20px 20px;
   border-bottom: 1px solid rgb(45, 62, 79);
+  border-top: 1px solid rgb(45, 62, 79);
   cursor: pointer;
   box-sizing: border-box;
 }

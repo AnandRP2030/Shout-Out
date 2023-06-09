@@ -1,8 +1,8 @@
 import { NEW_ACTIVE_USER } from "../ActionTypes/tweetActionTypes";
 import axios from 'axios';
-import { store } from "../store";
 
 export const initializeUser = ()  => {
+  
     return async (dispatch) => {
         try {
             const BASE_URL = import.meta.env.VITE_BASE_URL;

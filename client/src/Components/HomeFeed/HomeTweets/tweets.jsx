@@ -92,7 +92,13 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   ));
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  let token = localStorage.getItem("token").replaceAll('"', "");
+  let token = localStorage.getItem("token");
+  console.log(typeof token, 'token type')
+  if (!token) {
+    navigate('/signup');
+  }
+
+  token = token.replaceAll('"', "");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -100,7 +106,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   };
   // tweet crud methods
   const deleteTweet = async (event) => {
-    event.stopPropatagion();
+    event.stopPropagation();
+    
     const DELETE_URL = `${BASE_URL}/user/tweets/delete/${tweetId}`;
     let res = await axios.delete(DELETE_URL, config);
     if (res.status === 204) {
@@ -119,7 +126,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     }
   };
 
-  const submitEditedContent = async () => {
+  const submitEditedContent = async (e) => {
+    e.stopPropagation()
     const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
     let res = await axios.patch(EDIT_URL, { editContent }, config);
 
@@ -214,7 +222,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
             />
           )}
 
-          <Box className={style.moreBox} display={moreOpen ? "block" : "none"}>
+          <Box className={style.moreBox} onClick={(e) => e.stopPropagation()} display={moreOpen ? "block" : "none"}>
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
               <Text> Not interested in this Tweet </Text>

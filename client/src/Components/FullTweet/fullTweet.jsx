@@ -11,15 +11,29 @@ import { useParams } from "react-router-dom";
 import "./fullTweet.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TweetReplay from "../Common/tweetReplay";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const token = localStorage.getItem("token").replaceAll('"', "");
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
+import TweetReplay from "../Common/tweet Replay/tweetReplay";
+import { useNavigate } from "react-router-dom";
 
 const FullTweet = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  let token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const [newCmntCount, setNewCmntCount] = useState(0);
+
+  useEffect(() => {
+    getTweet();
+  }, [newCmntCount]);
+
+  if (token) {
+    token = token.replaceAll('"', "");
+  } else {
+    navigate("/signup");
+  }
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   const [comments, setComments] = useState([]);
   const [commentOwners, setCommentOwners] = useState([]);
 
@@ -30,7 +44,7 @@ const FullTweet = () => {
     const response = await axios.get(GET_TWEET_URL, config);
     const { tweets } = response.data;
 
-    setComments(tweets[0].comments);
+ 
 
     const allComments = tweets[0].comments;
     allComments.reverse();
@@ -40,18 +54,10 @@ const FullTweet = () => {
       let owner = await findOwner(comment.commenter);
       owners.push(owner);
     }
+    setComments(tweets[0].comments);
     setCommentOwners(owners);
-
-    return owners;
   };
 
-  useEffect(() => {
-    const getOwners = async () => {
-      let owners = await getTweet();
-    };
-
-    getOwners();
-  }, []);
 
   const findOwner = async (userId) => {
     const GET_OWNER_URL = `${BASE_URL}/user/tweets/user/${userId}`;
@@ -74,9 +80,12 @@ const FullTweet = () => {
           >
             <HomeFeedHeader headerName="Thread" />
             <HomeTweets tweetIdentity={tweetId} />
-            <TweetReplay/>
+            <TweetReplay
+              setNewCmntCount={setNewCmntCount}
+              newCmntCount={newCmntCount}
+            />
             {comments.length > 0 && commentOwners.length > 0 && (
-              <Box>
+              <Box mt="20px">
                 {comments.map((comment, idx) => {
                   const { commentContent, _id, time } = comment;
                   let ownersDetails = {
@@ -87,8 +96,8 @@ const FullTweet = () => {
                   };
 
                   {
-                    commentOwners[idx] &&
-                      (ownersDetails.username = commentOwners[idx].user.name),
+                    commentOwners[idx] && commentOwners[idx].user.username &&
+                      (ownersDetails.username = commentOwners[idx].user.username),
                       (ownersDetails.name = commentOwners[idx].user.name);
                     ownersDetails.ownerPic =
                       commentOwners[idx].user.profilePicture;
