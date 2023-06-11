@@ -16,12 +16,16 @@ const WhatHappening = () => {
   let trending4 = `https://www.shefinds.com/files/2023/05/Jennifer-Lawrence-74th-Venice-Film-Festival-Italy.jpg`
   let trending3 = `https://t4.ftcdn.net/jpg/05/95/69/35/240_F_595693569_w5sVhYnHyEe4vcpB09QoBJMzrQcZLqks.jpg`
   let trending5 = `https://imgk.timesnownews.com/story/kohli-rcb-happy-AP_3.jpg?tr=w-400,h-300,fo-auto`
+  
+
   return (
     <Grid
+      bgColor='red'
       templateRows="repeat(30, 1fr)"
       templateColumns="repeat(20, 1fr)"
       gap={4}
       id={style.trendingContainer}
+      w={[150, 190, 220, 300, 400]}
     >
       <GridItem rowSpan={3} colSpan={25}>
         <Text fontSize="3xl" as="b">

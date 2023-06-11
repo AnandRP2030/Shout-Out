@@ -23,7 +23,7 @@ div .searchBox:focus {
  #trendingContainer {
     margin-top: 20px;
     color: #fff;
-    background-color:#273340;
+    /* background-color:#273340; */
     padding: 20px 15px;
     border-radius: 20px;
     

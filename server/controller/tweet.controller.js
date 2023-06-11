@@ -85,6 +85,7 @@ const findOwner = async (tweets) => {
 createTweet = async (req, res) => {
   try {
     let { content, imageUrls, audience = "Everyone" } = req.body;
+  
     let private = false;
 
     if (audience === "Private") {
