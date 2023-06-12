@@ -1,15 +1,13 @@
 import SidbarItems from "./SidebarItems";
-import { Stack, HStack, VStack, Image, Spacer } from "@chakra-ui/react";
+import {VStack,  Spacer } from "@chakra-ui/react";
 import TweetButton from "../Button/tweetBtn";
 import ProfileBox from "../Profile/profileBox";
-import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
-  const navigate = useNavigate();
 
 
   return (
-    <VStack ml="2%" pos="fixed" color="#fff">
+    <VStack ml="2%" pos="fixed" color="#fff" w={[150, 180, 200, 250, 300]}>
       <SidbarItems label={""} />
       <SidbarItems label={"Home"} />
       <SidbarItems label={"Explore"} />

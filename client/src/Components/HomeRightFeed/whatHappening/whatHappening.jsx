@@ -18,17 +18,17 @@ const WhatHappening = () => {
   let trending5 = `https://imgk.timesnownews.com/story/kohli-rcb-happy-AP_3.jpg?tr=w-400,h-300,fo-auto`
   
 
+
   return (
     <Grid
-      bgColor='red'
       templateRows="repeat(30, 1fr)"
       templateColumns="repeat(20, 1fr)"
       gap={4}
       id={style.trendingContainer}
-      w={[150, 190, 220, 300, 400]}
+      w={[170, 210, 210, 300, 410]}
     >
       <GridItem rowSpan={3} colSpan={25}>
-        <Text fontSize="3xl" as="b">
+        <Text fontSize={{base: '20px', md: '22px', lg: '24px'}} as="b">
           What's Happening
         </Text>
       </GridItem>
@@ -38,8 +38,8 @@ const WhatHappening = () => {
         <Box className={style.trendingBox}>
           <Box>
             <Text color="#8b98a5"> Tredning in India </Text>
-            <Text as="b"> Nothing Phone</Text>
-            <Text color="#8b98a5"> 1200 Tweets</Text>
+            <Text fontSize={{base: '20px', md: '18px', lg: '16px'}} as="b"> Nothing Phone </Text>
+            <Text color="#8b98a5"> 1200 Tweets </Text>
           </Box>
 
           <Image w={20} h={20} src={trending1} alt="Trending" />

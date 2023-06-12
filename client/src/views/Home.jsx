@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <Grid templateColumns="repeat(18, 1fr)" gap={4}>
-      <GridItem colSpan={4}>
+      <GridItem colSpan={4} bgColor='red' >
         <SideBar />
       </GridItem>
       <GridItem  colSpan={hideComponent ? 14: 9}>
