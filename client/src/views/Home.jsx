@@ -14,17 +14,17 @@ const Home = () => {
   useEffect(() => {
     dispatch(initializeUser());
   },[]);
-  const hideComponent = useBreakpointValue({base: true, lg: false});
-
+  const hideComponent = useBreakpointValue({base: true, xl: false});
+  console.log(hideComponent)
   return (
-    <Grid templateColumns="repeat(18, 1fr)" gap={4}>
-      <GridItem colSpan={4}>
+    <Grid templateColumns="repeat(18, 1fr)" gap={4} >
+      <GridItem colSpan={4} >
         <SideBar />
       </GridItem>
       <GridItem  colSpan={hideComponent ? 14: 9}>
         <HomeCenterFeed />
       </GridItem>
-      <GridItem colSpan={5} display={hideComponent ? 'none': 'block'}>
+      <GridItem bgColor='red' colSpan={5} display={hideComponent ? 'none': 'block'}>
         <HomeRightFeed />
       </GridItem>
     </Grid>

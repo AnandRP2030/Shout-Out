@@ -46,7 +46,7 @@ const ProfileBox = () => {
   };
 
   const profileImg = {
-    width: "90%",
+    width: "80%",
     borderRadius: "50%",
   };
 
@@ -57,11 +57,12 @@ const ProfileBox = () => {
   return (
     <Grid
       h="66px"
-      w="250px"
+      w="270px"
+      pl='10px'
       templateRows="repeat(2, 1fr)"
       templateColumns="repeat(4, 1fr)"
-      gap={4}
       style={profileStyle}
+   
     >
       <GridItem rowSpan={2} colSpan={1}>
         <Image style={profileImg} src={userData.profilePicture} alt="" />

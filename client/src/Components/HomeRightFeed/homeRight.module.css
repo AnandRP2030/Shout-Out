@@ -1,9 +1,7 @@
 .homeRightParent {
     position: fixed;
-    width: 27%;
     justify-content: center;
     padding: 20px 15px;
-    
 }
 
 div .searchBox{
@@ -23,10 +21,9 @@ div .searchBox:focus {
  #trendingContainer {
     margin-top: 20px;
     color: #fff;
-    /* background-color:#273340; */
+    background-color:#273340;
     padding: 20px 15px;
     border-radius: 20px;
-    
 }
 .trendingBox {
     display: flex;
@@ -39,7 +36,6 @@ div .searchBox:focus {
 }
 
 .trendingBox div p:last-child{
-    /* margin-right: 33px; */
     margin-top: 0;
 }
 
