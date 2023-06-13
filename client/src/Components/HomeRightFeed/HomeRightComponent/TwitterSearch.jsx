@@ -7,7 +7,7 @@ const TwitterSearch = () => {
   const [inputActive, setInputActive] = useState(false);
   return (
     <>
-      <InputGroup w="100%">
+      <InputGroup>
         <InputLeftElement
           pointerEvents="none"
           children={<SearchIcon color={inputActive ? "#f91880":"gray.300"} />}

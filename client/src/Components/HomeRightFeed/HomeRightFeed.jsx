@@ -6,7 +6,7 @@ import style from "./homeRight.module.css";
 
 const HomeRightFeed = () => {
   return (
-    <VStack className={style.homeRightParent} >
+    <VStack className={style.homeRightParent} bgColor='yellow' maxW='400px' w={['30%']}>
         <TwitterSearch/>
         <WhatHappening/>
     </VStack>

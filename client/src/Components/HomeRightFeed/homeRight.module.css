@@ -1,6 +1,5 @@
 .homeRightParent {
     position: fixed;
-    width: 27%;
     justify-content: center;
     padding: 20px 15px;
 }
@@ -37,7 +36,6 @@ div .searchBox:focus {
 }
 
 .trendingBox div p:last-child{
-    /* margin-right: 33px; */
     margin-top: 0;
 }
 

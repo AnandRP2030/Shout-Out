@@ -92,7 +92,7 @@ const SidbarItems = ({label}) => {
  
 
     return (
-        <HStack   sx={optionStyles} w='90%' h='50px' onClick={redirectPage} >
+        <HStack   sx={optionStyles} w={['70%', '80%', '90%']} h='50px' onClick={redirectPage} >
             <Icon/> 
             <Text  fontSize={{base: '18px', md: '20px', lg: '24px'}}>{label} </Text>
             

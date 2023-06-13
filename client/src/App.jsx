@@ -17,16 +17,15 @@ function App() {
   }, [tokenAvail]);
 
   return (
-    <>
+    <Box bgColor="#15202b" w='100%'>
       {tokenAvail ? (
-        <Box bgColor="#15202b" w="100%">
+        <Box m='auto' maxW='1500px'  w={['90vw']}>
           <Home />
         </Box>
       ) : (
         <Login />
       )}
-    </>
+    </Box>
   );
 }
-
 export default App;
