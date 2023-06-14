@@ -26,7 +26,8 @@ const WhatHappening = () => {
       gap={4}
       id={style.trendingContainer}
       ml='5%'
-      w={[170, 210, 210, 320, 350]}
+      // w={[170, 210, 210, 320, 350]}
+      w={['20rem']}
     >
       <GridItem rowSpan={3} colSpan={15}>
         <Text fontSize={{base: '20px', md: '22px', lg: '24px'}} as="b">
@@ -61,7 +62,7 @@ const WhatHappening = () => {
         <Box className={style.trendingBox}>
           <Box>
             <Text color="#8b98a5"> Technology · Trending</Text>
-            <Text as="b"> Artificial general intelligence</Text>
+            <Text as="b"> Artificial Intelligence</Text>
             <Text color="#8b98a5"> 200 Tweets</Text>
           </Box>
 

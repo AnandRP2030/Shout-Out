@@ -11,7 +11,7 @@ import {
   Icon,
   HStack,
   Button,
-  Box,
+  Box,useBreakpointValue,
 } from "@chakra-ui/react";
 
 import {
@@ -148,6 +148,7 @@ const HomeTweetInput = () => {
     return response.data;
   };
 
+  const tabletSize = useBreakpointValue([true, true, false])
   return (
     <>
       <Grid

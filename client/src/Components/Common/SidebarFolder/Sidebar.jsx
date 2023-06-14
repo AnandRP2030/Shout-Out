@@ -1,12 +1,15 @@
 import SidbarItems from "./SidebarItems";
-import { VStack, Spacer, Box } from "@chakra-ui/react";
+import { VStack, Spacer, Box, useBreakpointValue } from "@chakra-ui/react";
 import TweetButton from "../Button/tweetBtn";
 import ProfileBox from "../Profile/profileBox";
 
 const SideBar = () => {
+
+  const sidebarWidth = useBreakpointValue([[50, 50, 50, 50, 250, 280]])
+
   return (
     <>
-      <VStack ml="2%" pos="fixed" color="#fff" w={[150, 180, 200, 250, 300]}>
+      <VStack  pos="fixed" color="#fff" w={sidebarWidth}>
         <SidbarItems label={""} />
         <SidbarItems label={"Home"} />
         <SidbarItems label={"Explore"} />
