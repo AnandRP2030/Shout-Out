@@ -38,7 +38,6 @@
 
 .userProfilePic {
   border-radius: 50%;
-  width: 100%;
 }
 
 .tweetBox .selectAudience {
@@ -55,8 +54,7 @@
   border-radius: 100px;
 }
 
-.inputGrid {
-}
+
 
 .inputGrid .tweetInput {
   height: 28px;
@@ -72,7 +70,6 @@
 }
 
 .tweetIcons {
-  width: 25%;
   display: flex;
   justify-content: space-between;
 }

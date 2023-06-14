@@ -13,6 +13,7 @@ import {
   Input,
   Button,
   Textarea,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
@@ -95,7 +96,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   let token = localStorage.getItem("token");
   if (!token) {
-    navigate('/signup');
+    navigate("/signup");
   }
 
   token = token.replaceAll('"', "");
@@ -107,7 +108,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   // tweet crud methods
   const deleteTweet = async (event) => {
     event.stopPropagation();
-    
+
     const DELETE_URL = `${BASE_URL}/user/tweets/delete/${tweetId}`;
     let res = await axios.delete(DELETE_URL, config);
     if (res.status === 204) {
@@ -122,13 +123,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
 
       toast({
         duration: 1000,
-        position: 'bottom-center',
+        position: "bottom-center",
         render: () => (
-          <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
-            <Text textAlign='center' fontSize='1.2rem'> Your Tweet was deleted. </Text>
+          <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+            <Text textAlign="center" fontSize="1.2rem">
+              {" "}
+              Your Tweet was deleted.{" "}
+            </Text>
           </Box>
         ),
-      })
+      });
     } else if (res.status === 403) {
       console.log("You can't delete others tweet ");
     } else {
@@ -137,7 +141,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   };
 
   const submitEditedContent = async (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
     const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
     let res = await axios.patch(EDIT_URL, { editContent }, config);
 
@@ -146,16 +150,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
       store.dispatch({ type: TWEET_EDITED });
     }
     setEditOpen(false);
-   
+
     toast({
       duration: 1500,
-      position: 'bottom-center',
+      position: "bottom-center",
       render: () => (
-        <Box color='white' p={3} bg='#f91880'>
-          <Text textAlign='center'> Your Tweet was Edited. </Text>
+        <Box color="white" p={3} bg="#f91880">
+          <Text textAlign="center"> Your Tweet was Edited. </Text>
         </Box>
       ),
-    })
+    });
   };
 
   const tweetLiked = async (event) => {
@@ -164,16 +168,18 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     let res = await axios.patch(LIKE_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
 
-
     toast({
       duration: 1000,
-      position: 'bottom-center',
+      position: "bottom-center",
       render: () => (
-        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
-          <Text textAlign='center' fontSize='1.2rem'> Tweet Liked. </Text>
+        <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+          <Text textAlign="center" fontSize="1.2rem">
+            {" "}
+            Tweet Liked.{" "}
+          </Text>
         </Box>
       ),
-    })
+    });
   };
 
   const tweetRetweeted = async (event) => {
@@ -184,13 +190,16 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
 
     toast({
       duration: 1000,
-      position: 'bottom-center',
+      position: "bottom-center",
       render: () => (
-        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
-          <Text textAlign='center' fontSize='1.2rem'> Tweet Retweeted. </Text>
+        <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+          <Text textAlign="center" fontSize="1.2rem">
+            {" "}
+            Tweet Retweeted.{" "}
+          </Text>
         </Box>
       ),
-    })
+    });
   };
 
   const toggleCommentBox2 = (event) => {
@@ -201,16 +210,21 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     toggleCommentBox(index);
   };
 
+  const mobileSize = useBreakpointValue([true,true, false]);
+
   return (
     <>
       <Grid
         h="auto"
-        templateColumns="repeat(10, 1fr)"
+        templateColumns={mobileSize ? "repeat(11, 1fr)" : "repeat(10, 1fr)"}
         gap={4}
         className={style.tweetBox}
         onClick={handleTweetClick}
       >
-        <GridItem className={style.userProfilePicBox} colSpan={1}>
+        <GridItem
+          className={style.userProfilePicBox}
+          colSpan={mobileSize ? 2 : 1}
+        >
           <Image
             className={style.userProfilePic}
             src={profilePicture}
@@ -226,7 +240,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
               <Box>
                 <TwitterBlueSvg height="25px" width="25px" />
               </Box>
-              <Text className={style.usernameText}>@{username} ·</Text>
+              <Text display={mobileSize ? 'none': 'block'} className={style.usernameText}>@{username} ·</Text>
               <Text className={style.timeText} ml="200px">
                 {" "}
                 {"1h"}{" "}
@@ -263,7 +277,11 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
             />
           )}
 
-          <Box className={style.moreBox} onClick={(e) => e.stopPropagation()} display={moreOpen ? "block" : "none"}>
+          <Box
+            className={style.moreBox}
+            onClick={(e) => e.stopPropagation()}
+            display={moreOpen ? "block" : "none"}
+          >
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
               <Text> Not interested in this Tweet </Text>
@@ -312,8 +330,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
             ""
           )}
 
-          <GridItem mt="20px">
-            <HStack className={style.tweetOptions}>
+          <GridItem mt="20px" >
+            <HStack w={['100%', '100%', '70%']} className={style.tweetOptions}>
               <HStack>
                 <Tooltip
                   bgColor="#f91880"
@@ -326,7 +344,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
                     color="white"
                     p={0}
                     onClick={(event) => {
-                      event.stopPropagation()
+                      event.stopPropagation();
                       toggleCommentBox2(event);
                     }}
                   >
@@ -351,10 +369,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
                     p={0}
                     onClick={tweetRetweeted}
                   >
-                    <Icon
-                      as={AiOutlineRetweet}
-                      boxSize={5}
-                    />
+                    <Icon as={AiOutlineRetweet} boxSize={5} />
                     <Text fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {retweets}
@@ -450,4 +465,3 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   );
 };
 export default Tweet;
-
