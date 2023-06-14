@@ -168,14 +168,15 @@ const HomeTweetInput = () => {
         }
         className={style.tweetBox}
       >
-        <GridItem colSpan={1}>
+        <GridItem colSpan={tabletSize ? 2: 1}>
           <Image
             className={style.userProfilePic}
             src={profilePicture}
             alt="Profile"
+            w={['70%', '80%']}
           />
         </GridItem>
-        <GridItem colSpan={10} display={inputActive ? "block" : "none"}>
+        <GridItem colSpan={tabletSize ? 9: 10} display={inputActive ? "block" : "none"}>
           <Select
             w="120px"
             ml="0"
@@ -190,7 +191,7 @@ const HomeTweetInput = () => {
         </GridItem>
         <GridItem
           ml={inputActive ? "80px" : "0"}
-          colSpan={10}
+          colSpan={tabletSize ? 9: 10}
           className={style.inputGrid}
         >
           <Input
@@ -204,7 +205,7 @@ const HomeTweetInput = () => {
           />
         </GridItem>
         <GridItem
-          colSpan={10}
+          colSpan={tabletSize ? 9: 10}
           display={inputActive ? "block" : "none"}
           ml="80px"
         >
@@ -215,7 +216,7 @@ const HomeTweetInput = () => {
             </HStack>
           </Link>
         </GridItem>
-        <GridItem colSpan={10} ml="80px">
+        <GridItem colSpan={tabletSize ? 11: 11} ml="80px">
           {/* start  */}
 
           <ImageUploading
@@ -264,8 +265,8 @@ const HomeTweetInput = () => {
           </ImageUploading>
 
           {/* end  */}
-          <HStack className={style.tweetLine}>
-            <HStack className={style.tweetIcons}>
+          <HStack w={['100%', '80%']}  className={style.tweetLine}>
+            <HStack w={['50%', '50%', '25%']} className={style.tweetIcons}>
               <Icon onClick={uploadImg} as={BsImage} boxSize={5} />
               <Icon as={CgPoll} boxSize={5} />
               <Icon as={BsEmojiHeartEyes} boxSize={5} />

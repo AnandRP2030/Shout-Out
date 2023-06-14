@@ -240,7 +240,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
               <Box>
                 <TwitterBlueSvg height="25px" width="25px" />
               </Box>
-              <Text className={style.usernameText}>@{username} ·</Text>
+              <Text display={mobileSize ? 'none': 'block'} className={style.usernameText}>@{username} ·</Text>
               <Text className={style.timeText} ml="200px">
                 {" "}
                 {"1h"}{" "}
