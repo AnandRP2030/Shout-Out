@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const HomeTweets = ({tweetIdentity}) => {
+const HomeTweets = ({ tweetIdentity }) => {
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
   const toggleCommentBox = (index) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
@@ -14,7 +14,7 @@ const HomeTweets = ({tweetIdentity}) => {
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
     collectData();
-  }, [allTweetsData]);  
+  }, [allTweetsData]);
 
   const collectData = async () => {
     let token = localStorage.getItem("token").replaceAll('"', "");
@@ -57,7 +57,14 @@ const HomeTweets = ({tweetIdentity}) => {
         tweetStatus: tweetsStatus[i],
       };
 
-      Tweets.push(tweet);
+      if (tweetIdentity) {
+        if (tweetIdentity === tweet.tweetId) {
+          Tweets.push(tweet);
+          break;
+        }
+      } else {
+        Tweets.push(tweet);
+      }
     }
     setAllTweets(Tweets);
   };

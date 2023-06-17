@@ -16,7 +16,7 @@ const HomeCenterFeed = () => {
     <Box style={homeCenterStyle} minHeight="1000px" pt="10px">
       <HomeFeedHeader headerName='Home'/>
       <HomeTweetInput />
-      <HomeTweets/>
+      <HomeTweets tweetIdentity={null} />
     </Box>
   );
 };
