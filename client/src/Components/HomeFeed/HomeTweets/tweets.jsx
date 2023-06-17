@@ -160,6 +160,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const tweetLiked = async (event) => {
     event.stopPropagation();
     const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
+    await axios.patch(LIKE_URL, {}, config);
 
     store.dispatch({ type: TWEET_EDITED });
     let toastContent = "Tweet Liked";
@@ -183,6 +184,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const tweetRetweeted = async (event) => {
     event.stopPropagation();
     const RETWEET_URL = `${BASE_URL}/user/tweets/retweet/${tweetId}`;
+    await axios.patch(RETWEET_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
     let toastContent = "Tweet Retweeted.";
     if (retweeted) {

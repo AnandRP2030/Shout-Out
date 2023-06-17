@@ -12,6 +12,7 @@ import { useState } from "react";
 import axios from "axios";
 const ProfileBox = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
   const [userData, setUserData] = useState({
     profilePicture:
       "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*",

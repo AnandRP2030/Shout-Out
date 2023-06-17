@@ -40,7 +40,7 @@ const SidbarItems = ({ label }) => {
     Icon = BookmarkSvg;
   } else if (label === "Shout Pro") {
     Icon = TwitterBlueSvg;
-  } else if (label === "Profile") {
+  } else if (label === "Signup") {
     Icon = ProfileSvg;
   } else if (label === "") {
     Icon = FlyBird;
@@ -73,7 +73,7 @@ const SidbarItems = ({ label }) => {
       navigate("/bookmarks");
     } else if (label === "Twitter Blue") {
       navigate("/twitter_blue");
-    } else if (label === "Profile") {
+    } else if (label === "Signup") {
       navigate("/signup");
     } else if (label === "Logout") {
       removeItemLs();

@@ -18,7 +18,7 @@ const SideBar = () => {
         <SidbarItems label={"Messages"} />
         <SidbarItems label={"Bookmarks"} />
         <SidbarItems label={"Shout Pro"} />
-        <SidbarItems label={"Profile"} />
+        <SidbarItems label={"Signup"} />
         <SidbarItems label={"Logout"} />
         <TweetButton colorCode={"#f91880"} content={"Shout"} />
         <Spacer />
