@@ -1,5 +1,4 @@
 import style from "../homeFeed.module.css";
-import ImageUploading from "react-images-uploading";
 import {
   Grid,
   Image,
@@ -11,7 +10,8 @@ import {
   Icon,
   HStack,
   Button,
-  Box,useBreakpointValue,
+  Box,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import {
@@ -22,24 +22,26 @@ import {
   BsImage,
   IoLocationOutline,
   IoEarth,
+  ImImages,
 } from "react-icons/all";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { NEW_TWEET_ADDED } from "../../../Redux/ActionTypes/tweetActionTypes.js";
 import { store } from "../../../Redux/store.js";
-import {useToast} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 const HomeTweetInput = () => {
   const [tweetData, setTweetData] = useState({
     content: "",
     audience: "Everyone",
   });
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(null);
+  
   const toast = useToast();
   const [profilePicture, setProfilePicture] = useState(
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
   );
-
+ 
   const [inputActive, setInputActive] = useState(false);
 
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
@@ -54,7 +56,7 @@ const HomeTweetInput = () => {
     } else {
       setInputActive(false);
     }
-    if (images.length > 0) {
+    if (images) {
       setDragAreaOpen(true);
     }
   }, [images, tweetData]);
@@ -80,12 +82,7 @@ const HomeTweetInput = () => {
     return res.data;
   };
 
-  // drag drop
 
-  const maxNumber = 4;
-  const imageAdded = (imageList, addUpdateIndex) => {
-    setImages(imageList);
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -93,13 +90,10 @@ const HomeTweetInput = () => {
   };
   // tweeting
   const userTweeted = async () => {
-    const newImage = images?.map((elem) => {
-      return elem.data_url;
-    });
-
+    
     const tweetObj = {
       content: tweetData.content,
-      imageUrls: newImage,
+      imageUrls: images,
       audience: tweetData.audience,
     };
     const data = await sendToServer(tweetObj);
@@ -107,21 +101,18 @@ const HomeTweetInput = () => {
       content: "",
       audience: "",
     });
-    setImages([]);
-  
+    setImages(null);
+
     toast({
       duration: 1500,
-      position: 'bottom-center',
+      position: "bottom-center",
       render: () => (
-        <Box color='white' p={3} bg='#f91880'>
-          <Text textAlign='center'> Your Tweet was sent. </Text>
+        <Box color="white" p={3} bg="#f91880">
+          <Text textAlign="center"> Your Tweet was sent. </Text>
         </Box>
       ),
-    })
-
+    });
   };
-
-
 
   const sendToServer = async (tweet) => {
     let token = localStorage.getItem("token");
@@ -137,7 +128,6 @@ const HomeTweetInput = () => {
     });
 
     if (response.status === 201) {
-     
       const addNewTweet = () => {
         return {
           type: NEW_TWEET_ADDED,
@@ -148,11 +138,39 @@ const HomeTweetInput = () => {
     return response.data;
   };
 
-  const tabletSize = useBreakpointValue([true, true, false])
+
+  //image uploading
+  const imageInputRef = useRef(null);
+
+  const handleFileSelection = () => {
+    imageInputRef.current.click();
+  }
+  const handleFileInput = (event) => {
+    const API_BASE_URL = 'https://api.cloudinary.com/v1_1/dpl5bxxv5';
+
+    const file = event.target.files[0];
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "shout-image-preset");
+    data.append("cloud_name", "dpl5bxxv5");
+
+    fetch(`${API_BASE_URL}/image/upload`, {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+          setImages(data.secure_url);
+      })
+      .catch((err) => console.log(err));
+
+  }
+
+  // responsive
+  const tabletSize = useBreakpointValue([true, true, false]);
   return (
     <>
       <Grid
-        
         templateColumns="repeat(11, 1fr)"
         gap={4}
         h={
@@ -168,15 +186,18 @@ const HomeTweetInput = () => {
         }
         className={style.tweetBox}
       >
-        <GridItem colSpan={tabletSize ? 2: 1}>
+        <GridItem colSpan={tabletSize ? 2 : 1}>
           <Image
             className={style.userProfilePic}
             src={profilePicture}
             alt="Profile"
-            w={['70%', '80%']}
+            w={["70%", "80%"]}
           />
         </GridItem>
-        <GridItem colSpan={tabletSize ? 9: 10} display={inputActive ? "block" : "none"}>
+        <GridItem
+          colSpan={tabletSize ? 9 : 10}
+          display={inputActive ? "block" : "none"}
+        >
           <Select
             w="120px"
             ml="0"
@@ -191,7 +212,7 @@ const HomeTweetInput = () => {
         </GridItem>
         <GridItem
           ml={inputActive ? "80px" : "0"}
-          colSpan={tabletSize ? 9: 10}
+          colSpan={tabletSize ? 9 : 10}
           className={style.inputGrid}
         >
           <Input
@@ -205,7 +226,7 @@ const HomeTweetInput = () => {
           />
         </GridItem>
         <GridItem
-          colSpan={tabletSize ? 9: 10}
+          colSpan={tabletSize ? 9 : 10}
           display={inputActive ? "block" : "none"}
           ml="80px"
         >
@@ -216,57 +237,24 @@ const HomeTweetInput = () => {
             </HStack>
           </Link>
         </GridItem>
-        <GridItem colSpan={tabletSize ? 11: 11} ml="80px">
+        <GridItem colSpan={tabletSize ? 11 : 11} ml="80px">
           {/* start  */}
+          <Box
+            display={dragAreaOpen ? "flex" : "none"}
+            className={style.dropbox}
+            onClick={handleFileSelection}
 
-          <ImageUploading
-            multiple
-            value={images}
-            onChange={imageAdded}
-            maxNumber={maxNumber}
-            acceptType={["jpg", "png", "gif "]}
           >
-            {({
-              imageList,
-              onImageUpload,
-              onImageRemoveAll,
-              onImageUpdate,
-              onImageRemove,
-              isDragging,
-              dragProps,
-            }) => (
-              // write your building UI
-              <Box
-                display={dragAreaOpen ? "flex" : "none"}
-                className={style.dropbox}
-                style={isDragging ? { color: "red" } : null}
-                onClick={onImageUpload}
-                {...dragProps}
-              >
-                <Icon as={TiDropbox} boxSize={10}></Icon>
-                <Text ml="20px" fontSize={20}>
-                  Drag and drop or click here
-                </Text>
-
-                {images &&
-                  images?.map((image, idx) => {
-                    return (
-                      <Box key={idx}>
-                        <Image
-                          src={image.data_url}
-                          alt="uploading..."
-                          className={style.uploadingImages}
-                        />
-                      </Box>
-                    );
-                  })}
-              </Box>
-            )}
-          </ImageUploading>
-
+            <Input type="file" ref={imageInputRef}  style={{display: 'none'}} onChange={handleFileInput}/>
+            <Icon as={TiDropbox} boxSize={10}></Icon>
+            <Text ml="20px" fontSize={20}>
+              Drag and drop or click here
+            </Text>
+            <Image className={style.uploadingImages} display={images ? 'block': 'none'} src={images} alt="..." />
+          </Box>
           {/* end  */}
-          <HStack w={['100%', '80%']}  className={style.tweetLine}>
-            <HStack w={['50%', '50%', '25%']} className={style.tweetIcons}>
+          <HStack w={["100%", "80%"]} className={style.tweetLine}>
+            <HStack w={["50%", "50%", "25%"]} className={style.tweetIcons}>
               <Icon onClick={uploadImg} as={BsImage} boxSize={5} />
               <Icon as={CgPoll} boxSize={5} />
               <Icon as={BsEmojiHeartEyes} boxSize={5} />

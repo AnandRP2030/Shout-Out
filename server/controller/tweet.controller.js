@@ -19,12 +19,12 @@ const findTweet = async (tweetId) => {
 findUserById = async (req, res) => {
   const { userId } = req.params;
 
-  console.log(req.params)
+
   try {
     let validUserId = mongoose.isValidObjectId(userId);
     if (validUserId) {
       const user = await RegistrationModel.findById(userId);
-      console.log(user)
+    
       if (user) {
         return res.status(200).send({ user });
       }
@@ -257,6 +257,8 @@ comment = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   createTweet,
   getTweets,
@@ -266,5 +268,5 @@ module.exports = {
   editTweet,
   likeTweet,
   retweet,
-  comment,
+  comment
 };

@@ -5,6 +5,7 @@ const connectDb = async () => {
     console.log('database connected')
 }
 
+// console.log(process.env.DATABASE_URL, 'db')
 module.exports = {
     connectDb
 }
