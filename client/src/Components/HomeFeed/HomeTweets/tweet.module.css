@@ -70,7 +70,7 @@
 
 .tweetImage {
   border-radius: 20px;
-  height: 500px;
+  height: auto;
   margin-top: 20px;
 }
 

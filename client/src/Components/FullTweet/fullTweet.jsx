@@ -1,11 +1,8 @@
-import Home from "../../views/Home";
 import CommentView from "./commentView";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
-import HomeCenterFeed from "../HomeFeed/HomeFeed";
+import { Box, Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import HomeRightFeed from "../HomeRightFeed/HomeRightFeed";
 import SideBar from "../Common/SidebarFolder/Sidebar";
 import HomeFeedHeader from "../HomeFeed/HomeFeedComponents/HomeFeedHeader";
-import HomeTweetInput from "../HomeFeed/HomeFeedComponents/HomeTweetInput";
 import HomeTweets from "../HomeFeed/HomeTweets/home-tweets";
 import { useParams } from "react-router-dom";
 import "./fullTweet.css";
@@ -44,8 +41,6 @@ const FullTweet = () => {
     const response = await axios.get(GET_TWEET_URL, config);
     const { tweets } = response.data;
 
- 
-
     const allComments = tweets[0].comments;
     allComments.reverse();
     let owners = [];
@@ -58,20 +53,26 @@ const FullTweet = () => {
     setCommentOwners(owners);
   };
 
-
   const findOwner = async (userId) => {
     const GET_OWNER_URL = `${BASE_URL}/user/tweets/user/${userId}`;
     let owner = await axios.get(GET_OWNER_URL, config);
     return owner.data;
   };
 
+  const hideComponent = useBreakpointValue({ base: true, xl: false });
+  const mobileSize = useBreakpointValue([true, false, false, false, false]);
+
   return (
-    <>
-      <Grid bgColor="#15202b" templateColumns="repeat(18, 1fr)" gap={4}>
-        <GridItem colSpan={4}>
+    <Box  bgColor="#15202b">
+      <Grid maxW='1500px' pl={10} m='auto' templateColumns="repeat(18, 1fr)" gap={4}>
+        <GridItem
+          display={mobileSize ? "none" : "block"}
+          colSpan={!hideComponent ? 4 : 2}
+        >
           <SideBar />
         </GridItem>
-        <GridItem colSpan={9}>
+
+        <GridItem colSpan={mobileSize ? 18 : hideComponent ? 16 : 9}>
           <Box
             className="homeCenterStyle"
             color="white"
@@ -96,8 +97,10 @@ const FullTweet = () => {
                   };
 
                   {
-                    commentOwners[idx] && commentOwners[idx].user.username &&
-                      (ownersDetails.username = commentOwners[idx].user.username),
+                    commentOwners[idx] &&
+                      commentOwners[idx].user.username &&
+                      (ownersDetails.username =
+                        commentOwners[idx].user.username),
                       (ownersDetails.name = commentOwners[idx].user.name);
                     ownersDetails.ownerPic =
                       commentOwners[idx].user.profilePicture;
@@ -115,11 +118,14 @@ const FullTweet = () => {
             )}
           </Box>
         </GridItem>
-        <GridItem colSpan={5}>
+        <GridItem
+          colSpan={!hideComponent ? 5 : 1}
+          display={hideComponent ? "none" : "block"}
+        >
           <HomeRightFeed />
         </GridItem>
       </Grid>
-    </>
+    </Box>
   );
 };
 export default FullTweet;

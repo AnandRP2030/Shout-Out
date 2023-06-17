@@ -229,7 +229,6 @@ retweet = async (req, res) => {
     } else {
       tweet.retweets.splice(alreadyTweeted, 1);
       await tweet.save();
-      console.log(tweet, "undo retweet");
       return res
         .status(200)
         .json({ message: "undo retweet", totalRetweeets: retweeets.length });

@@ -1,32 +1,21 @@
 import Tweet from "./tweets";
 import { useState, useEffect } from "react";
-// import '~video-react/dist/video-react.css';
-import { Player } from "video-react";
 import axios from "axios";
 import { store } from "../../../Redux/store.js";
+import { useSelector } from "react-redux";
 
-const HomeTweets = ({tweetIdentity}) => {
+const HomeTweets = () => {
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
   const toggleCommentBox = (index) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
   };
 
-  const findTweetCount = () => {
-    return store.getState().tweets.newTweetsCount;
-  };
-
-  const [newTweetCount, setNewTweetCount] = useState(findTweetCount());
-
-  const unSubscribe = store.subscribe(() => {
- 
-   const count = findTweetCount();
-    setNewTweetCount(count);
-  });
+  const allTweetsData = useSelector((state) => state.tweets);
 
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
     collectData();
-  }, [newTweetCount]);
+  }, [allTweetsData]);  
 
   const collectData = async () => {
     let token = localStorage.getItem("token").replaceAll('"', "");
@@ -41,12 +30,11 @@ const HomeTweets = ({tweetIdentity}) => {
   };
 
   const displayContent = (data) => {
-    
-    const {tweets, ownersInfo, tweetsStatus} = data;
+    const { tweets, ownersInfo, tweetsStatus } = data;
     let Tweets = [];
     for (let i = tweets.length - 1; i >= 0; i--) {
       let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
-      
+
       let ownerData = {
         username,
         name,
@@ -70,16 +58,7 @@ const HomeTweets = ({tweetIdentity}) => {
         tweetStatus: tweetsStatus[i],
       };
 
-      if (tweetIdentity) {
-        if (tweetIdentity === tweet.tweetId) {
-         
-          Tweets.push(tweet);
-          break;
-        }
-      }else {
-        Tweets.push(tweet);
-      }
-
+      Tweets.push(tweet);
     }
     setAllTweets(Tweets);
   };

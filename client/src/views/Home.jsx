@@ -12,10 +12,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(initializeUser());
   }, []);
+  
   const hideComponent = useBreakpointValue({ base: true, xl: false });
-
-
   const mobileSize = useBreakpointValue([true, false, false, false, false]);
+
   return (
     <Grid templateColumns="repeat(18, 1fr)" gap={4}>
       <GridItem display={mobileSize ? "none": "block"} colSpan={!hideComponent ? 4 : 2}>

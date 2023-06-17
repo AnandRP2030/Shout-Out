@@ -141,12 +141,11 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   };
 
   const submitEditedContent = async (e) => {
-    console.log('wor')
-    // e.stopPropagation();
+    e.stopPropagation();
     try {
       const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
       let res = await axios.patch(EDIT_URL, { editContent }, config);
-      console.log(res.status, 'sttus')
+      console.log(res.status, "sttus");
       if (res.status === 200) {
         console.log("edited successfully");
         store.dispatch({ type: TWEET_EDITED });
@@ -163,7 +162,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
         ),
       });
     } catch (err) {
-      console.log('error on submitEditContent', err);
+      console.log("error on submitEditContent", err);
     }
   };
 
@@ -171,16 +170,20 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     event.stopPropagation();
     const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
     let res = await axios.patch(LIKE_URL, {}, config);
+    
     store.dispatch({ type: TWEET_EDITED });
-
+    let toastContent = "Tweet Liked";
+    if (liked) {
+      toastContent = "Tweet Unliked";
+    }
     toast({
       duration: 1000,
       position: "bottom-center",
+
       render: () => (
         <Box color="white" p={3} bg="#f91880" borderRadius="10px">
           <Text textAlign="center" fontSize="1.2rem">
-            {" "}
-            Tweet Liked.{" "}
+            {toastContent}
           </Text>
         </Box>
       ),
@@ -192,6 +195,10 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     const RETWEET_URL = `${BASE_URL}/user/tweets/retweet/${tweetId}`;
     let res = await axios.patch(RETWEET_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
+    let toastContent = "Tweet Retweeted.";
+    if (retweeted) {
+      toastContent = "Undo retweet";
+    }
 
     toast({
       duration: 1000,
@@ -199,8 +206,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
       render: () => (
         <Box color="white" p={3} bg="#f91880" borderRadius="10px">
           <Text textAlign="center" fontSize="1.2rem">
-            {" "}
-            Tweet Retweeted.{" "}
+            {toastContent}
           </Text>
         </Box>
       ),
@@ -369,7 +375,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
               <HStack>
                 <Tooltip
                   bgColor="#f91880"
-                  label="Retweet"
+                  label={retweeted ? "Undo Retweet" : "Retweet"}
                   openDelay={400}
                   closeDelay={400}
                 >
@@ -391,7 +397,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
               <HStack>
                 <Tooltip
                   bgColor="#f91880"
-                  label="Like"
+                  label={liked ? "Unlike" : "Like"}
                   openDelay={400}
                   closeDelay={400}
                 >
