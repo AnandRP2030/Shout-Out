@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import "./signup.css";
 import { Center, Image, Button, Link, Icon } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
@@ -8,6 +7,7 @@ import { RxGithubLogo } from "react-icons/rx";
 import { useState } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
+import "./signup.css";
 
 const Signup = () => {
   const toast = useToast();
@@ -16,15 +16,6 @@ const Signup = () => {
   const formStyle = {
     boxShadow:
       "rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
-  };
-
-  const btnStyle = {
-    borderRadius: "100px",
-    width: "100%",
-    height: "30px",
-    paddingLeft: "20px",
-    boxSizing: "border-box",
-    cursor: "pointer",
   };
 
   const userInputStyle = {
@@ -124,10 +115,11 @@ const Signup = () => {
     <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
       <Box
         style={formStyle}
-        w="25%"
+        w={[320, 400]}
+        p={6}
+        pb={8}
         h="auto"
         className="signupForm"
-        padding="1% 2% 1%"
         color="#fff"
       >
         <Box>
@@ -138,23 +130,23 @@ const Signup = () => {
             {" "}
             Get Started
           </Text>
-          <Text fontSize=".8rem" color="gray">
+          <Text fontSize="1rem" color="gray">
             already have an account ?
-            <Link href="/login" color="green">
+            <Link fontSize="1rem" href="/login" color="green">
               {" "}
               Login{" "}
             </Link>
           </Text>
           <VStack w="100%" mt="20px" p={1}>
             <Link color="teal.500" w="100%">
-              <Button w="100%" className="signUpbtn" style={btnStyle}>
+              <Button w="100%" className="authBtns" >
                 <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
                 Google
               </Button>
             </Link>
 
             <Spacer />
-            <Button w="100%" style={btnStyle} className="signUpbtn">
+            <Button w="100%"  className="authBtns">
               {" "}
               <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
               Sign up with Github
@@ -230,9 +222,10 @@ const Signup = () => {
 
             <Input
               color="white"
-              style={btnStyle}
+              className="signupBtn"
               w="100%"
-              mt="50px"
+              mt="20px"
+              mb='20px'
               _hover={{ bg: "red" }}
               backgroundColor="#29a8df"
               value="Get Started"

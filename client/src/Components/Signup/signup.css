@@ -1,3 +1,19 @@
 .signUpbtn{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+
+button.authBtns {
+    border-radius: 10%;
+    
+    height: 30px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.signupBtn {
+   cursor: pointer;
+}
