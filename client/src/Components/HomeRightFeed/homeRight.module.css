@@ -1,55 +1,54 @@
 .homeRightParent {
-    position: fixed;
-    justify-content: center;
-    padding: 20px 15px;
+  position: fixed;
+  justify-content: center;
+  padding: 20px 15px;
 }
 
-div .searchBox{
-    border-radius: 100px;
-    cursor:pointer;
-    height: 40px;
-    border: none;
-    letter-spacing: 1.2px;
-    background-color: #273340;
+div .searchBox {
+  border-radius: 100px;
+  cursor: pointer;
+  height: 40px;
+  border: none;
+  letter-spacing: 1.2px;
+  background-color: #273340;
 }
 
 div .searchBox:focus {
-    border: 2px solid #f91880;
+  border: 2px solid #f91880;
 }
 
 /* What's happening  */
- #trendingContainer {
-    margin-top: 20px;
-    color: #fff;
-    background-color:#273340;
-    padding: 20px 15px;
-    border-radius: 20px;
+#trendingContainer {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #273340;
+  padding: 20px 15px;
+  border-radius: 20px;
 }
 .trendingBox {
-    display: flex;
-    justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #trendingContainer .trendingBox div {
-    width: 300px;
-    text-align: left;
+  width: 300px;
+  text-align: left;
 }
 
-.trendingBox div p:last-child{
-    margin-top: 0;
+.trendingBox div p:last-child {
+  margin-top: 0;
 }
 
-#trendingContainer .trendingBox div b{
-    margin-top: 0;
+#trendingContainer .trendingBox div b {
+  margin-top: 0;
 }
 
 .trendingBox img {
-    width: 70px;
-    height: 70px;
-    border-radius: 10px;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
 }
 
-
 .TredninghashTag {
-    color: #f8187f;
+  color: #f8187f;
 }

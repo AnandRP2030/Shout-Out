@@ -1,33 +1,30 @@
 .tweetReplayBox {
-    padding: 5px 2%;
+  padding: 5px 2%;
 }
 .activeUserPicture {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
-input.inputArea{
-    font-size: 1.2rem;
-    letter-spacing: 3px;
-    height: 60px;
-    border: none;
-    margin-left: 10px;
-    width: 80%;
-    padding-left: 30px;
-    
+input.inputArea {
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  height: 60px;
+  border: none;
+  margin-left: 10px;
+  width: 80%;
+  padding-left: 30px;
 }
-input.inputArea:focus{
-    outline: 1px solid #131111;
-    outline-offset:0;
-
+input.inputArea:focus {
+  outline: 1px solid #131111;
+  outline-offset: 0;
 }
 button.replayBtn {
-    background-color: #f91880;
-    color: white;
-    margin-left: 10px;
+  background-color: #f91880;
+  color: white;
+  margin-left: 10px;
 }
 
-button.replayBtn:hover{
-    background-color: #900e5c;
-
+button.replayBtn:hover {
+  background-color: #900e5c;
 }

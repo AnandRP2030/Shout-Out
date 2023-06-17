@@ -1,4 +1,3 @@
-import DogeSvg from "../../Icon/dogeSvg";
 import HomeSvg from "../../Icon/homeSvg";
 import HashSvg from "../../Icon/hashSvg";
 import MoreSvg from "../../Icon/moreSvg";
@@ -8,8 +7,7 @@ import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import MsgSvg from "../../Icon/messegesSvg";
 import CommunitySvg from "../../Icon/communitySvg";
 import BookmarkSvg from "../../Icon/bookmarkSvg";
-import { HStack, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
-import SpinTwit from "../../Icon/spinTwit";
+import { HStack, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import FlyBird from "../../Icon/flyBird";
 
@@ -85,7 +83,14 @@ const SidbarItems = ({ label }) => {
     }
   };
 
-  const textVisible = useBreakpointValue([false, false, false, false, true, true])
+  const textVisible = useBreakpointValue([
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+  ]);
   return (
     <HStack
       sx={optionStyles}
@@ -94,8 +99,11 @@ const SidbarItems = ({ label }) => {
       onClick={redirectPage}
     >
       <Icon />
-    {textVisible && <Text fontSize={{ base: "18px", md: "20px", lg: "24px" }}>{label} </Text> }
-      
+      {textVisible && (
+        <Text fontSize={{ base: "18px", md: "20px", lg: "24px" }}>
+          {label}{" "}
+        </Text>
+      )}
     </HStack>
   );
 };

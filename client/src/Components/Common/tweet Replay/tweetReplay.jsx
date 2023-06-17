@@ -1,9 +1,7 @@
 import {
   Button,
-  GridItem,
   HStack,
   Icon,
-  Textarea,
   Image,
   Box,
   Input,
@@ -18,45 +16,46 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./tweetReplay.css";
 import { initializeUser } from "../../../Redux/Reducers/user.reducer";
-import {useParams} from 'react-router-dom';
-import {useToast} from '@chakra-ui/react';
+import { useParams } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
-const TweetReplay = ({setNewCmntCount, newCmntCount}) => {
+const TweetReplay = ({ setNewCmntCount, newCmntCount }) => {
   const toast = useToast();
-  const {tweetId} = useParams()
+  const { tweetId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initializeUser());
   }, []);
-  
+
   const [commentContent, setCommentContent] = useState("");
-  
+
   const [inputActive, setInputActive] = useState(false);
   const activeUserProPic = useSelector((state) => {
     return state.user.profilePicture;
   });
-
-  
 
   const newComment = async () => {
     if (!commentContent) return;
     let res = await saveComment(commentContent);
     if (res.status === 201) {
       console.log("comment added");
-      setNewCmntCount(newCmntCount+1);
+      setNewCmntCount(newCmntCount + 1);
       toast({
         duration: 1000,
-        position: 'bottom-center',
+        position: "bottom-center",
         render: () => (
-          <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
-            <Text textAlign='center' fontSize='1.2rem'> Your Replay added. </Text>
+          <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+            <Text textAlign="center" fontSize="1.2rem">
+              {" "}
+              Your Replay added.{" "}
+            </Text>
           </Box>
         ),
-      })
+      });
     } else {
       console.log(res);
     }
-    setCommentContent("")
+    setCommentContent("");
   };
 
   const saveComment = async (commentContent) => {

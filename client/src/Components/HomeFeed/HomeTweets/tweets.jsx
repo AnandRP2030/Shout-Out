@@ -8,9 +8,6 @@ import {
   Text,
   Tooltip,
   Tag,
-  grid,
-  background,
-  Input,
   Button,
   Textarea,
   useBreakpointValue,
@@ -27,12 +24,10 @@ import {
   RiDeleteBin6Line,
   AiOutlineEdit,
   TbMoodSadSquint,
-  GrVolumeMute,
   MdReportGmailerrorred,
   BiBlock,
   VscMute,
   FcLike,
-  FaRetweet,
 } from "react-icons/all";
 import style from "./tweet.module.css";
 import React from "react";
@@ -42,7 +37,6 @@ import { useNavigate } from "react-router-dom";
 import {
   TWEET_DELETED,
   TWEET_EDITED,
-  COMMENT_BOX_EVENT,
 } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { store } from "../../../Redux/store.js";
 import CommentBox from "../HomeFeedComponents/CommentBox";
@@ -170,7 +164,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     event.stopPropagation();
     const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
     let res = await axios.patch(LIKE_URL, {}, config);
-    
+
     store.dispatch({ type: TWEET_EDITED });
     let toastContent = "Tweet Liked";
     if (liked) {

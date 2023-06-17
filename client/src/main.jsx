@@ -7,10 +7,9 @@ import Signup from "./Components/Signup/Signup";
 import Login from "./Components/Signup/Login";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
-import {store} from "./Redux/store.js";
+import { store } from "./Redux/store.js";
 import FullTweet from "./Components/FullTweet/fullTweet";
 import UploadImage from "./Components/HomeFeed/HomeFeedComponents/uploadImage";
-
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/home" element={<App />} />
-            <Route path="/fulltweet/:tweetId" element={<FullTweet/>} />
+            <Route path="/fulltweet/:tweetId" element={<FullTweet />} />
             <Route path="/explore" element={<App />} />
             <Route path="/communities" element={<App />} />
             <Route path="/notifications" element={<App />} />
@@ -30,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/profile" element={<Signup />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/view" element={<UploadImage/>} />
+            <Route path="/view" element={<UploadImage />} />
             <Route path="/*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>

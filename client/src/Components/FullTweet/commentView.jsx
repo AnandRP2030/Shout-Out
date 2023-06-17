@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import style from "../HomeFeed/HomeTweets/tweet.module.css";
 import {
   Icon,
@@ -11,11 +11,8 @@ import {
   Text,
   Tooltip,
   Tag,
-  Button,
-  Textarea,
 } from "@chakra-ui/react";
 
-// import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
 import TwitterBlueSvg from "../Icon/twitterBlueSvg";
 import {
   FaRegComment,

@@ -18,8 +18,8 @@ const TweetButton = ({ colorCode, content }) => {
           {content}
         </Button>
       ) : (
-        <Button  borderRadius='50%' bgColor={colorCode}>
-          <Icon as={AiFillEdit}  boxSize={3} />
+        <Button borderRadius="50%" bgColor={colorCode}>
+          <Icon as={AiFillEdit} boxSize={3} />
         </Button>
       )}
     </>

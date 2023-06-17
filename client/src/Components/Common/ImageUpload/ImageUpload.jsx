@@ -1,8 +1,6 @@
 import ImageUploading from "react-images-uploading";
 import { useState } from "react";
-import { Box, Icon, Text } from "@chakra-ui/react";
 import style from "./image.module.css";
-import { TiDropbox } from "react-icons/ti";
 
 const ImageUpload = ({ dragAreaOpen }) => {
   const [images, setImages] = useState();
@@ -58,14 +56,3 @@ const ImageUpload = ({ dragAreaOpen }) => {
   );
 };
 export default ImageUpload;
-
-
-// upload images 
-
-// {images && images?.map((image, idx) => {
-//   return (
-//     <div key={idx}>
-//       <Image w='200px' h='200px' src={image.data_url} alt="" width="100" />
-//     </div>
-//   );
-// })}

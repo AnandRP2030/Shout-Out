@@ -1,20 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import "./signup.css";
-import {
-  HStack,
-  Center,
-  Image,
-  Button,
-  Link,
-  FormLabel,
-  Icon,
-} from "@chakra-ui/react";
+import { Center, Image, Button, Link, Icon } from "@chakra-ui/react";
 
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
 

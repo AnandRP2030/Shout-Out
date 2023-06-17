@@ -2,7 +2,7 @@ import React, { useState } from "react";
 const UploadImage = () => {
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
-  const API_BASE_URL = 'https://api.cloudinary.com/v1_1/dpl5bxxv5';
+  const API_BASE_URL = "https://api.cloudinary.com/v1_1/dpl5bxxv5";
   const uploadImage = () => {
     const data = new FormData();
     data.append("file", image);
@@ -14,8 +14,8 @@ const UploadImage = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        setUrl(data.secure_url );
-        console.log(data)
+        setUrl(data.secure_url);
+        console.log(data);
       })
       .catch((err) => console.log(err));
   };

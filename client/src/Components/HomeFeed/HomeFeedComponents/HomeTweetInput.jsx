@@ -36,12 +36,12 @@ const HomeTweetInput = () => {
     audience: "Everyone",
   });
   const [images, setImages] = useState(null);
-  
+
   const toast = useToast();
   const [profilePicture, setProfilePicture] = useState(
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
   );
- 
+
   const [inputActive, setInputActive] = useState(false);
 
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
@@ -82,15 +82,12 @@ const HomeTweetInput = () => {
     return res.data;
   };
 
-
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setTweetData({ ...tweetData, [name]: value });
   };
   // tweeting
   const userTweeted = async () => {
-    
     const tweetObj = {
       content: tweetData.content,
       imageUrls: images,
@@ -138,15 +135,14 @@ const HomeTweetInput = () => {
     return response.data;
   };
 
-
   //image uploading
   const imageInputRef = useRef(null);
 
   const handleFileSelection = () => {
     imageInputRef.current.click();
-  }
+  };
   const handleFileInput = (event) => {
-    const API_BASE_URL = 'https://api.cloudinary.com/v1_1/dpl5bxxv5';
+    const API_BASE_URL = "https://api.cloudinary.com/v1_1/dpl5bxxv5";
 
     const file = event.target.files[0];
     const data = new FormData();
@@ -160,11 +156,10 @@ const HomeTweetInput = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-          setImages(data.secure_url);
+        setImages(data.secure_url);
       })
       .catch((err) => console.log(err));
-
-  }
+  };
 
   // responsive
   const tabletSize = useBreakpointValue([true, true, false]);
@@ -243,14 +238,23 @@ const HomeTweetInput = () => {
             display={dragAreaOpen ? "flex" : "none"}
             className={style.dropbox}
             onClick={handleFileSelection}
-
           >
-            <Input type="file" ref={imageInputRef}  style={{display: 'none'}} onChange={handleFileInput}/>
+            <Input
+              type="file"
+              ref={imageInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileInput}
+            />
             <Icon as={TiDropbox} boxSize={10}></Icon>
             <Text ml="20px" fontSize={20}>
               Drag and drop or click here
             </Text>
-            <Image className={style.uploadingImages} display={images ? 'block': 'none'} src={images} alt="..." />
+            <Image
+              className={style.uploadingImages}
+              display={images ? "block" : "none"}
+              src={images}
+              alt="..."
+            />
           </Box>
           {/* end  */}
           <HStack w={["100%", "80%"]} className={style.tweetLine}>

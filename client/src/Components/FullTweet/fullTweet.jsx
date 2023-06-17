@@ -63,8 +63,14 @@ const FullTweet = () => {
   const mobileSize = useBreakpointValue([true, false, false, false, false]);
 
   return (
-    <Box  bgColor="#15202b">
-      <Grid maxW='1500px' pl={10} m='auto' templateColumns="repeat(18, 1fr)" gap={4}>
+    <Box bgColor="#15202b">
+      <Grid
+        maxW="1500px"
+        pl={10}
+        m="auto"
+        templateColumns="repeat(18, 1fr)"
+        gap={4}
+      >
         <GridItem
           display={mobileSize ? "none" : "block"}
           colSpan={!hideComponent ? 4 : 2}

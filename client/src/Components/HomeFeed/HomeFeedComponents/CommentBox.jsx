@@ -8,16 +8,14 @@ import {
   Tooltip,
   Tag,
   Icon,
-  Input,
   Textarea,
   Button,
-  StatHelpText,
 } from "@chakra-ui/react";
 import React from "react";
 import style from "../HomeTweets/tweet.module.css";
 import style2 from "../homeFeed.module.css";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
-import { AiOutlineClose, AiOutlineCloseSquare } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { BsEmojiHeartEyes, BsImage } from "react-icons/bs";
 import { CgPoll } from "react-icons/cg";
 import { MdSchedule } from "react-icons/md";
@@ -40,8 +38,8 @@ const CommentBox = ({
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   let { content } = tweetInfo;
   if (content.length > 100) {
-    content = content.substring(0, 100); 
-    content += '...'
+    content = content.substring(0, 100);
+    content += "...";
   }
   const [commentContent, setCommentContent] = useState("");
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
@@ -63,13 +61,16 @@ const CommentBox = ({
 
     toast({
       duration: 1000,
-      position: 'bottom-center',
+      position: "bottom-center",
       render: () => (
-        <Box color='white' p={3} bg='#f91880' borderRadius='10px'>
-          <Text textAlign='center' fontSize='1.2rem'> Your Replay was sent. </Text>
+        <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+          <Text textAlign="center" fontSize="1.2rem">
+            {" "}
+            Your Replay was sent.{" "}
+          </Text>
         </Box>
       ),
-    })
+    });
   };
 
   const saveComment = async (commentContent) => {
@@ -153,7 +154,10 @@ const CommentBox = ({
         <GridItem h="120px" colSpan={9}>
           <Textarea
             value={commentContent}
-            onChange={(e) =>{e.stopPropagation(); setCommentContent(e.target.value)}}
+            onChange={(e) => {
+              e.stopPropagation();
+              setCommentContent(e.target.value);
+            }}
             onClick={(e) => e.stopPropagation()}
             h="120px"
             fontSize="1.2rem"

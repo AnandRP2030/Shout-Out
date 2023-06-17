@@ -1,7 +1,7 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Home from "./views/Home";
 import Login from "./Components/Signup/Login";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 function App() {
   const [tokenAvail, setTokenAvail] = useState(false);
@@ -17,9 +17,9 @@ function App() {
   }, [tokenAvail]);
 
   return (
-    <Box bgColor="#15202b" w='100%'>
+    <Box bgColor="#15202b" w="100%">
       {tokenAvail ? (
-        <Box m='auto' maxW='1500px'  w={['100vw', '90vw']}>
+        <Box m="auto" maxW="1500px" w={["100vw", "90vw"]}>
           <Home />
         </Box>
       ) : (

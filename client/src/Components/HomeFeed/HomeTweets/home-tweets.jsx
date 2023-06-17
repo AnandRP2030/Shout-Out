@@ -1,7 +1,6 @@
 import Tweet from "./tweets";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { store } from "../../../Redux/store.js";
 import { useSelector } from "react-redux";
 
 const HomeTweets = () => {

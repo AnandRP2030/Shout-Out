@@ -1,20 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import "./signup.css";
-import {
-  HStack,
-  Center,
-  Image,
-  Button,
-  Link,
-  FormLabel,
-  Icon,
-} from "@chakra-ui/react";
-
+import { Center, Image, Button, Link, Icon } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
 
@@ -66,7 +57,6 @@ const Signup = () => {
       registerUser(userDetails);
     } else {
       alert("Please enter all the fields");
-      
     }
   };
 
@@ -98,7 +88,7 @@ const Signup = () => {
     });
     if (res.status === 201) {
       let data = await res.json();
-      
+
       setUserDetails({
         name: "",
         username: "",
@@ -107,18 +97,20 @@ const Signup = () => {
         profilePicture: "",
       });
       toast({
-        position: 'top-center',
+        position: "top-center",
         render: () => (
-          <Box color='white' p={3} bg='blue.500'>
-            
-            <Text textAlign='center' fontSize='1.2rem'> Registration Completed. </Text>
+          <Box color="white" p={3} bg="blue.500">
+            <Text textAlign="center" fontSize="1.2rem">
+              {" "}
+              Registration Completed.{" "}
+            </Text>
           </Box>
         ),
-      })
-      
+      });
+
       setTimeout(() => {
-        navigate('/login')
-      },1550)
+        navigate("/login");
+      }, 1550);
     } else if (res.status === 409) {
       let data = await res.json();
       alert(data.error);
