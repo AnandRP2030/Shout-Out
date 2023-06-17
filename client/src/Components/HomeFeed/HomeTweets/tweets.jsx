@@ -53,18 +53,15 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
 
   let {
     content,
-    comments,
     imageUrls,
     likes,
-    isPrivate,
     retweets,
     totalNoCmts,
     tweetId,
     views,
-    videoUrls,
   } = tweetInfo;
-  let { username, name, email, userId, profilePicture } = tweetInfo.tweetOwner;
-  let { liked, retweeted, shared } = tweetInfo.tweetStatus;
+  let { username, name, profilePicture } = tweetInfo.tweetOwner;
+  let { liked, retweeted } = tweetInfo.tweetStatus;
 
   let gridHeight = 4;
   let len = content.length;
@@ -163,7 +160,6 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const tweetLiked = async (event) => {
     event.stopPropagation();
     const LIKE_URL = `${BASE_URL}/user/tweets/like/${tweetId}`;
-    let res = await axios.patch(LIKE_URL, {}, config);
 
     store.dispatch({ type: TWEET_EDITED });
     let toastContent = "Tweet Liked";
@@ -187,7 +183,6 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const tweetRetweeted = async (event) => {
     event.stopPropagation();
     const RETWEET_URL = `${BASE_URL}/user/tweets/retweet/${tweetId}`;
-    let res = await axios.patch(RETWEET_URL, {}, config);
     store.dispatch({ type: TWEET_EDITED });
     let toastContent = "Tweet Retweeted.";
     if (retweeted) {

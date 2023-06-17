@@ -35,22 +35,27 @@ const FullTweet = () => {
   const [commentOwners, setCommentOwners] = useState([]);
 
   const { tweetId } = useParams();
+
   const getTweet = async () => {
-    const GET_TWEET_URL = `${BASE_URL}/user/tweets/${tweetId}`;
+    try {
+      const GET_TWEET_URL = `${BASE_URL}/user/tweets/${tweetId}`;
 
-    const response = await axios.get(GET_TWEET_URL, config);
-    const { tweets } = response.data;
+      const response = await axios.get(GET_TWEET_URL, config);
+      const { tweets } = response.data;
+      console.log(tweets, "tw");
+      const allComments = tweets[0].comments;
+      allComments.reverse();
+      let owners = [];
 
-    const allComments = tweets[0].comments;
-    allComments.reverse();
-    let owners = [];
-
-    for (const comment of allComments) {
-      let owner = await findOwner(comment.commenter);
-      owners.push(owner);
+      for (const comment of allComments) {
+        let owner = await findOwner(comment.commenter);
+        owners.push(owner);
+      }
+      setComments(tweets[0].comments);
+      setCommentOwners(owners);
+    } catch (err) {
+      console.log("err on fullTweet.jsx", err);
     }
-    setComments(tweets[0].comments);
-    setCommentOwners(owners);
   };
 
   const findOwner = async (userId) => {

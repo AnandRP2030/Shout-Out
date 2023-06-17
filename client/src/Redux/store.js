@@ -6,7 +6,6 @@ import { commentsReducer } from "./Reducers/comment.reducer.js";
 import { userReducer } from "./Reducers/user.reducer.js";
 
 const logger = createLogger();
-
 const store = configureStore(
   {
     reducer: {
@@ -17,7 +16,5 @@ const store = configureStore(
   },
   applyMiddleware(logger)
 );
-
-console.log("current state", store.getState());
 
 export { store };

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const HomeTweets = () => {
+const HomeTweets = ({tweetIdentity}) => {
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
   const toggleCommentBox = (index) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
