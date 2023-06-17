@@ -141,25 +141,30 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   };
 
   const submitEditedContent = async (e) => {
-    e.stopPropagation();
-    const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
-    let res = await axios.patch(EDIT_URL, { editContent }, config);
+    console.log('wor')
+    // e.stopPropagation();
+    try {
+      const EDIT_URL = `${BASE_URL}/user/tweets/edit/${tweetId}`;
+      let res = await axios.patch(EDIT_URL, { editContent }, config);
+      console.log(res.status, 'sttus')
+      if (res.status === 200) {
+        console.log("edited successfully");
+        store.dispatch({ type: TWEET_EDITED });
+      }
+      setEditOpen(false);
 
-    if (res.status === 200) {
-      console.log("edited successfully");
-      store.dispatch({ type: TWEET_EDITED });
+      toast({
+        duration: 1500,
+        position: "bottom-center",
+        render: () => (
+          <Box color="white" p={3} bg="#f91880">
+            <Text textAlign="center"> Your Tweet was Edited. </Text>
+          </Box>
+        ),
+      });
+    } catch (err) {
+      console.log('error on submitEditContent', err);
     }
-    setEditOpen(false);
-
-    toast({
-      duration: 1500,
-      position: "bottom-center",
-      render: () => (
-        <Box color="white" p={3} bg="#f91880">
-          <Text textAlign="center"> Your Tweet was Edited. </Text>
-        </Box>
-      ),
-    });
   };
 
   const tweetLiked = async (event) => {
@@ -210,7 +215,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
     toggleCommentBox(index);
   };
 
-  const mobileSize = useBreakpointValue([true,true, false]);
+  const mobileSize = useBreakpointValue([true, true, false]);
 
   return (
     <>
@@ -240,7 +245,12 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
               <Box>
                 <TwitterBlueSvg height="25px" width="25px" />
               </Box>
-              <Text display={mobileSize ? 'none': 'block'} className={style.usernameText}>@{username} ·</Text>
+              <Text
+                display={mobileSize ? "none" : "block"}
+                className={style.usernameText}
+              >
+                @{username} ·
+              </Text>
               <Text className={style.timeText} ml="200px">
                 {" "}
                 {"1h"}{" "}
@@ -330,8 +340,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
             ""
           )}
 
-          <GridItem mt="20px" >
-            <HStack w={['100%', '100%', '70%']} className={style.tweetOptions}>
+          <GridItem mt="20px">
+            <HStack w={["100%", "100%", "70%"]} className={style.tweetOptions}>
               <HStack>
                 <Tooltip
                   bgColor="#f91880"

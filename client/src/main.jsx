@@ -10,6 +10,7 @@ import Responsive from "./Components/Common/responsive";
 import { Provider } from "react-redux";
 import {store} from "./Redux/store.js";
 import FullTweet from "./Components/FullTweet/fullTweet";
+import UploadImage from "./Components/HomeFeed/HomeFeedComponents/uploadImage";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/res" element={<Responsive />} />
+            <Route path="/view" element={<UploadImage/>} />
             <Route path="/*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>
