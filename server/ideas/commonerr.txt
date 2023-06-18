@@ -1,3 +1,0 @@
-(its only for my refs, will delete in future)
-//common errors i faced 
-1.db functions are async. (eg:  Model.create())
