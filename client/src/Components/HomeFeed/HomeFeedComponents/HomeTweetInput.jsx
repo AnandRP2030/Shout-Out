@@ -247,7 +247,7 @@ const HomeTweetInput = () => {
             />
             <Icon as={TiDropbox} boxSize={10}></Icon>
             <Text ml="20px" fontSize={20}>
-              Drag and drop or click here
+              Click here
             </Text>
             <Image
               className={style.uploadingImages}
