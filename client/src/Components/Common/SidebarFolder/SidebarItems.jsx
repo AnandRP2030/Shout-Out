@@ -1,18 +1,16 @@
-import HomeSvg from "../../Icon/homeSvg";
-import HashSvg from "../../Icon/hashSvg";
-import MoreSvg from "../../Icon/moreSvg";
-import NotificationSvg from "../../Icon/notificationSvg";
-import ProfileSvg from "../../Icon/profileSvg";
 import TwitterBlueSvg from "../../Icon/twitterBlueSvg";
-import MsgSvg from "../../Icon/messegesSvg";
-import CommunitySvg from "../../Icon/communitySvg";
-import BookmarkSvg from "../../Icon/bookmarkSvg";
-import { HStack, Text, useBreakpointValue } from "@chakra-ui/react";
+import { HStack, Icon, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import FlyBird from "../../Icon/flyBird";
 
+import {
+  FcHome,
+  FcBinoculars,
+  FcSms,
+  FcFilmReel,FcContacts,FcBookmark,FcAdvertising,FcLeft
+} from "react-icons/all";
+
 // bold
-import HomeBoldSvg from "../../Icon/BoldSvg/homeBoldSvg";
 
 const SidbarItems = ({ label }) => {
   const removeItemLs = () => {
@@ -24,28 +22,27 @@ const SidbarItems = ({ label }) => {
     navigate("/login");
   };
 
-  let Icon;
+  let Icons;
   if (label === "Home") {
-    Icon = HomeBoldSvg;
-    Icon = HomeSvg;
+    Icons = FcHome;
   } else if (label === "Explore") {
-    Icon = HashSvg;
-  } else if (label === "Communites") {
-    Icon = CommunitySvg;
+    Icons = FcBinoculars;
+  } else if (label === "Entertainment") {
+    Icons = FcFilmReel;
   } else if (label === "Notifications") {
-    Icon = NotificationSvg;
+    Icons = FcAdvertising;
   } else if (label === "Messages") {
-    Icon = MsgSvg;
+    Icons = FcSms;
   } else if (label === "Bookmarks") {
-    Icon = BookmarkSvg;
+    Icons = FcBookmark;
   } else if (label === "Shout Pro") {
-    Icon = TwitterBlueSvg;
+    Icons = TwitterBlueSvg;
   } else if (label === "Signup") {
-    Icon = ProfileSvg;
+    Icons = FcContacts;
   } else if (label === "") {
-    Icon = FlyBird;
+    Icons = FlyBird;
   } else if (label === "Logout") {
-    Icon = MoreSvg;
+    Icons = FcLeft;
   }
 
   const optionStyles = {
@@ -91,6 +88,7 @@ const SidbarItems = ({ label }) => {
     true,
     true,
   ]);
+
   return (
     <HStack
       sx={optionStyles}
@@ -98,7 +96,9 @@ const SidbarItems = ({ label }) => {
       h="50px"
       onClick={redirectPage}
     >
-      <Icon />
+      {/* <Icon /> */}
+      {/* <Icon as={FcHome} boxSize={10} /> */}
+      <Icon boxSize={30} as={Icons} />
       {textVisible && (
         <Text fontSize={{ base: "18px", md: "20px", lg: "24px" }}>
           {label}{" "}

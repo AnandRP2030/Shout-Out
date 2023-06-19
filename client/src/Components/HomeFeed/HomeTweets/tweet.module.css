@@ -16,14 +16,15 @@
 }
 
 .moreBox {
-  width: 335px;
+  /* width: 335px; */
+  width: 280px;
   font-size: 1.3rem;
   box-shadow: "rgba(164, 141, 141, 50%) 0px 3px 8px";
   background-color: #1b2b3c;
   height: 307px;
   line-height: 46px;
   position: absolute;
-  left: 810px;
+  /* left: 810px; */
   border-radius: 10px;
   padding: 15px;
 }

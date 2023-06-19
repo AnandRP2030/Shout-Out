@@ -286,7 +286,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
           >
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
-              <Text> Not interested in this Tweet </Text>
+              <Text> Not interested  </Text>
             </HStack>
             <HStack onClick={deleteTweet}>
               <Icon mr="10px" as={RiDeleteBin6Line} box={7} />

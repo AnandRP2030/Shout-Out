@@ -13,7 +13,7 @@ const SideBar = () => {
         <SidbarItems label={""} />
         <SidbarItems label={"Home"} />
         <SidbarItems label={"Explore"} />
-        <SidbarItems label={"Communites"} />
+        <SidbarItems label={"Entertainment"} />
         <SidbarItems label={"Notifications"} />
         <SidbarItems label={"Messages"} />
         <SidbarItems label={"Bookmarks"} />
