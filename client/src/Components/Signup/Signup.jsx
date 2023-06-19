@@ -1,5 +1,4 @@
-import { Box } from "@chakra-ui/react";
-import { Center, Image, Button, Link, Icon } from "@chakra-ui/react";
+import { Center,Box, Image, Button, Link, Icon } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
@@ -10,45 +9,97 @@ import { useToast } from "@chakra-ui/react";
 import "./signup.css";
 
 const Signup = () => {
+  
   const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const formStyle = {
-    boxShadow:
-      "rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
-  };
-
-  const userInputStyle = {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-    borderRadius: "100px",
-    width: "100%",
-    letterSpacing: "2px",
-    height: "30px",
-    paddingLeft: "20px",
-    boxSizing: "border-box",
-  };
+  const [userClickedRegistered, setUserClickedRegisterd] = useState(false);
 
   const [userDetails, setUserDetails] = useState({
     name: "",
     username: "",
     email: "",
     password: "",
-    profilePicture: "",
+    profilePicture:
+      "https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg",
+  });
+
+  const [warnings, setWarnings] = useState({
+    nameWarning: "Name should have at least 3 characters",
+    usernameWarning: "Username is required",
+    emailWarning: "Email should be valid format",
+    passwordWarning: "Password should be at least 6 digits.",
+  });
+
+  const [valid, setValid] = useState({
+    nameValid: true,
+    usernameValid: true,
+    emailValid: true,
+    passwordValid: true,
   });
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
+    const dataIsValid = validateFormData(userDetails);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { name, username, email, password } = userDetails;
-    if ((name, username && email && password)) {
+    setUserClickedRegisterd(true);
+    const dataIsValid = validateFormData(userDetails);
+    if (dataIsValid) {
       registerUser(userDetails);
-    } else {
-      alert("Please enter all the fields");
     }
+  };
+
+  const validateFormData = (userDetails) => {
+    if (!userClickedRegistered) return;
+
+    const nameRegex = /^[A-Za-z]{3,}$/;
+    const usernameRegex = /^[A-Za-z0-9]{3,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const { name, username, email, password } = userDetails;
+
+    const passed = {
+      namePassed: true,
+      usernamePassed: true,
+      emailPassed: true,
+      passwordPassed: true,
+    };
+
+    let { namePassed, usernamePassed, emailPassed, passwordPassed } = passed;
+
+    if (name === "" || !nameRegex.test(name)) {
+      namePassed = false;
+    }
+
+    if (username === "" || !usernameRegex.test(username)) {
+      usernamePassed = false;
+    }
+
+    if (email === "" || !emailRegex.test(email)) {
+      emailPassed = false;
+    }
+
+    if (password.length < 6) {
+      passwordPassed = false;
+    }
+
+    setValid({
+      ...valid,
+      nameValid: namePassed,
+      usernameValid: usernamePassed,
+      emailValid: emailPassed,
+      passwordValid: passwordPassed,
+    });
+
+    if (namePassed && usernamePassed && passwordPassed && emailPassed) {
+      return true;
+    }
+
+    return false;
   };
 
   const registerUser = async ({
@@ -59,10 +110,6 @@ const Signup = () => {
     profilePicture,
   }) => {
     const REGISTRATION_URL = `${BASE_URL}/user/register`;
-    if (!profilePicture) {
-      profilePicture =
-        "https://t4.ftcdn.net/jpg/04/60/03/13/360_F_460031310_ObbCLA1tKrqjsHa7je6G6BSa7iAYBANP.jpg";
-    }
 
     let res = await fetch(REGISTRATION_URL, {
       method: "POST",
@@ -77,8 +124,9 @@ const Signup = () => {
         profilePicture,
       }),
     });
+
     if (res.status === 201) {
-      let data = await res.json();
+      await res.json();
 
       setUserDetails({
         name: "",
@@ -101,7 +149,7 @@ const Signup = () => {
 
       setTimeout(() => {
         navigate("/login");
-      }, 1550);
+      }, 10); 
     } else if (res.status === 409) {
       let data = await res.json();
       alert(data.error);
@@ -111,10 +159,10 @@ const Signup = () => {
     }
   };
 
+
   return (
     <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
       <Box
-        style={formStyle}
         w={[320, 400]}
         p={6}
         pb={8}
@@ -139,14 +187,14 @@ const Signup = () => {
           </Text>
           <VStack w="100%" mt="20px" p={1}>
             <Link color="teal.500" w="100%">
-              <Button w="100%" className="authBtns" >
+              <Button w="100%" className="authBtns">
                 <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
                 Google
               </Button>
             </Link>
 
             <Spacer />
-            <Button w="100%"  className="authBtns">
+            <Button w="100%" className="authBtns">
               {" "}
               <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
               Sign up with Github
@@ -169,52 +217,68 @@ const Signup = () => {
         </Box>
         <FormControl h="auto" mt="20px">
           <form onSubmit={handleSubmit}>
+            <Box mt="20px">
+              <Text
+                display={valid.nameValid === true ? "none" : "block"}
+                color="red"
+              >
+                {" "}
+                {warnings.nameWarning}
+              </Text>
+            </Box>
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               type="text"
               placeholder="Name"
-              mt="20px"
               name="name"
               value={userDetails.name}
               onChange={handleChanges}
             />
-
+            <Box mt="20px">
+              <Text
+                color="red"
+                display={valid.usernameValid === true ? "none" : "block"}
+              >
+                {warnings.usernameWarning}
+              </Text>
+            </Box>
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               type="text"
               placeholder="Username"
-              mt="20px"
               name="username"
               value={userDetails.username}
               onChange={handleChanges}
             />
-            <Spacer />
+            <Box mt="20px">
+              <Text
+                color="red"
+                display={valid.emailValid === true ? "none" : "block"}
+              >
+                {warnings.emailWarning}
+              </Text>
+            </Box>
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               type="text"
-              placeholder="Profile Picture Link (Optional)"
-              mt="20px"
-              value={userDetails.profilePicture}
-              name="profilePicture"
-              onChange={handleChanges}
-            />
-            <Spacer />
-            <Input
-              style={userInputStyle}
-              type="email"
               placeholder="Enter your email"
-              mt="20px"
               value={userDetails.email}
               name="email"
               onChange={handleChanges}
             />
 
-            <br />
+            <Box mt="20px">
+              <Text
+                color="red"
+                display={valid.passwordValid === true ? "none" : "block"}
+              >
+                {warnings.passwordWarning}
+              </Text>
+            </Box>
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               type="password"
               placeholder="Enter your password"
-              mt="20px"
               name="password"
               value={userDetails.password}
               onChange={handleChanges}
@@ -225,7 +289,7 @@ const Signup = () => {
               className="signupBtn"
               w="100%"
               mt="20px"
-              mb='20px'
+              mb="20px"
               _hover={{ bg: "red" }}
               backgroundColor="#29a8df"
               value="Get Started"

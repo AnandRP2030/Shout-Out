@@ -1,19 +1,33 @@
-.signUpbtn{
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+div.signupForm {
+  box-shadow: rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.signUpbtn {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 button.authBtns {
-    border-radius: 10%;
-    
-    height: 30px;
-    padding-left: 20px;
-    box-sizing: border-box;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10%;
+  height: 30px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .signupBtn {
-   cursor: pointer;
+  cursor: pointer;
+}
+
+input.inputStyle {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 100px;
+  width: 100%;
+  letter-spacing: 2px;
+  height: 30px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  background-image: linear-gradient(to right, #04070b, #131b23);
+  border: none;
 }

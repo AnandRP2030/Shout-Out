@@ -13,22 +13,9 @@ const Login = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const formStyle = {
-    boxShadow:
-      "rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
-  };
 
 
 
-  const userInputStyle = {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-    borderRadius: "100px",
-    width: "100%",
-    letterSpacing: "2px",
-    height: "30px",
-    paddingLeft: "20px",
-    boxSizing: "border-box",
-  };
 
   const [userData, setUserData] = useState({
     email: "",
@@ -79,10 +66,10 @@ const Login = () => {
       toast({
         position: "top-center",
         render: () => (
-          <Box color="white" p={3} bg="blue.500">
+          <Box color="white" p={3} bg="red.500">
             <Text textAlign="center" fontSize="1.2rem">
               {" "}
-              Welocme back {name}{" "}
+              Welocme {name}{" "}
             </Text>
           </Box>
         ),
@@ -100,7 +87,6 @@ const Login = () => {
   return (
     <Center bgColor="#15202b" m="auto" h="auto" pt="50px"  pb="200px" w="100%">
       <Box
-        style={formStyle}
         w={[320, 400]}
         p={6}
         pb={8}
@@ -156,7 +142,7 @@ const Login = () => {
         <FormControl h="auto" mt="20px">
           <form onSubmit={handleSubmit}>
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               name="email"
               value={userData.email}
               onChange={handleChange}
@@ -167,7 +153,7 @@ const Login = () => {
             <Spacer />
 
             <Input
-              style={userInputStyle}
+              className="inputStyle"
               type="password"
               onChange={handleChange}
               value={userData.password}
