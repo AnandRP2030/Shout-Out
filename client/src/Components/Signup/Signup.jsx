@@ -6,6 +6,8 @@ import { RxGithubLogo } from "react-icons/rx";
 import { useState } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
+import BottomBtns from "../mobileButtons/bottomBtns";
+import { useBreakpointValue } from "@chakra-ui/react";
 import "./signup.css";
 
 const Signup = () => {
@@ -154,145 +156,150 @@ const Signup = () => {
     }
   };
 
+  const bottomBtnsOn = useBreakpointValue([true, false]);
+
   return (
-    <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
-      <Box
-        w={[320, 400]}
-        p={6}
-        pb={8}
-        h="auto"
-        className="signupForm"
-        color="#fff"
-      >
-        <Box>
-          <Center>
-            <Image w="50px" src={flyTwit} alt="logo" />
-          </Center>
-          <Text fontSize="3xl" as="b">
-            {" "}
-            Get Started
-          </Text>
-          <Text fontSize="1rem" color="gray">
-            already have an account ?
-            <Link fontSize="1rem" href="/login" color="green">
+    <>
+      <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
+        <Box
+          w={[320, 400]}
+          p={6}
+          pb={8}
+          h="auto"
+          className="signupForm"
+          color="#fff"
+        >
+          <Box>
+            <Center>
+              <Image w="50px" src={flyTwit} alt="logo" />
+            </Center>
+            <Text fontSize="3xl" as="b">
               {" "}
-              Login{" "}
-            </Link>
-          </Text>
-          <VStack w="100%" mt="20px" p={1}>
-            <Link color="teal.500" w="100%">
-              <Button w="100%" className="authBtns">
-                <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
-                Google
-              </Button>
-            </Link>
-
-            <Spacer />
-            <Button w="100%" className="authBtns">
-              {" "}
-              <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
-              Sign up with Github
-            </Button>
-          </VStack>
-        </Box>
-        <Box w="100%" margin="auto" mt="20px">
-          <Box
-            w="169px"
-            m="auto"
-            bg="#15202b"
-            fontSize=".8rem"
-            color="#998b8b"
-            pos="relative"
-            top="19px"
-          >
-            <Text textAlign="center"> Or Sign up with Email</Text>
-          </Box>
-          <hr style={{ borderColor: "#15202b" }} />
-        </Box>
-        <FormControl h="auto" mt="20px">
-          <form onSubmit={handleSubmit}>
-            <Box mt="10px">
-              <Text
-                display={valid.nameValid === true ? "none" : "block"}
-                color="red"
-              >
+              Get Started
+            </Text>
+            <Text fontSize="1rem" color="gray">
+              already have an account ?
+              <Link fontSize="1rem" href="/login" color="green">
                 {" "}
-                {warnings.nameWarning}
-              </Text>
-            </Box>
-            <Input
-              className="inputStyle"
-              type="text"
-              placeholder="Name"
-              name="name"
-              value={userDetails.name}
-              onChange={handleChanges}
-            />
-            <Box mt="10px">
-              <Text
-                color="red"
-                display={valid.usernameValid === true ? "none" : "block"}
-              >
-                {warnings.usernameWarning}
-              </Text>
-            </Box>
-            <Input
-              className="inputStyle"
-              type="text"
-              placeholder="Username"
-              name="username"
-              value={userDetails.username}
-              onChange={handleChanges}
-            />
-            <Box mt="10px">
-              <Text
-                color="red"
-                display={valid.emailValid === true ? "none" : "block"}
-              >
-                {warnings.emailWarning}
-              </Text>
-            </Box>
-            <Input
-              className="inputStyle"
-              type="text"
-              placeholder="Enter your email"
-              value={userDetails.email}
-              name="email"
-              onChange={handleChanges}
-            />
+                Login{" "}
+              </Link>
+            </Text>
+            <VStack w="100%" mt="20px" p={1}>
+              <Link color="teal.500" w="100%">
+                <Button w="100%" className="authBtns">
+                  <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
+                  Google
+                </Button>
+              </Link>
 
-            <Box mt="10px">
-              <Text
-                color="red"
-                display={valid.passwordValid === true ? "none" : "block"}
-              >
-                {warnings.passwordWarning}
-              </Text>
+              <Spacer />
+              <Button w="100%" className="authBtns">
+                {" "}
+                <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
+                Sign up with Github
+              </Button>
+            </VStack>
+          </Box>
+          <Box w="100%" margin="auto" mt="20px">
+            <Box
+              w="169px"
+              m="auto"
+              bg="#15202b"
+              fontSize=".8rem"
+              color="#998b8b"
+              pos="relative"
+              top="19px"
+            >
+              <Text textAlign="center"> Or Sign up with Email</Text>
             </Box>
-            <Input
-              className="inputStyle"
-              type="password"
-              placeholder="Enter your password"
-              name="password"
-              value={userDetails.password}
-              onChange={handleChanges}
-            />
+            <hr style={{ borderColor: "#15202b" }} />
+          </Box>
+          <FormControl h="auto" mt="20px">
+            <form onSubmit={handleSubmit}>
+              <Box mt="10px">
+                <Text
+                  display={valid.nameValid === true ? "none" : "block"}
+                  color="red"
+                >
+                  {" "}
+                  {warnings.nameWarning}
+                </Text>
+              </Box>
+              <Input
+                className="inputStyle"
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={userDetails.name}
+                onChange={handleChanges}
+              />
+              <Box mt="10px">
+                <Text
+                  color="red"
+                  display={valid.usernameValid === true ? "none" : "block"}
+                >
+                  {warnings.usernameWarning}
+                </Text>
+              </Box>
+              <Input
+                className="inputStyle"
+                type="text"
+                placeholder="Username"
+                name="username"
+                value={userDetails.username}
+                onChange={handleChanges}
+              />
+              <Box mt="10px">
+                <Text
+                  color="red"
+                  display={valid.emailValid === true ? "none" : "block"}
+                >
+                  {warnings.emailWarning}
+                </Text>
+              </Box>
+              <Input
+                className="inputStyle"
+                type="text"
+                placeholder="Enter your email"
+                value={userDetails.email}
+                name="email"
+                onChange={handleChanges}
+              />
 
-            <Input
-              color="white"
-              className="signupBtn"
-              w="100%"
-              mt="20px"
-              mb="20px"
-              _hover={{ bg: "red" }}
-              backgroundColor="#29a8df"
-              value="Get Started"
-              type="submit"
-            />
-          </form>
-        </FormControl>
-      </Box>
-    </Center>
+              <Box mt="10px">
+                <Text
+                  color="red"
+                  display={valid.passwordValid === true ? "none" : "block"}
+                >
+                  {warnings.passwordWarning}
+                </Text>
+              </Box>
+              <Input
+                className="inputStyle"
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                value={userDetails.password}
+                onChange={handleChanges}
+              />
+
+              <Input
+                color="white"
+                className="signupBtn"
+                w="100%"
+                mt="20px"
+                mb="20px"
+                _hover={{ bg: "red" }}
+                backgroundColor="#29a8df"
+                value="Get Started"
+                type="submit"
+              />
+            </form>
+          </FormControl>
+        </Box>
+      </Center>
+      {bottomBtnsOn && <BottomBtns />}
+    </>
   );
 };
 export default Signup;

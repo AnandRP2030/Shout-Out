@@ -1,0 +1,13 @@
+.bottomStack {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4%;
+    padding-right: 4%;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    height: 50px;
+    background-color: #15202b;
+    width: 100%;
+}

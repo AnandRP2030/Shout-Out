@@ -9,7 +9,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store.js";
 import FullTweet from "./Components/FullTweet/fullTweet";
-import UploadImage from "./Components/HomeFeed/HomeFeedComponents/uploadImage";
+import BottomBtns from "./Components/mobileButtons/bottomBtns";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -29,7 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/profile" element={<Signup />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/view" element={<UploadImage />} />
+            <Route path="/view" element={<BottomBtns />} />
             <Route path="/*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>

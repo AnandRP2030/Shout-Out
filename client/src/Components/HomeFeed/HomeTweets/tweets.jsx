@@ -41,6 +41,7 @@ import {
 import { store } from "../../../Redux/store.js";
 import CommentBox from "../HomeFeedComponents/CommentBox";
 import { useToast } from "@chakra-ui/react";
+import BottomBtns from "../../mobileButtons/bottomBtns";
 
 const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const toast = useToast();
@@ -51,15 +52,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   const [commentBox, setCommentBox] = useState(false);
   const navigate = useNavigate();
 
-  let {
-    content,
-    imageUrls,
-    likes,
-    retweets,
-    totalNoCmts,
-    tweetId,
-    views,
-  } = tweetInfo;
+  let { content, imageUrls, likes, retweets, totalNoCmts, tweetId, views } =
+    tweetInfo;
   let { username, name, profilePicture } = tweetInfo.tweetOwner;
   let { liked, retweeted } = tweetInfo.tweetStatus;
 
@@ -213,7 +207,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   };
 
   const mobileSize = useBreakpointValue([true, true, false]);
-
+  const bottomBtnsOn = useBreakpointValue([true, false]);
+  console.log(bottomBtnsOn, "mbs");
   return (
     <>
       <Grid
@@ -468,6 +463,8 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
           </Button>
         </HStack>
       )}
+
+      {bottomBtnsOn && <BottomBtns />}
     </>
   );
 };

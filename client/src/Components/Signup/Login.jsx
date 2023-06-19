@@ -7,6 +7,8 @@ import { RxGithubLogo } from "react-icons/rx";
 import { useState } from "react";
 import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
+import BottomBtns from "../mobileButtons/bottomBtns";
+import { useBreakpointValue } from "@chakra-ui/react";
 import "./signup.css";
 
 const Login = () => {
@@ -27,33 +29,33 @@ const Login = () => {
   const resetState = () => {
     setUserData({
       email: "",
-      password: ""
-    })
+      password: "",
+    });
     setValid({
       eamilValid: "",
-      passwordValid: ""
-    })
-  }
+      passwordValid: "",
+    });
+  };
 
-  const handleSubmit =  (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     let isValid = validateFormData(userData);
 
     if (isValid) {
       loginUser(userData);
-      resetState()
+      resetState();
     }
   };
-  
+
   const validateFormData = (userData) => {
     const { email, password } = userData;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email && emailRegex.test(email) && password && password.length >= 6) {
       return true;
     }
-    resetState()
+    resetState();
     return false;
-  }
+  };
 
   const toastMsg = (msg, color) => {
     toast({
@@ -69,7 +71,6 @@ const Login = () => {
     });
   };
 
- 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -98,117 +99,120 @@ const Login = () => {
       let output = await res.json();
       const { error } = output;
       toastMsg(error, "red");
-      resetState()
+      resetState();
     }
   };
-
+  const bottomBtnsOn = useBreakpointValue([true, false]);
   return (
-    <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
-      <Box
-        w={[320, 400]}
-        p={6}
-        pb={8}
-        h="auto"
-        className="signupForm"
-        color="#fff"
-      >
-        <Box>
-          <Center>
-            <Image w="50px" src={flyTwit} alt="logo" />
-          </Center>
-          <Text fontSize="3xl" as="b">
-            {" "}
-            Welcome Back
-          </Text>
-          <Text fontSize="1rem" color="gray">
-            Don't you have an account ?
-            <Link fontSize="1rem" href="/signup" color="green">
+    <>
+      <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
+        <Box
+          w={[320, 400]}
+          p={6}
+          pb={8}
+          h="auto"
+          className="signupForm"
+          color="#fff"
+        >
+          <Box>
+            <Center>
+              <Image w="50px" src={flyTwit} alt="logo" />
+            </Center>
+            <Text fontSize="3xl" as="b">
               {" "}
-              Signup{" "}
-            </Link>
-          </Text>
-          <VStack w="100%" mt="20px" p={1}>
-            <Link color="teal.500" w="100%">
-              <Button w="100%" className="authBtns">
-                <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Log in with
-                Google
-              </Button>
-            </Link>
-
-            <Spacer />
-            <Button w="100%" className="authBtns">
-              {" "}
-              <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
-              Log in with Github
-            </Button>
-          </VStack>
-        </Box>
-        <Box w="100%" margin="auto" mt="20px">
-          <Box
-            w="169px"
-            m="auto"
-            bg="#15202b"
-            fontSize=".8rem"
-            color="#998b8b"
-            pos="relative"
-            top="19px"
-          >
-            <Text textAlign="center"> Or Sign up with Email</Text>
-          </Box>
-          <hr style={{ borderColor: "#15202b" }} />
-        </Box>
-        <FormControl h="auto" mt="40px">
-          <form onSubmit={handleSubmit}>
-            <Box mt="10px">
-              <Text
-                display={valid.emailValid === true ? "none" : "block"}
-                color="red"
-              >
-                Email should be valid format{" "}
-              </Text>
-            </Box>
-            <Input
-              className="inputStyle"
-              name="email"
-              value={userData.email}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter your email"
-            />
-            <Spacer />
-            <Box mt="20px">
-              <Text
-                display={valid.passwordValid === true ? "none" : "block"}
-                color="red"
-              >
+              Welcome Back
+            </Text>
+            <Text fontSize="1rem" color="gray">
+              Don't you have an account ?
+              <Link fontSize="1rem" href="/signup" color="green">
                 {" "}
-                Password should be at least 6 digits.
-              </Text>
+                Signup{" "}
+              </Link>
+            </Text>
+            <VStack w="100%" mt="20px" p={1}>
+              <Link color="teal.500" w="100%">
+                <Button w="100%" className="authBtns">
+                  <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Log in with
+                  Google
+                </Button>
+              </Link>
+
+              <Spacer />
+              <Button w="100%" className="authBtns">
+                {" "}
+                <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
+                Log in with Github
+              </Button>
+            </VStack>
+          </Box>
+          <Box w="100%" margin="auto" mt="20px">
+            <Box
+              w="169px"
+              m="auto"
+              bg="#15202b"
+              fontSize=".8rem"
+              color="#998b8b"
+              pos="relative"
+              top="19px"
+            >
+              <Text textAlign="center"> Or Sign up with Email</Text>
             </Box>
+            <hr style={{ borderColor: "#15202b" }} />
+          </Box>
+          <FormControl h="auto" mt="40px">
+            <form onSubmit={handleSubmit}>
+              <Box mt="10px">
+                <Text
+                  display={valid.emailValid === true ? "none" : "block"}
+                  color="red"
+                >
+                  Email should be valid format{" "}
+                </Text>
+              </Box>
+              <Input
+                className="inputStyle"
+                name="email"
+                value={userData.email}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter your email"
+              />
+              <Spacer />
+              <Box mt="20px">
+                <Text
+                  display={valid.passwordValid === true ? "none" : "block"}
+                  color="red"
+                >
+                  {" "}
+                  Password should be at least 6 digits.
+                </Text>
+              </Box>
 
-            <Input
-              className="inputStyle"
-              type="password"
-              onChange={handleChange}
-              value={userData.password}
-              name="password"
-              placeholder="Enter your password"
-            />
+              <Input
+                className="inputStyle"
+                type="password"
+                onChange={handleChange}
+                value={userData.password}
+                name="password"
+                placeholder="Enter your password"
+              />
 
-            <Input
-              color="white"
-              className="signupBtn"
-              w="100%"
-              mt="50px"
-              type="submit"
-              _hover={{ bg: "red" }}
-              backgroundColor="#29a8df"
-              value="Login"
-            />
-          </form>
-        </FormControl>
-      </Box>
-    </Center>
+              <Input
+                color="white"
+                className="signupBtn"
+                w="100%"
+                mt="50px"
+                type="submit"
+                _hover={{ bg: "red" }}
+                backgroundColor="#29a8df"
+                value="Login"
+              />
+            </form>
+          </FormControl>
+        </Box>
+      </Center>
+      {bottomBtnsOn && <BottomBtns />}
+    </>
   );
 };
 export default Login;
