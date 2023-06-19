@@ -103,11 +103,10 @@
 
 /* comment box component  */
 .commentBox {
-  width: 600px;
   min-height: 350px;
   background-color: #15202b;
-  padding: 25px 25px;
+  
   box-sizing: border-box;
   box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 8px;
-  border-radius: 20px;
+  border-radius: 10px;
 }

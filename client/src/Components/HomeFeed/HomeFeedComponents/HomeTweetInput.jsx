@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   useBreakpointValue,
+  Center,
 } from "@chakra-ui/react";
 
 import {
@@ -239,16 +240,19 @@ const HomeTweetInput = () => {
             className={style.dropbox}
             onClick={handleFileSelection}
           >
-            <Input
-              type="file"
-              ref={imageInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileInput}
-            />
-            <Icon as={TiDropbox} boxSize={10}></Icon>
-            <Text ml="20px" fontSize={20}>
-              Click here
-            </Text>
+            <Center mr="1rem">
+              <Input
+                type="file"
+                ref={imageInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileInput}
+              />
+
+              <Icon as={TiDropbox} boxSize={10}></Icon>
+              <Text ml="20px" fontSize={20}>
+                Click here
+              </Text>
+            </Center>
             <Image
               className={style.uploadingImages}
               display={images ? "block" : "none"}

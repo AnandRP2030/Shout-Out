@@ -95,7 +95,7 @@ const CommentBox = ({
     </Box>
   ));
   return (
-    <Box pos="absolute" top={boxPosition.top} className={style.commentBox}>
+    <Box w={[350,370, 490, 495, 500]} ml='-4rem'  p={[5]} pos="absolute" top={boxPosition.top} className={style.commentBox}>
       <Grid templateColumns="repeat(10, 1fr)" gap={4}>
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
@@ -151,7 +151,7 @@ const CommentBox = ({
             alt="userProfilePic"
           />
         </GridItem>
-        <GridItem h="120px" colSpan={9}>
+        <GridItem h="120px" colSpan={9} mb={[14, 18]}>
           <Textarea
             value={commentContent}
             onChange={(e) => {
@@ -173,7 +173,7 @@ const CommentBox = ({
               <Icon as={MdSchedule} boxSize={5} />
               <Icon as={IoLocationOutline} boxSize={5} />
             </HStack>
-            <Button onClick={newComment} className={style2.tweetBtn}>
+            <Button fontSize={{base: '1rem', md: '1.2rem', lg: '1.4rem'}} onClick={newComment} className={style2.tweetBtn}>
               {" "}
               Comment{" "}
             </Button>
