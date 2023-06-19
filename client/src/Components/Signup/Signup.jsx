@@ -1,4 +1,4 @@
-import { Center,Box, Image, Button, Link, Icon } from "@chakra-ui/react";
+import { Center, Box, Image, Button, Link, Icon } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { VStack, FormControl, Input, Spacer, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
@@ -9,12 +9,9 @@ import { useToast } from "@chakra-ui/react";
 import "./signup.css";
 
 const Signup = () => {
-  
   const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [userClickedRegistered, setUserClickedRegisterd] = useState(false);
-
   const [userDetails, setUserDetails] = useState({
     name: "",
     username: "",
@@ -26,7 +23,7 @@ const Signup = () => {
 
   const [warnings, setWarnings] = useState({
     nameWarning: "Name should have at least 3 characters",
-    usernameWarning: "Username is required",
+    usernameWarning: "Username should have at least 3 characters",
     emailWarning: "Email should be valid format",
     passwordWarning: "Password should be at least 6 digits.",
   });
@@ -38,15 +35,26 @@ const Signup = () => {
     passwordValid: true,
   });
 
+  const showToast = (msg) => {
+    toast({
+      position: "top-center",
+      render: () => (
+        <Box color="white" p={3} bg="blue.500">
+          <Text textAlign="center" fontSize="1.2rem">
+            {" "}
+            {msg}
+          </Text>
+        </Box>
+      ),
+    });
+  };
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
-    const dataIsValid = validateFormData(userDetails);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUserClickedRegisterd(true);
     const dataIsValid = validateFormData(userDetails);
     if (dataIsValid) {
       registerUser(userDetails);
@@ -54,9 +62,7 @@ const Signup = () => {
   };
 
   const validateFormData = (userDetails) => {
-    if (!userClickedRegistered) return;
-
-    const nameRegex = /^[A-Za-z]{3,}$/;
+    const nameRegex = /^[A-Za-z\s]{3,}$/;
     const usernameRegex = /^[A-Za-z0-9]{3,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -135,30 +141,18 @@ const Signup = () => {
         password: "",
         profilePicture: "",
       });
-      toast({
-        position: "top-center",
-        render: () => (
-          <Box color="white" p={3} bg="blue.500">
-            <Text textAlign="center" fontSize="1.2rem">
-              {" "}
-              Registration Completed.{" "}
-            </Text>
-          </Box>
-        ),
-      });
 
+      showToast("Registration Completed");
       setTimeout(() => {
         navigate("/login");
-      }, 10); 
+      }, 10);
     } else if (res.status === 409) {
       let data = await res.json();
-      alert(data.error);
+      showToast(data.error);
     } else {
-      alert(res.status);
-      console.log("Email or username already use");
+      showToast(res.status);
     }
   };
-
 
   return (
     <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
@@ -217,7 +211,7 @@ const Signup = () => {
         </Box>
         <FormControl h="auto" mt="20px">
           <form onSubmit={handleSubmit}>
-            <Box mt="20px">
+            <Box mt="10px">
               <Text
                 display={valid.nameValid === true ? "none" : "block"}
                 color="red"
@@ -234,7 +228,7 @@ const Signup = () => {
               value={userDetails.name}
               onChange={handleChanges}
             />
-            <Box mt="20px">
+            <Box mt="10px">
               <Text
                 color="red"
                 display={valid.usernameValid === true ? "none" : "block"}
@@ -250,7 +244,7 @@ const Signup = () => {
               value={userDetails.username}
               onChange={handleChanges}
             />
-            <Box mt="20px">
+            <Box mt="10px">
               <Text
                 color="red"
                 display={valid.emailValid === true ? "none" : "block"}
@@ -267,7 +261,7 @@ const Signup = () => {
               onChange={handleChanges}
             />
 
-            <Box mt="20px">
+            <Box mt="10px">
               <Text
                 color="red"
                 display={valid.passwordValid === true ? "none" : "block"}

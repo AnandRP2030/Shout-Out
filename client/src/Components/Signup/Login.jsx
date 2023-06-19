@@ -10,41 +10,72 @@ import { useToast } from "@chakra-ui/react";
 import "./signup.css";
 
 const Login = () => {
+  const [valid, setValid] = useState({
+    emailValid: true,
+    passwordValid: true,
+  });
+
   const navigate = useNavigate();
   const toast = useToast();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-
-
 
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (event) => {
+  const resetState = () => {
+    setUserData({
+      email: "",
+      password: ""
+    })
+    setValid({
+      eamilValid: "",
+      passwordValid: ""
+    })
+  }
+
+  const handleSubmit =  (event) => {
     event.preventDefault();
+    let isValid = validateFormData(userData);
 
-    const { email, password } = userData;
-
-    if (email && password) {
-      validateUser(userData);
-
-      setUserData({
-        email: "",
-        password: "",
-      });
-    } else {
-      console.log("email and password is required");
+    if (isValid) {
+      loginUser(userData);
+      resetState()
     }
   };
+  
+  const validateFormData = (userData) => {
+    const { email, password } = userData;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && emailRegex.test(email) && password && password.length >= 6) {
+      return true;
+    }
+    resetState()
+    return false;
+  }
 
+  const toastMsg = (msg, color) => {
+    toast({
+      position: "top-center",
+      render: () => (
+        <Box color="white" p={3} bg={`${color}.500`}>
+          <Text textAlign="center" fontSize="1.2rem">
+            {" "}
+            {msg}
+          </Text>
+        </Box>
+      ),
+    });
+  };
+
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const validateUser = async ({ email, password }) => {
+  const loginUser = async ({ email, password }) => {
     const LOGIN_URL = `${BASE_URL}/user/login`;
 
     let res = await fetch(LOGIN_URL, {
@@ -57,35 +88,22 @@ const Login = () => {
         password,
       }),
     });
-
     if (res.status === 200) {
       let data = await res.json();
-
       const { username, name } = data.UserPassingData;
-
-      toast({
-        position: "top-center",
-        render: () => (
-          <Box color="white" p={3} bg="red.500">
-            <Text textAlign="center" fontSize="1.2rem">
-              {" "}
-              Welocme {name}{" "}
-            </Text>
-          </Box>
-        ),
-      });
-
+      toastMsg(`Welcome ${name}`, "blue");
       localStorage.setItem("token", JSON.stringify(data.token));
-
       navigate("/");
     } else {
       let output = await res.json();
-      alert(output.error);
+      const { error } = output;
+      toastMsg(error, "red");
+      resetState()
     }
   };
 
   return (
-    <Center bgColor="#15202b" m="auto" h="auto" pt="50px"  pb="200px" w="100%">
+    <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
       <Box
         w={[320, 400]}
         p={6}
@@ -118,7 +136,7 @@ const Login = () => {
             </Link>
 
             <Spacer />
-            <Button w="100%"  className="authBtns" >
+            <Button w="100%" className="authBtns">
               {" "}
               <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
               Log in with Github
@@ -139,18 +157,34 @@ const Login = () => {
           </Box>
           <hr style={{ borderColor: "#15202b" }} />
         </Box>
-        <FormControl h="auto" mt="20px">
+        <FormControl h="auto" mt="40px">
           <form onSubmit={handleSubmit}>
+            <Box mt="10px">
+              <Text
+                display={valid.emailValid === true ? "none" : "block"}
+                color="red"
+              >
+                Email should be valid format{" "}
+              </Text>
+            </Box>
             <Input
               className="inputStyle"
               name="email"
               value={userData.email}
               onChange={handleChange}
-              type="email"
+              type="text"
               placeholder="Enter your email"
-              mt="20px"
             />
             <Spacer />
+            <Box mt="20px">
+              <Text
+                display={valid.passwordValid === true ? "none" : "block"}
+                color="red"
+              >
+                {" "}
+                Password should be at least 6 digits.
+              </Text>
+            </Box>
 
             <Input
               className="inputStyle"
@@ -159,7 +193,6 @@ const Login = () => {
               value={userData.password}
               name="password"
               placeholder="Enter your password"
-              mt="20px"
             />
 
             <Input

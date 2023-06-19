@@ -25,7 +25,6 @@ const HomeTweets = ({ tweetIdentity }) => {
     };
     let GET_ALL_TWEETS = `${import.meta.env.VITE_BASE_URL}/user/tweets`;
     const data = await axios.get(GET_ALL_TWEETS, config);
-    console.log(data, 'data')
     displayContent(data.data);
   };
 
