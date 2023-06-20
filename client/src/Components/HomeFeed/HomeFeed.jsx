@@ -11,7 +11,7 @@ const HomeCenterFeed = () => {
     color: "#fff",
   };
 
-  
+    
   return (
     <Box style={homeCenterStyle} minHeight="1000px" pt="10px">
       <HomeFeedHeader headerName='Home'/>

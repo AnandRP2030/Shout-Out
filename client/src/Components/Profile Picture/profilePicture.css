@@ -19,6 +19,7 @@
     width: 50%;
     margin-top: 20%;
     cursor: pointer;
+    border-radius: 50%;
 }
 button.selectPicture {
     background-color: #222b35;

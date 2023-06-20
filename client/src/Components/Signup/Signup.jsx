@@ -159,12 +159,16 @@ const Signup = () => {
   };
 
   const bottomBtnsOn = useBreakpointValue([true, false]);
-
+  console.log('pro pic', userDetails.profilePicture);
   return (
     <>
       <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
         {pictureBox ? (
-          <ProfilePictureComp setPicutureBox={setPicutureBox}/>
+          <ProfilePictureComp
+            userDetails={userDetails}
+            setUserDetails={setUserDetails}
+            setPicutureBox={setPicutureBox}
+          />
         ) : (
           <Box
             w={[320, 400]}
@@ -196,8 +200,6 @@ const Signup = () => {
                     Google
                   </Button>
                 </Link>
-
-               
               </VStack>
             </Box>
             <Box w="100%" margin="auto" mt="20px">

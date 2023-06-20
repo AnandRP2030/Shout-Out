@@ -208,7 +208,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
 
   const mobileSize = useBreakpointValue([true, true, false]);
   const bottomBtnsOn = useBreakpointValue([true, false]);
-  console.log(bottomBtnsOn, "mbs");
+
   return (
     <>
       <Grid

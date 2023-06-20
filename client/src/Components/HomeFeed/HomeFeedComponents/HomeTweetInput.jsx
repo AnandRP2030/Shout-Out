@@ -36,8 +36,8 @@ const HomeTweetInput = () => {
     content: "",
     audience: "Everyone",
   });
-  const [images, setImages] = useState(null);
-
+  const [activeFile, setActiveFile] = useState(null);
+  const [previewImg, setPreviewImg] = useState(null);
   const toast = useToast();
   const [profilePicture, setProfilePicture] = useState(
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
@@ -57,10 +57,8 @@ const HomeTweetInput = () => {
     } else {
       setInputActive(false);
     }
-    if (images) {
-      setDragAreaOpen(true);
-    }
-  }, [images, tweetData]);
+    
+  }, [ tweetData]);
 
   useEffect(() => {
     const callData = async () => {
@@ -87,19 +85,42 @@ const HomeTweetInput = () => {
     const { name, value } = event.target;
     setTweetData({ ...tweetData, [name]: value });
   };
+  const selectingImage = (e) => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPreviewImg(event.target.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+      setActiveFile(file);
+    }
+  };
+
   // tweeting
   const userTweeted = async () => {
+    if (tweetData.content === "") {
+      alert(" empty post not allowed");
+      return;
+    }
+    let url = null;
+    if (activeFile) {
+      url = await uploadImage(activeFile);
+    }
+
     const tweetObj = {
       content: tweetData.content,
-      imageUrls: images,
+      imageUrls: url,
       audience: tweetData.audience,
     };
-    const data = await sendToServer(tweetObj);
+    await sendToServer(tweetObj);
     setTweetData({
       content: "",
       audience: "",
     });
-    setImages(null);
+    
 
     toast({
       duration: 1500,
@@ -110,6 +131,21 @@ const HomeTweetInput = () => {
         </Box>
       ),
     });
+  };
+
+  const uploadImage = async (activeFile) => {
+    const API_BASE_URL = "https://api.cloudinary.com/v1_1/dpl5bxxv5";
+    const data = new FormData();
+    data.append("file", activeFile);
+    data.append("upload_preset", "shout-image-preset");
+    data.append("cloud_name", "dpl5bxxv5");
+
+    const res = await axios.post(`${API_BASE_URL}/image/upload`, data);
+
+    if (res.status === 200) {
+      return res.data.secure_url;
+    }
+    return null;
   };
 
   const sendToServer = async (tweet) => {
@@ -133,6 +169,7 @@ const HomeTweetInput = () => {
       };
       store.dispatch(addNewTweet());
     }
+    setPreviewImg(null);
     return response.data;
   };
 
@@ -141,25 +178,6 @@ const HomeTweetInput = () => {
 
   const handleFileSelection = () => {
     imageInputRef.current.click();
-  };
-  const handleFileInput = (event) => {
-    const API_BASE_URL = "https://api.cloudinary.com/v1_1/dpl5bxxv5";
-
-    const file = event.target.files[0];
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "shout-image-preset");
-    data.append("cloud_name", "dpl5bxxv5");
-
-    fetch(`${API_BASE_URL}/image/upload`, {
-      method: "post",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setImages(data.secure_url);
-      })
-      .catch((err) => console.log(err));
   };
 
   // responsive
@@ -245,7 +263,7 @@ const HomeTweetInput = () => {
                 type="file"
                 ref={imageInputRef}
                 style={{ display: "none" }}
-                onChange={handleFileInput}
+                onChange={selectingImage}
               />
 
               <Icon as={TiDropbox} boxSize={10}></Icon>
@@ -255,8 +273,8 @@ const HomeTweetInput = () => {
             </Center>
             <Image
               className={style.uploadingImages}
-              display={images ? "block" : "none"}
-              src={images}
+              display={previewImg ? "block" : "none"}
+              src={previewImg}
               alt="..."
             />
           </Box>
