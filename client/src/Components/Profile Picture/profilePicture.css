@@ -1,0 +1,31 @@
+.pictureContainer {
+    background-color: #16202a;
+    margin: auto;
+    color: white;
+    padding: 20px 5%;
+    border-radius: 15px;
+    box-shadow: rgb(41, 168, 223) 0px 0px 11px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.profileHeading {
+    display: flex;
+    justify-content: space-between;
+}
+.profileHeading>svg{
+    cursor: pointer;
+}
+
+.userImg {
+    width: 50%;
+    margin-top: 20%;
+    cursor: pointer;
+}
+button.selectPicture {
+    background-color: #222b35;
+    color: white;
+}
+
+button.selectPicture:hover{
+    background-color: red;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

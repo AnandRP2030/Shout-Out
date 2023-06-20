@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { store } from "./Redux/store.js";
 import FullTweet from "./Components/FullTweet/fullTweet";
 import BottomBtns from "./Components/mobileButtons/bottomBtns";
+import ProfilePictureComp from "./Components/Profile Picture/ProfilePicture";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -30,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/profile" element={<Signup />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/view" element={<BottomBtns />} />
+            {/* <Route path="/view" element={<ProfilePictureComp />} /> */}
             <Route path="/*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>

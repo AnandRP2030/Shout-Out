@@ -31,3 +31,7 @@ input.inputStyle {
   background-image: linear-gradient(to right, #04070b, #131b23);
   border: none;
 }
+
+.pictureBtn {
+  cursor: pointer;
+}

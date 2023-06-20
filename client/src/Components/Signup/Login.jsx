@@ -137,12 +137,6 @@ const Login = () => {
                 </Button>
               </Link>
 
-              <Spacer />
-              <Button w="100%" className="authBtns">
-                {" "}
-                <Icon as={RxGithubLogo} fontSize="2xl" mr="10px" />
-                Log in with Github
-              </Button>
             </VStack>
           </Box>
           <Box w="100%" margin="auto" mt="20px">
