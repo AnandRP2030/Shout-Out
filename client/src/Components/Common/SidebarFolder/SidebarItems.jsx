@@ -13,13 +13,13 @@ import {
 // bold
 
 const SidbarItems = ({ label }) => {
+  const navigate = useNavigate();
   const removeItemLs = () => {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("token") || "";
     if (token) {
       localStorage.removeItem("token");
     }
-    console.log("navigate");
-    navigate("/login");
+    navigate("/signup");
   };
 
   let Icons;
@@ -54,7 +54,7 @@ const SidbarItems = ({ label }) => {
     },
   };
 
-  const navigate = useNavigate();
+  
   const redirectPage = () => {
     if (label === "Home") {
       navigate("/home");
@@ -74,7 +74,6 @@ const SidbarItems = ({ label }) => {
       navigate("/signup");
     } else if (label === "Logout") {
       removeItemLs();
-      navigate("/home");
     } else if (label === "") {
       navigate("/home");
     }
@@ -96,8 +95,6 @@ const SidbarItems = ({ label }) => {
       h="50px"
       onClick={redirectPage}
     >
-      {/* <Icon /> */}
-      {/* <Icon as={FcHome} boxSize={10} /> */}
       <Icon boxSize={30} as={Icons} />
       {textVisible && (
         <Text fontSize={{ base: "18px", md: "20px", lg: "24px" }}>

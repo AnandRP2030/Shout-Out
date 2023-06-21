@@ -30,8 +30,10 @@ import axios from "axios";
 import { NEW_TWEET_ADDED } from "../../../Redux/ActionTypes/tweetActionTypes.js";
 import { store } from "../../../Redux/store.js";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const HomeTweetInput = () => {
+  const navigate = useNavigate();
   const [tweetData, setTweetData] = useState({
     content: "",
     audience: "Everyone",
@@ -62,7 +64,10 @@ const HomeTweetInput = () => {
   useEffect(() => {
     const callData = async () => {
       let userData = await getUserDetails();
-      setProfilePicture(userData.profilePicture);
+      if (userData) {
+        setProfilePicture(userData.profilePicture);
+      }
+
     };
     callData();
   }, []);
@@ -70,8 +75,14 @@ const HomeTweetInput = () => {
   const getUserDetails = async () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const GET_USERDETAILS_URL = `${BASE_URL}/user/user-details`;
-    let token = localStorage.getItem("token");
-    token = token.replaceAll('"', "");
+    let token = localStorage.getItem("token") || "";
+    if (token) {
+      token = token.replaceAll('"', "");
+    }else {
+      navigate("/signup");
+      return null;
+    }
+
     let res = await axios.get(GET_USERDETAILS_URL, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -158,8 +169,13 @@ const HomeTweetInput = () => {
   };
 
   const sendToServer = async (tweet) => {
-    let token = localStorage.getItem("token");
-    token = token.replaceAll('"', "");
+    let token = localStorage.getItem("token") || "";
+    if (token) {
+      token = token.replaceAll('"', "");
+    }else {
+
+    }
+
     const headers = {
       Authorization: `Bearer ${token}`,
     };

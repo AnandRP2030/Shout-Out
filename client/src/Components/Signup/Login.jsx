@@ -77,6 +77,10 @@ const Login = () => {
   };
 
   const loginUser = async ({ email, password }) => {
+    if (!email || !password) {
+      console.log(" email or password is empty");
+      return;
+    }
     const LOGIN_URL = `${BASE_URL}/user/login`;
 
     let res = await fetch(LOGIN_URL, {
@@ -136,7 +140,6 @@ const Login = () => {
                   Google
                 </Button>
               </Link>
-
             </VStack>
           </Box>
           <Box w="100%" margin="auto" mt="20px">
@@ -209,4 +212,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export { Login };

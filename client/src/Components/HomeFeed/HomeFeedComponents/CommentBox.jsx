@@ -26,14 +26,17 @@ import { useDispatch } from "react-redux";
 import { TWEET_EDITED } from "../../../Redux/ActionTypes/tweetActionTypes";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const CommentBox = ({
+  
   boxPosition,
   tweetInfo,
   setCommentBox,
   toggleCommentBox,
   index,
 }) => {
+  const navigate = useNavigate();
   const toast = useToast();
   const { name, username, profilePicture } = tweetInfo.tweetOwner;
   let { content } = tweetInfo;
@@ -53,31 +56,39 @@ const CommentBox = ({
     let res = await saveComment(commentContent);
     if (res.status === 201) {
       console.log("comment added");
+      
+      dispatch({ type: TWEET_EDITED });
+      toggleCommentBox(index);
+      setCommentProgress(false);
+      setCommentBox(false);
+      toast({
+        duration: 1000,
+        position: "bottom-center",
+        render: () => (
+          <Box color="white" p={3} bg="#f91880" borderRadius="10px">
+            <Text textAlign="center" fontSize="1.2rem">
+              {" "}
+              Your Replay was sent.{" "}
+            </Text>
+          </Box>
+        ),
+      });
     } else {
       console.log(res);
     }
 
-    dispatch({ type: TWEET_EDITED });
-    toggleCommentBox(index);
-    setCommentProgress(false);
-    setCommentBox(false);
-    toast({
-      duration: 1000,
-      position: "bottom-center",
-      render: () => (
-        <Box color="white" p={3} bg="#f91880" borderRadius="10px">
-          <Text textAlign="center" fontSize="1.2rem">
-            {" "}
-            Your Replay was sent.{" "}
-          </Text>
-        </Box>
-      ),
-    });
+
   };
 
   const saveComment = async (commentContent) => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    let token = localStorage.getItem("token").replaceAll('"', "");
+    let token = localStorage.getItem("token") || "";
+
+    if (token) {
+      token = token.replaceAll('"', "");
+    } else {
+      navigate("/signup");
+    }
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

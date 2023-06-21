@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Box, Center, CircularProgress } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+
 
 const HomeTweets = ({ tweetIdentity }) => {
+  const navigate = useNavigate();
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
   const toggleCommentBox = (index) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
@@ -20,7 +23,14 @@ const HomeTweets = ({ tweetIdentity }) => {
   }, [allTweetsData]);
 
   const collectData = async () => {
-    let token = localStorage.getItem("token").replaceAll('"', "");
+    let token = localStorage.getItem("token") || "";
+    if (token) {
+      token = token.replaceAll('"', "");
+    }else {
+      navigate('/signup');
+      return ;
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

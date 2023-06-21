@@ -1,6 +1,6 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Home from "./views/Home";
-import Login from "./Components/Signup/Login";
+import {Login} from "./Components/Signup/Login";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 function App() {
@@ -8,7 +8,7 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     let token = localStorage.getItem("token") || "";
-    if (token) {
+    if (token) {  
       setTokenAvail(true);
     } else {
       setTokenAvail(false);

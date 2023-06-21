@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const FullTweet = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  let token = localStorage.getItem("token");
+  let token = localStorage.getItem("token") || "";
   const navigate = useNavigate();
   const [newCmntCount, setNewCmntCount] = useState(0);
 

@@ -10,7 +10,9 @@ import { useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const ProfileBox = () => {
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   
   const [userData, setUserData] = useState({
@@ -39,7 +41,7 @@ const ProfileBox = () => {
 
   const getUserDetails = async () => {
     const GET_USERDETAILS_URL = `${BASE_URL}/user/user-details`;
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("token") || "";
     if (token) {
       token = token.replaceAll('"', "");
       let res = await axios.get(GET_USERDETAILS_URL, {
@@ -48,6 +50,8 @@ const ProfileBox = () => {
         },
       });
       return res.data;
+    }else {
+      navigate('/signup');
     }
     return null;
   };

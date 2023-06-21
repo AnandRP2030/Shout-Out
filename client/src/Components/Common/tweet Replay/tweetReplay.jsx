@@ -14,12 +14,14 @@ import { MdSchedule } from "react-icons/md";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./tweetReplay.css";
 import { initializeUser } from "../../../Redux/Reducers/user.reducer";
 import { useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import "./tweetReplay.css";
 
 const TweetReplay = ({ setNewCmntCount, newCmntCount }) => {
+  const navigate = useNavigate();
   const toast = useToast();
   const { tweetId } = useParams();
   const dispatch = useDispatch();
@@ -60,7 +62,13 @@ const TweetReplay = ({ setNewCmntCount, newCmntCount }) => {
 
   const saveComment = async (commentContent) => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    let token = localStorage.getItem("token").replaceAll('"', "");
+    let token = localStorage.getItem("token") || "";
+    if (token) {
+      token = token.replaceAll('"', "");
+    } else {
+      navigate("/signup");
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

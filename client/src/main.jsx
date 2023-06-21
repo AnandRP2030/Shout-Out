@@ -4,7 +4,7 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Notfound from "./Components/Common/404";
 import Signup from "./Components/Signup/Signup";
-import Login from "./Components/Signup/Login";
+import {Login} from "./Components/Signup/Login";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store.js";

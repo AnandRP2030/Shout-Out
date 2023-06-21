@@ -79,7 +79,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
   ));
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  let token = localStorage.getItem("token");
+  let token = localStorage.getItem("token") || "";
   if (!token) {
     navigate("/signup");
   }

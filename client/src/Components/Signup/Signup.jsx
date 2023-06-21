@@ -9,9 +9,11 @@ import { useToast } from "@chakra-ui/react";
 import BottomBtns from "../mobileButtons/bottomBtns";
 import { useBreakpointValue } from "@chakra-ui/react";
 import ProfilePictureComp from "../Profile Picture/ProfilePicture";
+import { auth, provider } from "./firebaseConfig.js";
+import { signInWithPopup } from "firebase/auth";
 import "./signup.css";
 
-const Signup = () => {  
+const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -39,6 +41,71 @@ const Signup = () => {
     passwordValid: true,
   });
 
+  const signupWithGoogle = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      const name = data.user.displayName;
+      const email = data.user.email;
+      const profilePicture = data.user.photoURL;
+      if (email) {
+        generateData(name, email, profilePicture);
+      }
+    });
+  };
+
+  const generateData = (name, email, profilePicture) => {
+    const firstName = name.split(" ")[0];
+    const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+    const username = `${firstName}${randomNumber}`;
+
+    const userGoogleDetails = {
+      name,
+      username,
+      email,
+      password: email,
+      profilePicture,
+    };
+
+    registerUser(userGoogleDetails);
+  };
+
+  const loginUser = async ({ email, password }) => {
+    if (!email || !password) {
+      console.log(" email or password is empty");
+      return;
+    }
+    const LOGIN_URL = `${BASE_URL}/user/login`;
+
+    let res = await fetch(LOGIN_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    setUserDetails({
+      name: "",
+      username: "",
+      email: "",
+      password: "",
+      profilePicture: "",
+    });
+
+    if (res.status === 200) {
+      let data = await res.json();
+      const { username, name } = data.UserPassingData;
+      showToast(`Welcome ${name}`);
+      localStorage.setItem("token", JSON.stringify(data.token));
+      navigate("/");
+    } else {
+      let output = await res.json();
+      const { error } = output;
+      showToast(error);
+    }
+  };
 
   const showToast = (msg) => {
     toast({
@@ -53,6 +120,7 @@ const Signup = () => {
       ),
     });
   };
+
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
@@ -139,18 +207,7 @@ const Signup = () => {
     if (res.status === 201) {
       await res.json();
 
-      setUserDetails({
-        name: "",
-        username: "",
-        email: "",
-        password: "",
-        profilePicture: "",
-      });
-
-      showToast("Registration Completed");
-      setTimeout(() => {
-        navigate("/login");
-      }, 10);
+      loginUser({ email, password });
     } else if (res.status === 409) {
       let data = await res.json();
       showToast(data.error);
@@ -160,7 +217,7 @@ const Signup = () => {
   };
 
   const bottomBtnsOn = useBreakpointValue([true, false]);
-  console.log('pro pic', userDetails.profilePicture);
+
   return (
     <>
       <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
@@ -196,7 +253,11 @@ const Signup = () => {
               </Text>
               <VStack w="100%" mt="20px" p={1}>
                 <Link color="teal.500" w="100%">
-                  <Button w="100%" className="authBtns">
+                  <Button
+                    onClick={signupWithGoogle}
+                    w="100%"
+                    className="authBtns"
+                  >
                     <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Sign up with
                     Google
                   </Button>
