@@ -21,13 +21,14 @@ registerUser = async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
     const newUser = await RegistrationModel.create({
       name,
       username,
       email,
       password: hashedPassword,
-      profilePicture
+      profilePicture,
     });
     const { password: omit, ...userData } = newUser._doc;
     return res.status(201).send({ message: "User created", userData });
@@ -37,20 +38,20 @@ registerUser = async (req, res) => {
   }
 };
 
-
 loginUser = async (req, res) => {
- 
   try {
     const { email, password } = req.body;
-    //can't find password here its hashed on the registration time
+    
     let userData = await RegistrationModel.find({ email });
 
     if (userData.length == 0) {
-      console.log("empty user data => ", userData);
       return res.status(404).send({ error: "email or password is wrong" });
     }
     // check passwords
-    const isPasswordValid = await bcrypt.compare(password, userData[0].password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      userData[0].password
+    );
 
     if (!isPasswordValid) {
       return res.status(401).send({ error: "Password is not valid" });
@@ -59,21 +60,21 @@ loginUser = async (req, res) => {
     //generate token
     const token = jwt.sign(
       {
-
         userId: userData[0]._id,
         name: userData[0].name,
         email,
         username: userData[0].username,
-        profilePicture: userData[0].profilePicture
+        profilePicture: userData[0].profilePicture,
       },
-      JWT_SECRET_KEY, {expiresIn: '100h'}
+      JWT_SECRET_KEY,
+      { expiresIn: "100h" }
     );
 
     const UserPassingData = {
       name: userData[0].name,
       username: userData[0].username,
     };
-    
+
     return res
       .status(200)
       .send({ message: "Login Successful", UserPassingData, token });
