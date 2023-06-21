@@ -41,6 +41,7 @@ const CommentBox = ({
     content = content.substring(0, 100);
     content += "...";
   }
+  const [commentProgress, setCommentProgress] = useState(false);
   const [commentContent, setCommentContent] = useState("");
   const activeUserProPic = useSelector((state) => state.user.profilePicture);
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const CommentBox = ({
   const newComment = async (e) => {
     e.stopPropagation();
     if (!commentContent) return;
+    setCommentProgress(true);
     let res = await saveComment(commentContent);
     if (res.status === 201) {
       console.log("comment added");
@@ -57,8 +59,8 @@ const CommentBox = ({
 
     dispatch({ type: TWEET_EDITED });
     toggleCommentBox(index);
+    setCommentProgress(false);
     setCommentBox(false);
-
     toast({
       duration: 1000,
       position: "bottom-center",
@@ -95,7 +97,14 @@ const CommentBox = ({
     </Box>
   ));
   return (
-    <Box w={[350,370, 490, 495, 500]} ml='-4rem'  p={[5]} pos="absolute" top={boxPosition.top} className={style.commentBox}>
+    <Box
+      w={[350, 370, 490, 495, 500]}
+      ml="-4rem"
+      p={[5]}
+      pos="absolute"
+      top={boxPosition.top}
+      className={style.commentBox}
+    >
       <Grid templateColumns="repeat(10, 1fr)" gap={4}>
         <GridItem className={style.userProfilePicBox} colSpan={1}>
           <Image
@@ -173,9 +182,17 @@ const CommentBox = ({
               <Icon as={MdSchedule} boxSize={5} />
               <Icon as={IoLocationOutline} boxSize={5} />
             </HStack>
-            <Button fontSize={{base: '1rem', md: '1.2rem', lg: '1.4rem'}} onClick={newComment} className={style2.tweetBtn}>
-              {" "}
-              Comment{" "}
+            
+            <Button
+              
+              isLoading={commentProgress}
+              loadingText=""
+              fontSize={{ base: "1rem", md: "1.2rem", lg: "1.4rem" }}
+              onClick={newComment}
+              className={style2.tweetBtn}
+              spinnerPlacement='end'
+            >
+              Comment
             </Button>
           </HStack>
         </GridItem>
