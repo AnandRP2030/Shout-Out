@@ -198,10 +198,10 @@ const CommentBox = ({
               
               isLoading={commentProgress}
               loadingText=""
+              spinnerPlacement='end'
               fontSize={{ base: "1rem", md: "1.2rem", lg: "1.4rem" }}
               onClick={newComment}
               className={style2.tweetBtn}
-              spinnerPlacement='end'
             >
               Comment
             </Button>

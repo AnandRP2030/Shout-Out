@@ -415,7 +415,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
                 >
                   <CustomCard bgColor="transparent" color="white" p={0}>
                     <Icon as={BiBarChart} boxSize={5} />
-                    <Text fontSize="1.1rem" ml="2" as="b">
+                    <Text display='none' fontSize="1.1rem" ml="2" as="b">
                       {" "}
                       {views}
                     </Text>

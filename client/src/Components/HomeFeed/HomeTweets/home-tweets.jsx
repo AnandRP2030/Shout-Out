@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { Box, Center, CircularProgress } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-
 const HomeTweets = ({ tweetIdentity }) => {
   const navigate = useNavigate();
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
@@ -26,9 +25,9 @@ const HomeTweets = ({ tweetIdentity }) => {
     let token = localStorage.getItem("token") || "";
     if (token) {
       token = token.replaceAll('"', "");
-    }else {
-      navigate('/signup');
-      return ;
+    } else {
+      navigate("/signup");
+      return;
     }
 
     const config = {
@@ -38,6 +37,7 @@ const HomeTweets = ({ tweetIdentity }) => {
     };
     let GET_ALL_TWEETS = `${import.meta.env.VITE_BASE_URL}/user/tweets`;
     const data = await axios.get(GET_ALL_TWEETS, config);
+  
     displayContent(data.data);
   };
 
@@ -45,15 +45,24 @@ const HomeTweets = ({ tweetIdentity }) => {
     const { tweets, ownersInfo, tweetsStatus } = data;
     let Tweets = [];
     for (let i = tweets.length - 1; i >= 0; i--) {
-      let { username, name, email, _id, profilePicture } = ownersInfo[i]._doc;
+      const randomNum = Math.floor(Math.random() * 100) + 100;
 
       let ownerData = {
-        username,
-        name,
-        email,
-        userId: _id,
-        profilePicture,
+        username: "username",
+        name: "name",
+        email: "email",
+        userId: randomNum,
+        profilePicture:
+          "https://cdn.landesa.org/wp-content/uploads/default-user-image.png",
       };
+
+      if (ownersInfo[i]._doc) {
+        ownerData.username = ownersInfo[i]._doc.username;
+        ownerData.name = ownersInfo[i]._doc.name;
+        ownerData.email = ownersInfo[i]._doc.email;
+        ownerData._id = ownersInfo[i]._doc._id;
+        ownerData.profilePicture = ownersInfo[i]._doc.profilePicture;
+      }
 
       let tweet = {
         content: tweets[i].content,
@@ -86,7 +95,7 @@ const HomeTweets = ({ tweetIdentity }) => {
   return (
     <>
       <Center w="8%" m="auto" display={isProgress ? "block" : "none"}>
-          <CircularProgress isIndeterminate color="red" value={80} />
+        <CircularProgress isIndeterminate color="#f91880" value={80} />
       </Center>
       {allTweets?.map((elem, idx) => {
         return (

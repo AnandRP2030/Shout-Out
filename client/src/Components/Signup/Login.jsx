@@ -9,6 +9,8 @@ import flyTwit from "../../../asset/fly-bird.gif";
 import { useToast } from "@chakra-ui/react";
 import BottomBtns from "../mobileButtons/bottomBtns";
 import { useBreakpointValue } from "@chakra-ui/react";
+import { auth, provider } from "./firebaseConfig.js";
+import { signInWithPopup } from "firebase/auth";
 import "./signup.css";
 
 const Login = () => {
@@ -16,7 +18,7 @@ const Login = () => {
     emailValid: true,
     passwordValid: true,
   });
-
+  const [isProgress, setIsProgress] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -26,14 +28,31 @@ const Login = () => {
     password: "",
   });
 
+  const signupWithGoogle = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      const email = data.user.email;
+      if (email) {
+        generateData(email);
+      }
+    });
+  };
+
+  const generateData = (email) => {
+    const userGoogleDetails = {
+      email,
+      password: email,
+    };
+    loginUser(userGoogleDetails);
+  };
+
   const resetState = () => {
     setUserData({
       email: "",
       password: "",
     });
     setValid({
-      eamilValid: "",
-      passwordValid: "",
+      emailValid: true,
+      passwordValid: true,
     });
   };
 
@@ -81,32 +100,41 @@ const Login = () => {
       console.log(" email or password is empty");
       return;
     }
+    setIsProgress(true);
     const LOGIN_URL = `${BASE_URL}/user/login`;
+    try{
+      let res = await fetch(LOGIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (res.status === 200) {
+        let data = await res.json();
+        const { username, name } = data.UserPassingData;
+        toastMsg(`Welcome ${name}`, "blue");
+        localStorage.setItem("token", JSON.stringify(data.token));
+        navigate("/");
+      } else {
+        let output = await res.json();
+        const { error } = output;
+        toastMsg(error, "red");
+        resetState();
+      }
 
-    let res = await fetch(LOGIN_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-    if (res.status === 200) {
-      let data = await res.json();
-      const { username, name } = data.UserPassingData;
-      toastMsg(`Welcome ${name}`, "blue");
-      localStorage.setItem("token", JSON.stringify(data.token));
-      navigate("/");
-    } else {
-      let output = await res.json();
-      const { error } = output;
-      toastMsg(error, "red");
-      resetState();
+    }catch(err) {
+      console.log(err);
+    }finally{
+      setIsProgress(false);
     }
   };
+
   const bottomBtnsOn = useBreakpointValue([true, false]);
+
   return (
     <>
       <Center bgColor="#15202b" m="auto" h="auto" pt="50px" pb="200px" w="100%">
@@ -135,7 +163,11 @@ const Login = () => {
             </Text>
             <VStack w="100%" mt="20px" p={1}>
               <Link color="teal.500" w="100%">
-                <Button w="100%" className="authBtns">
+                <Button
+                  w="100%"
+                  className="authBtns"
+                  onClick={signupWithGoogle}
+                >
                   <Icon as={FcGoogle} fontSize="2xl" mr="10px" /> Log in with
                   Google
                 </Button>
@@ -195,15 +227,30 @@ const Login = () => {
               />
 
               <Input
-                color="white"
                 className="signupBtn"
+                color="white"
                 w="100%"
                 mt="50px"
                 type="submit"
                 _hover={{ bg: "red" }}
                 backgroundColor="#29a8df"
                 value="Login"
+                display={isProgress ? "none": "block"}
               />
+
+              <Button
+                display={!isProgress ? "none": "block"}
+                w="100%"
+                mt="50px"
+                className="signupBtn"
+                backgroundColor="#29a8df"
+                isLoading={isProgress}
+                colorScheme='blue'
+                loadingText=""
+                pl='50%'
+              >
+                Login
+              </Button>
             </form>
           </FormControl>
         </Box>

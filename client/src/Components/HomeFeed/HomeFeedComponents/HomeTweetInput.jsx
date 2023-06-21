@@ -42,7 +42,7 @@ const HomeTweetInput = () => {
   const [previewImg, setPreviewImg] = useState(null);
   const toast = useToast();
   const [profilePicture, setProfilePicture] = useState(
-    "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
+    "https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
   );
   const [isProgress, setIsProgress] = useState(false);
   const [inputActive, setInputActive] = useState(false);
@@ -110,14 +110,21 @@ const HomeTweetInput = () => {
 
   const selectingImage = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPreviewImg(event.target.result);
-    };
-
+    
+    
     if (file) {
-      reader.readAsDataURL(file);
-      setActiveFile(file);
+      if (file.type.startsWith('image/')){
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setPreviewImg(event.target.result);
+        };
+        
+        reader.readAsDataURL(file);
+        setActiveFile(file);
+      }else {
+        showToast("Select Image file", 'red');
+        e.target.value = null;
+      }
     }
   };
 

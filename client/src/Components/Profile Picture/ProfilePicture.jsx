@@ -15,9 +15,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRef } from "react";
 import { useState } from "react";
 import "./profilePicture.css";
-import {useNavigate} from 'react-router';
+import { useNavigate } from "react-router";
 
-const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => {
+const ProfilePictureComp = ({
+  setPicutureBox,
+  userDetails,
+  setUserDetails,
+}) => {
   const toast = useToast();
   const inputRef = useRef(null);
   const [activeFile, setActiveFile] = useState(null);
@@ -26,16 +30,14 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
   );
   const [btnContent, setBtnContent] = useState("Select Profile Picture");
   const handleBtnClick = () => {
-    if (btnContent === "Select Profile Picture"){
+    if (btnContent === "Select Profile Picture") {
       inputRef.current.click();
       return;
     }
     if (activeFile) {
       confirmProfilePicture();
     }
-
-  }
-
+  };
 
   const handleChange = (e) => {
     const file = e.target.files[0];
@@ -44,16 +46,22 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
     reader.onload = (event) => {
       setCurrentImg(event.target.result);
       setBtnContent("Confirm Profile Picture");
-    }
+    };
+
     if (file) {
-      reader.readAsDataURL(file);
-      setActiveFile(file);
+      if (file.type.startsWith("image/")) {
+        reader.readAsDataURL(file);
+        setActiveFile(file);
+      } else {
+        showToast("Select Image file");
+        e.target.value = null;
+      }
     }
-  }
+  };
 
   const confirmProfilePicture = () => {
     const API_BASE_URL = "https://api.cloudinary.com/v1_1/dpl5bxxv5";
-    
+
     const data = new FormData();
     data.append("file", activeFile);
     data.append("upload_preset", "shout-image-preset");
@@ -67,14 +75,14 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
       .then((data) => {
         setUserDetails({
           ...userDetails,
-          profilePicture: data.secure_url
-        })
+          profilePicture: data.secure_url,
+        });
         setPicutureBox(false);
         showToast("Profile Picture Confirmed");
       })
       .catch((err) => {
         console.log(err, "error on upload profile picture");
-        showToast("Error: Try after some time...")
+        showToast("Error: Try after some time...");
       });
   };
 
@@ -114,7 +122,7 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
         />
       </Box>
       <Center mt="10%">
-        <Circle w='200px' h='200px' borderRadius='50%' overflow='hidden'>
+        <Circle w="200px" h="200px" borderRadius="50%" overflow="hidden">
           <Input
             display="none"
             type="file"
@@ -125,7 +133,8 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
             onClick={() => {
               inputRef.current.click();
             }}
-            w='100px' h='100px'
+            w="100px"
+            h="100px"
             className="userImg"
             src={currentImg}
             alt="user-img"
@@ -133,10 +142,7 @@ const ProfilePictureComp = ({ setPicutureBox, userDetails, setUserDetails }) => 
         </Circle>
       </Center>
       <Center mt="10%">
-        <Button
-          onClick={handleBtnClick}
-          className="selectPicture"
-        >
+        <Button onClick={handleBtnClick} className="selectPicture">
           {btnContent}
         </Button>
       </Center>

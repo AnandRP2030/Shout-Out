@@ -14,6 +14,7 @@ import { signInWithPopup } from "firebase/auth";
 import "./signup.css";
 
 const Signup = () => {
+  const [isProgress, setIsProgress] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -94,6 +95,7 @@ const Signup = () => {
       profilePicture: "",
     });
 
+    setIsProgress(true);
     if (res.status === 200) {
       let data = await res.json();
       const { username, name } = data.UserPassingData;
@@ -188,6 +190,7 @@ const Signup = () => {
     password,
     profilePicture,
   }) => {
+    setIsProgress(true);
     const REGISTRATION_URL = `${BASE_URL}/user/register`;
 
     let res = await fetch(REGISTRATION_URL, {
@@ -353,7 +356,6 @@ const Signup = () => {
                   type="button"
                   value="Select Profile Picture"
                   name="password"
-                  // value={userDetails.password}
                   onClick={() => {
                     setPicutureBox(!pictureBox);
                   }}
@@ -370,7 +372,22 @@ const Signup = () => {
                   backgroundColor="#29a8df"
                   value="Get Started"
                   type="submit"
+                  display={isProgress ? "none" : "block"}
                 />
+
+                <Button
+                  display={!isProgress ? "none" : "block"}
+                  w="100%"
+                  mt="50px"
+                  className="signupBtn"
+                  backgroundColor="#29a8df"
+                  isLoading={isProgress}
+                  colorScheme="blue"
+                  loadingText=""
+                  pl="50%"
+                >
+                  Login
+                </Button>
               </form>
             </FormControl>
           </Box>

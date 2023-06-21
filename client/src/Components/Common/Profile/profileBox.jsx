@@ -17,9 +17,9 @@ const ProfileBox = () => {
   
   const [userData, setUserData] = useState({
     profilePicture:
-      "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*",
-    name: "Elon Musk",
-    username: "@elonmusk",
+      "https://cdn.landesa.org/wp-content/uploads/default-user-image.png",
+    name: "Name",
+    username: "username",
   });
 
   useEffect(() => {

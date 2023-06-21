@@ -19,7 +19,7 @@ const SidbarItems = ({ label }) => {
     if (token) {
       localStorage.removeItem("token");
     }
-    navigate("/signup");
+    navigate("/login");
   };
 
   let Icons;
