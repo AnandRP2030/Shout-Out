@@ -7,6 +7,7 @@ import {
   Image,
   Text,
   Tooltip,
+  
   Tag,
   Button,
   Textarea,
@@ -218,6 +219,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
         className={style.tweetBox}
         onClick={handleTweetClick}
       >
+    
         <GridItem
           className={style.userProfilePicBox}
           colSpan={mobileSize ? 2 : 1}
@@ -286,7 +288,7 @@ const Tweet = ({ tweetInfo, index, commentBoxIndex, toggleCommentBox }) => {
           >
             <HStack>
               <Icon mr="10px" as={TbMoodSadSquint} box={7} />
-              <Text> Not interested  </Text>
+              <Text> Not interested </Text>
             </HStack>
             <HStack onClick={deleteTweet}>
               <Icon mr="10px" as={RiDeleteBin6Line} box={7} />

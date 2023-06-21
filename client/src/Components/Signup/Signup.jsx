@@ -11,7 +11,7 @@ import { useBreakpointValue } from "@chakra-ui/react";
 import ProfilePictureComp from "../Profile Picture/ProfilePicture";
 import "./signup.css";
 
-const Signup = () => {
+const Signup = () => {  
   const toast = useToast();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -38,6 +38,7 @@ const Signup = () => {
     emailValid: true,
     passwordValid: true,
   });
+
 
   const showToast = (msg) => {
     toast({

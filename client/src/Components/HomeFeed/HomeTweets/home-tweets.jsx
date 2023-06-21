@@ -2,6 +2,7 @@ import Tweet from "./tweets";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Box, Center, CircularProgress } from "@chakra-ui/react";
 
 const HomeTweets = ({ tweetIdentity }) => {
   const [commentBoxIndex, setCommentBoxIndex] = useState(-1);
@@ -9,10 +10,12 @@ const HomeTweets = ({ tweetIdentity }) => {
     setCommentBoxIndex((prevIndex) => (prevIndex === index ? -1 : index));
   };
 
+  const [isProgress, setIsProgress] = useState(false);
   const allTweetsData = useSelector((state) => state.tweets);
 
   const [allTweets, setAllTweets] = useState([]);
   useEffect(() => {
+    setIsProgress(true);
     collectData();
   }, [allTweetsData]);
 
@@ -66,11 +69,15 @@ const HomeTweets = ({ tweetIdentity }) => {
         Tweets.push(tweet);
       }
     }
+    setIsProgress(false);
     setAllTweets(Tweets);
   };
 
   return (
     <>
+      <Center w="8%" m="auto" display={isProgress ? "block" : "none"}>
+          <CircularProgress isIndeterminate color="red" value={80} />
+      </Center>
       {allTweets?.map((elem, idx) => {
         return (
           <Tweet

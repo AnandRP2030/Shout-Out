@@ -12,7 +12,7 @@ import {
   Button,
   Box,
   useBreakpointValue,
-  Center,
+  Center,Progress
 } from "@chakra-ui/react";
 
 import {
@@ -42,7 +42,7 @@ const HomeTweetInput = () => {
   const [profilePicture, setProfilePicture] = useState(
     "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg?resize=1200:*"
   );
-
+  const [isProgress, setIsProgress] = useState(false);
   const [inputActive, setInputActive] = useState(false);
 
   const [dragAreaOpen, setDragAreaOpen] = useState(false);
@@ -57,7 +57,6 @@ const HomeTweetInput = () => {
     } else {
       setInputActive(false);
     }
-    
   }, [ tweetData]);
 
   useEffect(() => {
@@ -85,9 +84,21 @@ const HomeTweetInput = () => {
     const { name, value } = event.target;
     setTweetData({ ...tweetData, [name]: value });
   };
+
+  const showToast = (msg, color) => {
+    toast({
+      duration: 1500,
+      position: "bottom-center",
+      render: () => (
+        <Box color="white" p={3} bg={color}>
+          <Text textAlign="center"> {msg} </Text>
+        </Box>
+      ),
+    });
+  }
+
   const selectingImage = (e) => {
     const file = e.target.files[0];
-
     const reader = new FileReader();
     reader.onload = (event) => {
       setPreviewImg(event.target.result);
@@ -102,9 +113,10 @@ const HomeTweetInput = () => {
   // tweeting
   const userTweeted = async () => {
     if (tweetData.content === "") {
-      alert(" empty post not allowed");
+      showToast("Post shouldn't be empty.", "#c1300c");
       return;
     }
+    setIsProgress(true);
     let url = null;
     if (activeFile) {
       url = await uploadImage(activeFile);
@@ -121,16 +133,13 @@ const HomeTweetInput = () => {
       audience: "",
     });
     
+    showToast("Your Tweet was sent.", "#f91880");
+    const timeoutRef = setTimeout(() => {
+      setIsProgress(false);
+    },1000);
 
-    toast({
-      duration: 1500,
-      position: "bottom-center",
-      render: () => (
-        <Box color="white" p={3} bg="#f91880">
-          <Text textAlign="center"> Your Tweet was sent. </Text>
-        </Box>
-      ),
-    });
+    
+
   };
 
   const uploadImage = async (activeFile) => {
@@ -184,6 +193,8 @@ const HomeTweetInput = () => {
   const tabletSize = useBreakpointValue([true, true, false]);
   return (
     <>
+    {isProgress && <Progress colorScheme='red' size='xs' isIndeterminate hasStripe value={80} />}
+      
       <Grid
         templateColumns="repeat(11, 1fr)"
         gap={4}
@@ -200,6 +211,7 @@ const HomeTweetInput = () => {
         }
         className={style.tweetBox}
       >
+        
         <GridItem colSpan={tabletSize ? 2 : 1}>
           <Image
             className={style.userProfilePic}
