@@ -9,8 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store.js";
 import FullTweet from "./Components/FullTweet/fullTweet";
-import BottomBtns from "./Components/mobileButtons/bottomBtns";
-import ProfilePictureComp from "./Components/Profile Picture/ProfilePicture";
+import LiveDemo from "./Components/Live Demo/liveDemo";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -22,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/" element={<App />} />
             <Route path="/home" element={<App />} />
             <Route path="/fulltweet/:tweetId" element={<FullTweet />} />
-            <Route path="/explore" element={<App />} />
+            <Route path="/demo" element={<LiveDemo />} />
             <Route path="/communities" element={<App />} />
             <Route path="/notifications" element={<App />} />
             <Route path="/messages" element={<App />} />
@@ -31,7 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/profile" element={<Signup />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/view" element={<ProfilePictureComp />} /> */}
+            <Route path="/view" element={<LiveDemo />} />
             <Route path="/*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>

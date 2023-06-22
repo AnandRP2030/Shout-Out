@@ -213,10 +213,11 @@ const Signup = () => {
       loginUser({ email, password });
     } else if (res.status === 409) {
       let data = await res.json();
-      showToast(data.error);
+      showToast(`${data.error} do login.`);
     } else {
       showToast(res.status);
     }
+    setIsProgress(false);
   };
 
   const bottomBtnsOn = useBreakpointValue([true, false]);

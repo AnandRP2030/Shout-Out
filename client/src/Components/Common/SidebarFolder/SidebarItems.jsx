@@ -25,7 +25,7 @@ const SidbarItems = ({ label }) => {
   let Icons;
   if (label === "Home") {
     Icons = FcHome;
-  } else if (label === "Explore") {
+  } else if (label === "Live Demo") {
     Icons = FcBinoculars;
   } else if (label === "Entertainment") {
     Icons = FcFilmReel;
@@ -58,8 +58,8 @@ const SidbarItems = ({ label }) => {
   const redirectPage = () => {
     if (label === "Home") {
       navigate("/home");
-    } else if (label === "Explore") {
-      navigate("/explore");
+    } else if (label === "Live Demo") {
+      navigate("/demo");
     } else if (label === "Communites") {
       navigate("/communities");
     } else if (label === "Notifications") {

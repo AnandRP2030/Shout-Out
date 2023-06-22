@@ -12,7 +12,7 @@ const SideBar = () => {
       <VStack  pos="fixed" color="#fff" w={sidebarWidth}>
         <SidbarItems label={""} />
         <SidbarItems label={"Home"} />
-        <SidbarItems label={"Explore"} />
+        <SidbarItems label={"Live Demo"} />
         <SidbarItems label={"Entertainment"} />
         <SidbarItems label={"Notifications"} />
         <SidbarItems label={"Messages"} />
