@@ -1,4 +1,4 @@
-![image](https://github.com/AnandRP2030/Shout-Out/assets/106311407/752a4b4f-c12c-44ca-a95d-bb0687ec5de7)
+
 # Shout Out - Social Media App
 
 ## Introduction
