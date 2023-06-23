@@ -1,11 +1,11 @@
-
+![image](https://github.com/AnandRP2030/Shout-Out/assets/106311407/752a4b4f-c12c-44ca-a95d-bb0687ec5de7)
 # Shout Out - Social Media App
 
 ## Introduction
 Shout Out is a fully responsive social media application that resembles Twitter in terms of its user interface and functionality. Built using the MERN (MongoDB, Express.js, React.js, Node.js) stack, this project allows multiple users to sign up, create, read, edit, and delete posts. Users can engage with each other through comments. and  various content types such as text, images, and GIFs are supported. User authentication is implemented using JSON Web Tokens (JWT), and password security is ensured through bcrypt encryption.
 
 <div style="display: flex;">
-  <img src="https://pbs.twimg.com/media/FzTK3WQWIAAN3em?format=jpg&name=900x900" alt="home-page" style="border-radius: 40%; margin: auto; width: 60%;" />
+  <img src="https://pbs.twimg.com/media/FzTQeo_XgAAthRZ?format=jpg&name=900x900" alt="home-page" style="border-radius: 40%; margin: auto; width: 60%;" />
   <img src="https://pbs.twimg.com/media/FzTLkopXwAEBx_g?format=png&name=small" alt="home-page" style="border-radius: 40%; margin: auto; width: 20%;" />
 </div>
 
