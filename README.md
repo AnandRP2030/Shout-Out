@@ -9,6 +9,8 @@ Shout Out is a fully responsive social media application that resembles Twitter 
   <img src="https://pbs.twimg.com/media/FzTLkopXwAEBx_g?format=png&name=small" alt="home-page" style="border-radius: 40%; margin: auto; width: 20%;" />
 </div>
 
+## Tech Stack
+-  <p > <b> React JS, Node JS, Express JS, Mongo DB, ES6, Chakra UI, CSS,  JSON Web Token, Bcrypt, Firebase </b> </p>
 
 ## Features
 - **User-friendly UI:** Shout Out offers an intuitive and user-friendly interface, inspired by Twitter, providing a seamless experience for users.
